@@ -1,11 +1,9 @@
 import React from 'react';
 
-interface PieceProps {
-
-}
+interface PieceProps {}
 
 const Piece: React.FC<PieceProps> = ({}) => {
-    return ();
-}
+  return <div></div>;
+};
 
 export default Piece;
