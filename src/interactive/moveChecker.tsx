@@ -6,9 +6,9 @@ import { BOARD_GAME } from '../utils';
 const { ROWS, COLS } = BOARD_GAME;
 
 const validMovesFromCard = [
-  [1, -1],
-  [-1, 1],
-  [0, 2],
+  [0, 0],
+  [0, 0],
+  [0, 0],
 ];
 
 const transposeCardMovement = (validMoves: number[][]): number[][] => {
@@ -20,11 +20,15 @@ const checkValidMoves = (
   validMovesFromCard: number[][]
 ): boolean[] => {
   const { x, y } = clickedCoordinates;
-  return validMovesFromCard.map(([moveX, moveY]) => {
-    if (x + moveX >= ROWS || x + moveX < 0) return false;
-    if (y + moveY >= COLS || y + moveY < 0) return false;
-    return true;
-  });
+  return validMovesFromCard.map(
+    ([moveX, moveY]) =>
+      !(
+        x + moveX >= ROWS ||
+        x + moveX < 0 ||
+        y + moveY >= COLS ||
+        y + moveY < 0
+      )
+  );
 };
 
 const MoveChecker: React.FC = () => {
