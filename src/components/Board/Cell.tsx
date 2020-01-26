@@ -9,6 +9,8 @@ interface CellProps {
 }
 
 const Box = styled.div`
+  margin: 0;
+  padding: 0;
   border: 1px solid #000;
   &:hover {
     cursor: pointer;

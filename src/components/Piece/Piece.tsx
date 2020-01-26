@@ -9,14 +9,16 @@ import RedStudent from '../../assets/red_student.svg';
 import RedTempleArch from '../../assets/red_temple_arch.svg';
 
 interface PieceProps {
-  type: string;
+  type?: string;
 }
 
 const PieceWrapper = styled.div<{ isRotated: boolean }>`
+  width: 5.9rem;
+  height: 5.9rem;
   ${(props): string => (props.isRotated ? `transform: rotate(180deg)` : '')};
 `;
 
-const getPieceGraphic = (type: string): string | null => {
+const getPieceGraphic = (type: string | undefined): string | null => {
   switch (type) {
     case PIECES[0]:
       return BlueMaster;
@@ -37,10 +39,12 @@ const getPieceGraphic = (type: string): string | null => {
 
 const Piece: React.FC<PieceProps> = ({ type }) => {
   const typeOfPiece = getPieceGraphic(type);
-  return (
+  return type ? (
     <PieceWrapper isRotated={type.startsWith('RED')}>
       {typeOfPiece && <img src={typeOfPiece} alt={type} />}
     </PieceWrapper>
+  ) : (
+    <>Hello</>
   );
 };
 

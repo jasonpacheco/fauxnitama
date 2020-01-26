@@ -15,6 +15,7 @@ const Grid = styled.div`
   display: grid;
   height: 30rem;
   grid-template-columns: repeat(${COLS}, 1fr);
+  grid-template-rows: repeat(${COLS}, 6rem);
 `;
 
 const Board: React.FC = () => {
