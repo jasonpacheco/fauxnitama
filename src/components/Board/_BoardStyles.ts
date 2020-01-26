@@ -4,7 +4,7 @@ import RedTempleArch from '../../assets/red_temple_arch.svg';
 import { BOARD_GAME } from '../../utils';
 const { COLS } = BOARD_GAME;
 
-export const BoardWrapper = styled.div`
+export const GridWrapper = styled.div`
   margin: 0 auto;
   width: 30rem;
 `;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Board from './components/Board/Board';
+import BoardSetup from './components/BoardSetup/BoardSetup';
 import GameState from './context/gameState';
 // import Piece from './components/Piece/Piece';
 // import Card from './components/Card/Card';
@@ -7,7 +7,7 @@ import GameState from './context/gameState';
 const App: React.FC = () => {
   return (
     <GameState>
-      <Board />
+      <BoardSetup />
     </GameState>
   );
 };
