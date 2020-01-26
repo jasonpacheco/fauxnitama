@@ -1,7 +1,12 @@
 import React, { useReducer } from 'react';
 import gameReducer from './gameReducer';
 import GameContext from './gameContext';
-import { State, Player, Piece } from '../interfaces/context.interface';
+import {
+  State,
+  Player,
+  Piece,
+  Coordinates,
+} from '../interfaces/context.interface';
 
 const Opponent: Player = {
   pieces: [
@@ -24,7 +29,7 @@ const User: Player = {
 };
 
 const initialState: State = {
-  message: '',
+  clickedCoordinates: undefined,
   board: {
     layout: [
       Opponent.pieces,
@@ -43,16 +48,16 @@ const GameState: React.FC = ({ children }) => {
     return initialState.board.layout;
   };
 
-  const setMessage = (message: string): void => {
+  const setClickedCoordinates = (coordinates: Coordinates): void => {
     dispatch({
-      type: 'SET_MESSAGE',
-      message,
+      type: 'SET_COORDINATES',
+      coordinates,
     });
   };
 
   const dispatchFunctions = {
     getBoard,
-    setMessage,
+    setClickedCoordinates,
   };
 
   return (

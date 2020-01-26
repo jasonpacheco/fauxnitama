@@ -13,7 +13,7 @@ export const Grid = styled.div`
   border: 1px solid #000;
   display: grid;
   height: 30rem;
-  grid-template-columns: repeat(${COLS}, 1fr);
+  grid-template-columns: repeat(${COLS}, 6rem);
   grid-template-rows: repeat(${COLS}, 6rem);
 `;
 

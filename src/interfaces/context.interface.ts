@@ -17,17 +17,21 @@ interface BoardState {
   layout: (Piece | null)[][];
 }
 
+export interface Coordinates extends Coordinate {
+  id: number;
+}
+
 export interface State {
   board: BoardState;
-  message: string;
+  clickedCoordinates: Coordinates | undefined;
 }
 export interface GameContextProperties extends State {
   getBoard: () => (Piece | null)[][];
+  setClickedCoordinates: (coordinates: Coordinates) => void;
+}
+interface SetCoordinates {
+  type: 'SET_COORDINATES';
+  coordinates: Coordinates;
 }
 
-interface SetMessage {
-  type: 'SET_MESSAGE';
-  message: string;
-}
-
-export type Actions = SetMessage;
+export type Actions = SetCoordinates;
