@@ -32,4 +32,18 @@ export const assignGridID = (): Array<SpaceID> => {
   return idList;
 };
 
-export const getIds = (): Array<SpaceID> => assignGridID();
+export const getIDs = (): Array<SpaceID> => assignGridID();
+
+interface TempleIDs {
+  blue: SpaceID;
+  red: SpaceID;
+}
+
+export const getTempleID = (): TempleIDs => {
+  const templeY = Math.floor(BOARD_GAME.COLS / 2);
+  const blueX = BOARD_GAME.ROWS - 1;
+  return {
+    blue: { x: blueX, y: templeY, id: BOARD_GAME.ROWS * blueX + templeY },
+    red: { x: 0, y: templeY, id: templeY },
+  };
+};
