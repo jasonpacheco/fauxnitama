@@ -2,6 +2,7 @@ import React from 'react';
 import { Box } from './_BoardStyles';
 import Piece from '../Piece/Piece';
 import { getTempleID } from '../../utils';
+import { Piece as IPiece } from '../../interfaces/context.interface';
 
 const {
   blue: { id: blueTempleID },
@@ -12,9 +13,10 @@ interface CellProps {
   id: number;
   x: number;
   y: number;
+  piece: IPiece | null;
 }
 
-const Cell: React.FC<CellProps> = ({ id, x, y }) => {
+const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
   return (
     <Box
       key={id}
@@ -23,7 +25,7 @@ const Cell: React.FC<CellProps> = ({ id, x, y }) => {
       }
       onClick={(): void => console.log(`{x:${x},y:${y},id:${id}}`)}
     >
-      {id === 2 ? <Piece id={2} /> : id === 22 ? <Piece id={22} /> : 'Box'}
+      {piece ? <Piece color={piece.color} type={piece.type} /> : 'Box'}
     </Box>
   );
 };
