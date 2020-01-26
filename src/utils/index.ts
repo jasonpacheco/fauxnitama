@@ -6,6 +6,15 @@ export const BOARD_GAME = {
   },
 };
 
+export enum PIECES {
+  BLUE_MASTER,
+  BLUE_STUDENT,
+  BLUE_TEMPLE_ARCH,
+  RED_MASTER,
+  RED_STUDENT,
+  RED_TEMPLE_ARCH,
+}
+
 interface SpaceID {
   x: number;
   y: number;
