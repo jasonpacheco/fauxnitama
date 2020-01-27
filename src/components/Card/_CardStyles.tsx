@@ -39,9 +39,10 @@ export const MiniBoard = styled.div`
   border: 1px solid #000;
 `;
 
-export const MiniBox = styled.div<{ center: boolean }>`
+export const MiniBox = styled.div<{ center?: boolean; hasColor?: boolean }>`
   margin: 0;
   padding: 0;
   border: 1px solid #ddd;
-  background-color: ${({ center }): string => (center ? 'black' : 'white')};
+  background-color: ${({ center, hasColor }): string =>
+    center ? 'black' : hasColor ? 'red' : 'white'};
 `;

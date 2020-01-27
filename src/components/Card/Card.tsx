@@ -9,10 +9,11 @@ import {
   MiniBoard,
   MiniBox,
 } from './_CardStyles';
-import { getIDs } from '../../utils';
+import { getIDs, coordinateToID, movesToID } from '../../utils';
 
 const Card: React.FC = ({}) => {
-  const { character, moves, name, stamp } = CardTypes.Mantis;
+  const { character, moves, name, stamp } = CardTypes.Tiger;
+  const moveIDs = movesToID(moves);
   return (
     <CardWrapper>
       <LeftHalf>
@@ -21,9 +22,11 @@ const Card: React.FC = ({}) => {
       </LeftHalf>
       <RightHalf id='hello'>
         <MiniBoard>
-          {getIDs().map(({ id, x, y }) => (
-            <MiniBox key={id} center={id === 12} />
-          ))}
+          {getIDs().map(({ id, x, y }) => {
+            if (moveIDs.includes(coordinateToID({ x, y })))
+              return <MiniBox key={id} hasColor />;
+            return <MiniBox key={id} center={id === 12} />;
+          })}
         </MiniBoard>
         {/* {moves}
         {stamp} */}

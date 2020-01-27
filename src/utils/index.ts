@@ -89,16 +89,12 @@ export const movesToID = (
 ): (number | undefined)[] => {
   const refCoordinate = idToCoordinate(refID);
   const { x: refX, y: refY } = refCoordinate;
-  return validMoves.map(([x, y]) => {
-    // const point = [x + refX, y + refY];
-    if (
-      x + refX >= BOARD_GAME.ROWS ||
-      x + refX < 0 ||
-      y + refY >= BOARD_GAME.COLS ||
-      y + refY < 0
-    ) {
-      return undefined;
-    }
-    return coordinateToID({ x: x + refX, y: y + refY });
-  });
+  return validMoves.map(([x, y]) =>
+    x + refX >= BOARD_GAME.ROWS ||
+    x + refX < 0 ||
+    y + refY >= BOARD_GAME.COLS ||
+    y + refY < 0
+      ? undefined
+      : coordinateToID({ x: x + refX, y: y + refY })
+  );
 };
