@@ -1,3 +1,5 @@
+import { Coordinate } from '../interfaces/context.interface';
+
 export const BOARD_GAME = {
   ROWS: 5,
   COLS: 5,
@@ -46,4 +48,57 @@ export const getTempleID = (): TempleIDs => {
     blue: { x: blueX, y: templeY, id: BOARD_GAME.ROWS * blueX + templeY },
     red: { x: 0, y: templeY, id: templeY },
   };
+};
+
+/**
+ * Converts a [coordinate] of type <Coordinate> { x: number, y: number } to
+ * a numeric id based on an optional [?rows] argument.
+ * @param coordinate {x: number, y: number}
+ * @param rows optional, default = rows in board game
+ */
+export const coordinateToID = (
+  coordinate: Coordinate,
+  rows = BOARD_GAME.ROWS
+): number => {
+  return rows * coordinate.x + coordinate.y;
+};
+
+/**
+ *
+ * @param id
+ * @param rows
+ */
+export const idToCoordinate = (id: number, rows = BOARD_GAME.ROWS): SpaceID => {
+  const x = Math.floor(id / rows);
+  const y = id % rows;
+  return { id, x, y };
+};
+
+/**
+ * Returns an array of IDs for a list of valid moves corresponding to a reference
+ * point. A [validMoves] argument is an array of a move tuple, e.g. [1, 0], where
+ * the first index is movement down the X-axis, and the second is movement across
+ * the y-axis. The result is an array containing a numeric ID for the valid move
+ * or undefined if the move is not valid on the grid.
+ * @param validMoves Array<[x: number, y: number]>
+ * @param refID optional
+ */
+export const movesToID = (
+  validMoves: number[][],
+  refID = 12
+): (number | undefined)[] => {
+  const refCoordinate = idToCoordinate(refID);
+  const { x: refX, y: refY } = refCoordinate;
+  return validMoves.map(([x, y]) => {
+    // const point = [x + refX, y + refY];
+    if (
+      x + refX >= BOARD_GAME.ROWS ||
+      x + refX < 0 ||
+      y + refY >= BOARD_GAME.COLS ||
+      y + refY < 0
+    ) {
+      return undefined;
+    }
+    return coordinateToID({ x: x + refX, y: y + refY });
+  });
 };
