@@ -1,3 +1,20 @@
+import BoarImage from '../../assets/calligraphy/boar.png';
+import CobraImage from '../../assets/calligraphy/cobra.png';
+import CrabImage from '../../assets/calligraphy/crab.png';
+import CraneImage from '../../assets/calligraphy/crane.png';
+import DragonImage from '../../assets/calligraphy/dragon.png';
+import EelImage from '../../assets/calligraphy/eel.png';
+import ElephantImage from '../../assets/calligraphy/elephant.png';
+import FrogImage from '../../assets/calligraphy/frog.png';
+import GooseImage from '../../assets/calligraphy/goose.png';
+import HorseImage from '../../assets/calligraphy/horse.png';
+import MantisImage from '../../assets/calligraphy/mantis.png';
+import MonkeyImage from '../../assets/calligraphy/monkey.png';
+import OxImage from '../../assets/calligraphy/ox.png';
+import RabbitImage from '../../assets/calligraphy/rabbit.png';
+import RoosterImage from '../../assets/calligraphy/rooster.png';
+import TigerImage from '../../assets/calligraphy/tiger.png';
+
 interface Card {
   name:
     | 'Boar'
@@ -17,14 +34,16 @@ interface Card {
     | 'Rooster'
     | 'Tiger';
   stamp: 'Red' | 'Blue';
-  character: string;
+  image: string;
+  color: string;
   moves: number[][];
 }
 
 const Boar: Card = {
   name: 'Boar',
   stamp: 'Red',
-  character: '豬',
+  image: BoarImage,
+  color: '#689F38',
   moves: [
     [0, -1],
     [-1, 0],
@@ -35,7 +54,8 @@ const Boar: Card = {
 const Cobra: Card = {
   name: 'Cobra',
   stamp: 'Red',
-  character: '鏡蛇',
+  image: CobraImage,
+  color: '#D32F2F',
   moves: [
     [0, -1],
     [-1, 1],
@@ -46,7 +66,8 @@ const Cobra: Card = {
 const Crab: Card = {
   name: 'Crab',
   stamp: 'Blue',
-  character: '蟹',
+  image: CrabImage,
+  color: '#689F38',
   moves: [
     [0, -2],
     [-1, 0],
@@ -57,7 +78,8 @@ const Crab: Card = {
 const Crane: Card = {
   name: 'Crane',
   stamp: 'Blue',
-  character: '鶴',
+  image: CraneImage,
+  color: '#689F38',
   moves: [
     [1, -1],
     [-1, 0],
@@ -68,7 +90,8 @@ const Crane: Card = {
 const Dragon: Card = {
   name: 'Dragon',
   stamp: 'Red',
-  character: '龍',
+  image: DragonImage,
+  color: '#689F38',
   moves: [
     [-1, -2],
     [1, -1],
@@ -80,7 +103,8 @@ const Dragon: Card = {
 const Eel: Card = {
   name: 'Eel',
   stamp: 'Blue',
-  character: '鰻',
+  image: EelImage,
+  color: '#1976D2',
   moves: [
     [-1, -1],
     [1, -1],
@@ -91,7 +115,8 @@ const Eel: Card = {
 const Elephant: Card = {
   name: 'Elephant',
   stamp: 'Red',
-  character: '象',
+  image: ElephantImage,
+  color: '#689F38',
   moves: [
     [-1, -1],
     [0, -1],
@@ -103,7 +128,8 @@ const Elephant: Card = {
 const Frog: Card = {
   name: 'Frog',
   stamp: 'Red',
-  character: '蛙',
+  image: FrogImage,
+  color: '#1976D2',
   moves: [
     [0, -2],
     [-1, -1],
@@ -114,7 +140,8 @@ const Frog: Card = {
 const Goose: Card = {
   name: 'Goose',
   stamp: 'Blue',
-  character: '鵝',
+  image: GooseImage,
+  color: '#1976D2',
   moves: [
     [-1, -1],
     [0, -1],
@@ -126,7 +153,8 @@ const Goose: Card = {
 const Horse: Card = {
   name: 'Horse',
   stamp: 'Red',
-  character: '馬',
+  image: HorseImage,
+  color: '#1976D2',
   moves: [
     [0, -1],
     [-1, 0],
@@ -137,7 +165,8 @@ const Horse: Card = {
 const Mantis: Card = {
   name: 'Mantis',
   stamp: 'Red',
-  character: '螳螂',
+  image: MantisImage,
+  color: '#689F38',
   moves: [
     [-1, -1],
     [1, 0],
@@ -148,7 +177,8 @@ const Mantis: Card = {
 const Monkey: Card = {
   name: 'Monkey',
   stamp: 'Blue',
-  character: '猴',
+  image: MonkeyImage,
+  color: '#689F38',
   moves: [
     [-1, -1],
     [1, -1],
@@ -160,7 +190,8 @@ const Monkey: Card = {
 const Ox: Card = {
   name: 'Ox',
   stamp: 'Blue',
-  character: '牛',
+  image: OxImage,
+  color: '#D32F2F',
   moves: [
     [-1, 0],
     [1, 0],
@@ -171,7 +202,8 @@ const Ox: Card = {
 const Rabbit: Card = {
   name: 'Rabbit',
   stamp: 'Blue',
-  character: '兔',
+  image: RabbitImage,
+  color: '#D32F2F',
   moves: [
     [1, -1],
     [-1, 1],
@@ -182,7 +214,8 @@ const Rabbit: Card = {
 const Rooster: Card = {
   name: 'Rooster',
   stamp: 'Red',
-  character: '雞',
+  image: RoosterImage,
+  color: '#D32F2F',
   moves: [
     [0, -1],
     [1, -1],
@@ -194,7 +227,8 @@ const Rooster: Card = {
 const Tiger: Card = {
   name: 'Tiger',
   stamp: 'Blue',
-  character: '虎',
+  image: TigerImage,
+  color: '#689F38',
   moves: [
     [-2, 0],
     [1, 0],

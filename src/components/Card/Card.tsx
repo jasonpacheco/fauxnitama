@@ -2,35 +2,43 @@ import React from 'react';
 import CardTypes from './CardTypes';
 import {
   CardWrapper,
+  TopHalf,
+  BottomHalf,
   LeftHalf,
   RightHalf,
   Character,
   Name,
   MiniBoard,
   MiniBox,
+  Stamp,
 } from './_CardStyles';
 import { getIDs, coordinateToID, movesToID } from '../../utils';
 
-const Card: React.FC = ({}) => {
-  const { character, moves, name, stamp } = CardTypes.Tiger;
+const Card: React.FC = () => {
+  const { image, moves, name, color, stamp } = CardTypes.Crane;
   const moveIDs = movesToID(moves);
   return (
     <CardWrapper>
-      <LeftHalf>
-        <Character>{character}</Character>
-        <Name>{name}</Name>
-      </LeftHalf>
-      <RightHalf id='hello'>
-        <MiniBoard>
-          {getIDs().map(({ id, x, y }) => {
-            if (moveIDs.includes(coordinateToID({ x, y })))
-              return <MiniBox key={id} hasColor />;
-            return <MiniBox key={id} center={id === 12} />;
-          })}
-        </MiniBoard>
-        {/* {moves}
-        {stamp} */}
-      </RightHalf>
+      <TopHalf>
+        <LeftHalf>
+          <Character>
+            <img src={image} alt='' />
+          </Character>
+          <Name>{name}</Name>
+        </LeftHalf>
+        <RightHalf id='right'>
+          <MiniBoard>
+            {getIDs().map(({ id, x, y }) => {
+              if (moveIDs.includes(coordinateToID({ x, y })))
+                return <MiniBox key={id} hasColor={color} />;
+              return <MiniBox key={id} center={id === 12} />;
+            })}
+          </MiniBoard>
+        </RightHalf>
+      </TopHalf>
+      <BottomHalf>
+        <Stamp color={stamp} />
+      </BottomHalf>
     </CardWrapper>
   );
 };
