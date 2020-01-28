@@ -5,13 +5,14 @@ import RedShuriken from '../../assets/red_shuriken.svg';
 
 const { COLS } = BOARD_GAME;
 
-export const CardWrapper = styled.div`
+export const CardWrapper = styled.div<{ inverted?: boolean }>`
   border: 1px solid #000;
   width: 20rem;
   display: flex;
   flex-direction: column;
   padding: 1rem;
   background-color: #cacba2;
+  ${({ inverted }): string => (inverted ? `transform: rotate(180deg)` : '')};
 `;
 
 export const Main = styled.div`
@@ -71,7 +72,7 @@ export const MiniBox = styled.div<{
     center ? 'black' : hasColor ? hasColor : 'white'};
 `;
 
-export const StampTooltip = styled.div`
+export const StampTooltip = styled.div<{ inverted: boolean }>`
   font-family: 'Arvo', 'Georgia', serif;
   font-size: 0.8rem;
   visibility: hidden;
@@ -85,6 +86,10 @@ export const StampTooltip = styled.div`
   z-index: 1;
   left: 1.5rem;
   top: -0.5rem;
+
+  & > div {
+    ${({ inverted }): string => (inverted ? `transform: rotate(180deg)` : '')};
+  }
 
   &::after {
     content: '';

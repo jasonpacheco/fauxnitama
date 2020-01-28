@@ -6,3 +6,7 @@ export const BoardDeckWrapper = styled.div`
   width: 40rem;
   border: 1px solid #000;
 `;
+
+export const DeckWrapper = styled.div`
+  display: flex;
+`;

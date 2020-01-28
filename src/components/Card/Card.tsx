@@ -14,18 +14,21 @@ import {
   StampTooltip,
 } from './_CardStyles';
 
-import {
-  getIDs,
-  coordinateToID,
-  movesToID,
-  generateCardSet,
-} from '../../utils';
+import { getIDs, coordinateToID, movesToID } from '../../utils';
 
-const Card: React.FC = () => {
-  const { image, moves, name, color, stamp } = generateCardSet()[0];
+import { Card as CardType } from './CardTypes';
+
+interface CardProps {
+  inverted: boolean;
+  card: CardType;
+}
+
+const Card: React.FC<CardProps> = ({ inverted, card }) => {
+  const { image, moves, name, color, stamp } = card;
+  // const { image, moves, name, color, stamp } = ;
   const moveIDs = movesToID(moves);
   return (
-    <CardWrapper>
+    <CardWrapper inverted={inverted}>
       <Main>
         <LeftHalf>
           <Character>
@@ -47,8 +50,10 @@ const Card: React.FC = () => {
       </Main>
       <Gutter>
         <Stamp color={stamp}>
-          <StampTooltip>
-            <span>{stamp}</span> player goes first.
+          <StampTooltip inverted={inverted}>
+            <div>
+              <span>{stamp}</span> player goes first.
+            </div>
           </StampTooltip>
         </Stamp>
       </Gutter>

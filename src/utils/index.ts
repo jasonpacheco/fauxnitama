@@ -118,7 +118,7 @@ export const movesToID = (
   );
 };
 
-export const generateCardSet = (): Card[] => {
+export const generateCardSet = (numCards = 5): Card[] => {
   const cards = [
     Boar,
     Cobra,
@@ -138,16 +138,13 @@ export const generateCardSet = (): Card[] => {
     Tiger,
   ];
 
-  const numCards = 5;
   const cardSet: Card[] = [];
 
   for (let i = 0; i < numCards; i++) {
     const randomIndex = Math.floor(Math.random() * cards.length);
-    const card = cards[randomIndex];
-    cardSet.push(card);
+    cardSet.push(cards[randomIndex]);
     cards.splice(randomIndex, 1);
   }
-  console.log(cardSet);
 
   return cardSet;
 };
