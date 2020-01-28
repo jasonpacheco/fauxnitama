@@ -2,8 +2,8 @@ import React from 'react';
 import CardTypes from './CardTypes';
 import {
   CardWrapper,
-  TopHalf,
-  BottomHalf,
+  Main,
+  Gutter,
   LeftHalf,
   RightHalf,
   Character,
@@ -11,15 +11,16 @@ import {
   MiniBoard,
   MiniBox,
   Stamp,
+  StampTooltip,
 } from './_CardStyles';
 import { getIDs, coordinateToID, movesToID } from '../../utils';
 
 const Card: React.FC = () => {
-  const { image, moves, name, color, stamp } = CardTypes.Crane;
+  const { image, moves, name, color, stamp } = CardTypes.Boar;
   const moveIDs = movesToID(moves);
   return (
     <CardWrapper>
-      <TopHalf>
+      <Main>
         <LeftHalf>
           <Character>
             <img src={image} alt='' />
@@ -35,10 +36,16 @@ const Card: React.FC = () => {
             })}
           </MiniBoard>
         </RightHalf>
-      </TopHalf>
-      <BottomHalf>
-        <Stamp color={stamp} />
-      </BottomHalf>
+      </Main>
+      <Gutter>
+        <Stamp color={stamp}>
+          <StampTooltip>
+            {stamp === 'Blue'
+              ? 'Blue player goes first'
+              : 'Red player goes first'}
+          </StampTooltip>
+        </Stamp>
+      </Gutter>
     </CardWrapper>
   );
 };
