@@ -15,7 +15,7 @@ import RabbitImage from '../../assets/calligraphy/rabbit.png';
 import RoosterImage from '../../assets/calligraphy/rooster.png';
 import TigerImage from '../../assets/calligraphy/tiger.png';
 
-interface Card {
+export interface Card {
   name:
     | 'Boar'
     | 'Cobra'

@@ -5,6 +5,7 @@ import {
   idToCoordinate,
   coordinateToID,
   movesToID,
+  generateCardSet,
 } from './index';
 
 describe('tests for assignGridID', () => {
@@ -132,5 +133,11 @@ describe('tests for moveToID', () => {
 
   test('edge case: moving 100 squares will return undefined', () => {
     expect(movesToID([[100, 0]])).toEqual([undefined]);
+  });
+});
+
+describe('test for generateCardSet', () => {
+  test('CardSet returns 5 elements', () => {
+    expect(generateCardSet()).toHaveLength(5);
   });
 });

@@ -1,4 +1,23 @@
 import { Coordinate } from '../interfaces/context.interface';
+import CardTypes, { Card } from '../components/Card/CardTypes';
+const {
+  Boar,
+  Cobra,
+  Crab,
+  Crane,
+  Dragon,
+  Eel,
+  Elephant,
+  Frog,
+  Goose,
+  Horse,
+  Mantis,
+  Monkey,
+  Ox,
+  Rabbit,
+  Rooster,
+  Tiger,
+} = CardTypes;
 
 export const BOARD_GAME = {
   ROWS: 5,
@@ -97,4 +116,38 @@ export const movesToID = (
       ? undefined
       : coordinateToID({ x: x + refX, y: y + refY })
   );
+};
+
+export const generateCardSet = (): Card[] => {
+  const cards = [
+    Boar,
+    Cobra,
+    Crab,
+    Crane,
+    Dragon,
+    Eel,
+    Elephant,
+    Frog,
+    Goose,
+    Horse,
+    Mantis,
+    Monkey,
+    Ox,
+    Rabbit,
+    Rooster,
+    Tiger,
+  ];
+
+  const numCards = 5;
+  const cardSet: Card[] = [];
+
+  for (let i = 0; i < numCards; i++) {
+    const randomIndex = Math.floor(Math.random() * cards.length);
+    const card = cards[randomIndex];
+    cardSet.push(card);
+    cards.splice(randomIndex, 1);
+  }
+  console.log(cardSet);
+
+  return cardSet;
 };

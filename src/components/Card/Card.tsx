@@ -1,5 +1,5 @@
 import React from 'react';
-import CardTypes from './CardTypes';
+
 import {
   CardWrapper,
   Main,
@@ -13,10 +13,16 @@ import {
   Stamp,
   StampTooltip,
 } from './_CardStyles';
-import { getIDs, coordinateToID, movesToID } from '../../utils';
+
+import {
+  getIDs,
+  coordinateToID,
+  movesToID,
+  generateCardSet,
+} from '../../utils';
 
 const Card: React.FC = () => {
-  const { image, moves, name, color, stamp } = CardTypes.Rooster;
+  const { image, moves, name, color, stamp } = generateCardSet()[0];
   const moveIDs = movesToID(moves);
   return (
     <CardWrapper>
@@ -29,11 +35,13 @@ const Card: React.FC = () => {
         </LeftHalf>
         <RightHalf id='right'>
           <MiniBoard>
-            {getIDs().map(({ id, x, y }) => {
-              if (moveIDs.includes(coordinateToID({ x, y })))
-                return <MiniBox key={id} hasColor={color} />;
-              return <MiniBox key={id} center={id === 12} />;
-            })}
+            {getIDs().map(({ id, x, y }) =>
+              moveIDs.includes(coordinateToID({ x, y })) ? (
+                <MiniBox key={id} hasColor={color} />
+              ) : (
+                <MiniBox key={id} center={id === 12} />
+              )
+            )}
           </MiniBoard>
         </RightHalf>
       </Main>
