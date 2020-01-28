@@ -9,10 +9,12 @@ interface DeckProps {
 }
 
 const Deck: React.FC<DeckProps> = ({ isFor, cards }) => {
+  let keyID = 0;
   return (
     <DeckWrapper>
-      <Card inverted={isFor === 'opponent'} card={cards[0]} />
-      <Card inverted={isFor === 'opponent'} card={cards[1]} />
+      {cards.map(card => (
+        <Card key={keyID++} inverted={isFor === 'opponent'} card={card} />
+      ))}
     </DeckWrapper>
   );
 };

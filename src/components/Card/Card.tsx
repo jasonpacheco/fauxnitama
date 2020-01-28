@@ -19,13 +19,12 @@ import { getIDs, coordinateToID, movesToID } from '../../utils';
 import { Card as CardType } from './CardTypes';
 
 interface CardProps {
-  inverted: boolean;
+  inverted?: boolean;
   card: CardType;
 }
 
 const Card: React.FC<CardProps> = ({ inverted, card }) => {
   const { image, moves, name, color, stamp } = card;
-  // const { image, moves, name, color, stamp } = ;
   const moveIDs = movesToID(moves);
   return (
     <CardWrapper inverted={inverted}>

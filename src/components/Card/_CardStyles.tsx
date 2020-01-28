@@ -72,7 +72,7 @@ export const MiniBox = styled.div<{
     center ? 'black' : hasColor ? hasColor : 'white'};
 `;
 
-export const StampTooltip = styled.div<{ inverted: boolean }>`
+export const StampTooltip = styled.div<{ inverted?: boolean }>`
   font-family: 'Arvo', 'Georgia', serif;
   font-size: 0.8rem;
   visibility: hidden;
