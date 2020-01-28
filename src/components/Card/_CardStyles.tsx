@@ -66,6 +66,7 @@ export const MiniBox = styled.div<{
 }>`
   margin: 0;
   padding: 0;
+  border: 1px solid #979677;
   background-color: ${({ center, hasColor }): string =>
     center ? 'black' : hasColor ? hasColor : 'white'};
 `;
@@ -74,12 +75,12 @@ export const StampTooltip = styled.div`
   font-family: 'Arvo', 'Georgia', serif;
   font-size: 0.8rem;
   visibility: hidden;
-  background-color: black;
+  background-color: #333;
   color: #fff;
   text-align: center;
   border-radius: 0.2rem;
   padding: 0.5rem;
-  width: 8rem;
+  width: 10rem;
   position: absolute;
   z-index: 1;
   left: 1.5rem;
@@ -89,7 +90,7 @@ export const StampTooltip = styled.div`
     content: '';
     position: absolute;
     top: 1rem;
-    right: 9rem;
+    right: 10rem;
     margin-top: -0.3rem;
     border-width: 0.3rem;
     border-style: solid;
@@ -110,5 +111,11 @@ export const Stamp = styled.div<{ color: 'Blue' | 'Red' }>`
   }
   &:hover ${StampTooltip} {
     visibility: visible;
+  }
+
+  ${StampTooltip} span {
+    color: white;
+    background-color: ${(props): string =>
+      props.color === 'Blue' ? '#1976D2' : '#D32F2F'};
   }
 `;

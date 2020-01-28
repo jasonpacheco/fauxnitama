@@ -16,7 +16,7 @@ import {
 import { getIDs, coordinateToID, movesToID } from '../../utils';
 
 const Card: React.FC = () => {
-  const { image, moves, name, color, stamp } = CardTypes.Boar;
+  const { image, moves, name, color, stamp } = CardTypes.Rooster;
   const moveIDs = movesToID(moves);
   return (
     <CardWrapper>
@@ -40,9 +40,7 @@ const Card: React.FC = () => {
       <Gutter>
         <Stamp color={stamp}>
           <StampTooltip>
-            {stamp === 'Blue'
-              ? 'Blue player goes first'
-              : 'Red player goes first'}
+            <span>{stamp}</span> player goes first.
           </StampTooltip>
         </Stamp>
       </Gutter>
