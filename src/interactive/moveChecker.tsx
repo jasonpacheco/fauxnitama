@@ -33,9 +33,6 @@ const checkValidMoves = (
 
 const MoveChecker: React.FC = () => {
   const { clickedCoordinates } = useGameContext();
-  console.log(clickedCoordinates);
-  console.log(validMovesFromCard);
-  console.log(transposeCardMovement(validMovesFromCard));
   if (clickedCoordinates) {
     console.log(checkValidMoves(clickedCoordinates, validMovesFromCard));
   }

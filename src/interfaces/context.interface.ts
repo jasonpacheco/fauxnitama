@@ -32,6 +32,7 @@ export interface State {
 export interface GameContextProperties extends State {
   getBoard: () => (Piece | null)[][];
   setClickedCoordinates: (coordinates: Coordinates) => void;
+  setCurrentCard: (card: CardModel) => void;
 }
 interface SetCoordinates {
   type: typeof SET_COORDINATES;

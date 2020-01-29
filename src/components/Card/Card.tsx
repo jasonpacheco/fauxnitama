@@ -18,25 +18,28 @@ import { getIDs, coordinateToID, movesToID } from '../../utils';
 
 import CardModel from '../../interfaces/card.interface';
 
+import useGameContext from '../../context/useGameContext';
+
 interface CardProps {
   inverted?: boolean;
   card: CardModel;
   isTurn?: boolean;
 }
 
-const handleCardClick = (
-  event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  isTurn: boolean | undefined,
-  card: CardModel
-): void => {
-  if (isTurn) {
-    console.log(card);
-  }
-};
-
 const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
   const { image, moves, name, color, stamp } = card;
   const moveIDs = movesToID(moves);
+  const { setCurrentCard } = useGameContext();
+
+  const handleCardClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    isTurn: boolean | undefined,
+    card: CardModel
+  ): void => {
+    if (isTurn) {
+      setCurrentCard(card);
+    }
+  };
 
   return (
     <CardWrapper
