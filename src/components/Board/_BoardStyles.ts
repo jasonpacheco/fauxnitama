@@ -19,15 +19,15 @@ export const Grid = styled.div`
 
 export const Box = styled.div<{
   hasBackground: string | boolean;
-  highlighted: boolean;
+  highlighted: boolean | undefined;
 }>`
   margin: 0;
   padding: 0;
   border: 1px solid #000;
-  background-color: ${({ highlighted }): string =>
-    highlighted ? 'blue' : 'white'};
 
   &:hover {
+    ${({ highlighted }): string =>
+      highlighted ? 'background-color: blue' : ''};
     cursor: pointer;
   }
   ${({ hasBackground }): string =>

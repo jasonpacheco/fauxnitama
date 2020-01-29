@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import isEqual from 'lodash.isequal';
 import { Box } from './_BoardStyles';
 import Piece from '../Piece/Piece';
 import { getTempleID } from '../../utils';
@@ -20,11 +21,10 @@ interface CellProps {
 const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
   const {
     currentPlayer,
+    clickedCoordinates,
     setClickedCoordinates,
     selectedCard,
   } = useGameContext();
-
-  const [highlight, setHighlight] = useState(false);
 
   const handleCellClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -35,7 +35,6 @@ const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
   ): void => {
     if (piece?.color === currentPlayer && selectedCard) {
       setClickedCoordinates({ x: x, y: y, id: id });
-      setHighlight(true);
       console.log(x, y, id, piece);
     }
   };
@@ -43,7 +42,9 @@ const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
   return (
     <Box
       key={id}
-      highlighted={highlight}
+      highlighted={
+        clickedCoordinates && isEqual(clickedCoordinates, { x, y, id })
+      }
       hasBackground={
         !piece &&
         ((id === blueTempleID && 'blue') || (id === redTempleID && 'red'))
