@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { createGlobalStyle } from 'styled-components';
+import GameState from './context/gameState';
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -17,7 +18,9 @@ const GlobalStyles = createGlobalStyle`
 ReactDOM.render(
   <React.Fragment>
     <GlobalStyles />
-    <App />
+    <GameState>
+      <App />
+    </GameState>
   </React.Fragment>,
   document.getElementById('root')
 );
