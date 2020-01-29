@@ -17,9 +17,9 @@ SVG icons from [game-icons.net](https://game-icons.net/). Granted under [CC BY 3
 Chinese calligraphy for cards generated from https://chinese.gratis/tools/chinesecalligraphy/.
 
 ##  Development
-`git clone https://github.com/jasonpacheco/fauxnitama.git`
-`cd fauxnitama`
-`yarn`
+`git clone https://github.com/jasonpacheco/fauxnitama.git` \
+`cd fauxnitama` \
+`yarn` \
 `yarn start`
 
 ##  Disclaimer
