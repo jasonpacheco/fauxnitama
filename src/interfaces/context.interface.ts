@@ -1,4 +1,5 @@
 import CardModel from '../interfaces/card.interface';
+import { SET_COORDINATES, SET_CURRENT_CARD } from '../types';
 
 export type Coordinate = {
   x: number;
@@ -33,8 +34,13 @@ export interface GameContextProperties extends State {
   setClickedCoordinates: (coordinates: Coordinates) => void;
 }
 interface SetCoordinates {
-  type: 'SET_COORDINATES';
+  type: typeof SET_COORDINATES;
   coordinates: Coordinates;
 }
 
-export type Actions = SetCoordinates;
+interface SetCurrentCard {
+  type: typeof SET_CURRENT_CARD;
+  card: CardModel;
+}
+
+export type Actions = SetCoordinates | SetCurrentCard;

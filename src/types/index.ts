@@ -1,0 +1,2 @@
+export const SET_COORDINATES = 'SET_COORDINATES';
+export const SET_CURRENT_CARD = 'SET_CURRENT_CARD';

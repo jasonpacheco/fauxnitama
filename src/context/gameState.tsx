@@ -7,7 +7,8 @@ import {
   Piece,
   Coordinates,
 } from '../interfaces/context.interface';
-// import CardModel from '../interfaces/card.interface';
+import CardModel from '../interfaces/card.interface';
+import { SET_COORDINATES, SET_CURRENT_CARD } from '../types';
 
 const Opponent: Player = {
   pieces: [
@@ -52,16 +53,22 @@ const GameState: React.FC = ({ children }) => {
 
   const setClickedCoordinates = (coordinates: Coordinates): void => {
     dispatch({
-      type: 'SET_COORDINATES',
+      type: SET_COORDINATES,
       coordinates,
     });
   };
 
-  // const setCurrentCard = (card: CardM)
+  const setCurrentCard = (card: CardModel): void => {
+    dispatch({
+      type: SET_CURRENT_CARD,
+      card,
+    });
+  };
 
   const dispatchFunctions = {
     getBoard,
     setClickedCoordinates,
+    setCurrentCard,
   };
 
   return (
