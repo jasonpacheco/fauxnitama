@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import BlueTempleArch from '../../assets/blue_temple_arch.svg';
-import RedTempleArch from '../../assets/red_temple_arch.svg';
+import BlueTempleArch from '../../assets/_blue/temple_arch.svg';
+import RedTempleArch from '../../assets/_red/temple_arch.svg';
 import { BOARD_GAME } from '../../utils';
 const { COLS } = BOARD_GAME;
 
@@ -17,10 +17,16 @@ export const Grid = styled.div`
   grid-template-rows: repeat(${COLS}, 6rem);
 `;
 
-export const Box = styled.div<{ hasBackground: string | boolean }>`
+export const Box = styled.div<{
+  hasBackground: string | boolean;
+  highlighted: boolean;
+}>`
   margin: 0;
   padding: 0;
   border: 1px solid #000;
+  background-color: ${({ highlighted }): string =>
+    highlighted ? 'blue' : 'white'};
+
   &:hover {
     cursor: pointer;
   }

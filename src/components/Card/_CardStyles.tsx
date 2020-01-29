@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BOARD_GAME } from '../../utils';
-import BlueShuriken from '../../assets/blue_shuriken.svg';
-import RedShuriken from '../../assets/red_shuriken.svg';
+import BlueShuriken from '../../assets/_blue/shuriken.svg';
+import RedShuriken from '../../assets/_red/shuriken.svg';
 
 const { COLS } = BOARD_GAME;
 

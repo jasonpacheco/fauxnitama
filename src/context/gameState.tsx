@@ -36,11 +36,14 @@ const User: Player = {
   ],
 };
 
+const cards = generateCardSet();
+
 const initialState: State = {
   clickedCoordinates: undefined,
   selectedCard: undefined,
-  currentPlayer: undefined,
-  cardSet: generateCardSet(),
+  currentPlayer: 'Blue',
+  cardSet: cards,
+  firstPlayer: cards[4].stamp,
   board: {
     layout: [
       Opponent.pieces,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box } from './_BoardStyles';
 import Piece from '../Piece/Piece';
 import { getTempleID } from '../../utils';
@@ -18,16 +18,39 @@ interface CellProps {
 }
 
 const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
-  const { setClickedCoordinates } = useGameContext();
+  const {
+    currentPlayer,
+    setClickedCoordinates,
+    selectedCard,
+  } = useGameContext();
+
+  const [highlight, setHighlight] = useState(false);
+
+  const handleCellClick = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    x: number,
+    y: number,
+    id: number,
+    piece: IPiece | null
+  ): void => {
+    if (piece?.color === currentPlayer && selectedCard) {
+      setClickedCoordinates({ x: x, y: y, id: id });
+      setHighlight(true);
+      console.log(x, y, id, piece);
+    }
+  };
+
   return (
     <Box
       key={id}
+      highlighted={highlight}
       hasBackground={
-        (id === blueTempleID && 'blue') || (id === redTempleID && 'red')
+        !piece &&
+        ((id === blueTempleID && 'blue') || (id === redTempleID && 'red'))
       }
-      onClick={(): void => setClickedCoordinates({ x: x, y: y, id: id })}
+      onClick={(e): void => handleCellClick(e, x, y, id, piece)}
     >
-      {piece ? <Piece color={piece.color} type={piece.type} /> : 'Box'}
+      {piece ? <Piece color={piece.color} type={piece.type} /> : ''}
     </Box>
   );
 };

@@ -3,11 +3,11 @@ import BoardSetup from './components/BoardSetup/BoardSetup';
 import useGameContext from './context/useGameContext';
 
 const App: React.FC = () => {
-  const { cardSet } = useGameContext();
+  const { cardSet, firstPlayer } = useGameContext();
 
   return (
     <>
-      <BoardSetup cards={cardSet} firstPlayerColor={cardSet[4].stamp} />
+      <BoardSetup cards={cardSet} firstPlayerColor={firstPlayer} />
     </>
   );
 };

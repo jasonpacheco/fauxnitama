@@ -1,9 +1,9 @@
 import React from 'react';
 import { PieceWrapper } from './_PieceStyles';
-import BlueMaster from '../../assets/blue_master.svg';
-import BlueStudent from '../../assets/blue_student.svg';
-import RedMaster from '../../assets/red_master.svg';
-import RedStudent from '../../assets/red_student.svg';
+import BlueMaster from '../../assets/_blue/master.svg';
+import BlueStudent from '../../assets/_blue/student.svg';
+import RedMaster from '../../assets/_red/master.svg';
+import RedStudent from '../../assets/_red/student.svg';
 
 interface PieceProps {
   type: 'Student' | 'Master';

@@ -34,6 +34,7 @@ export interface State {
   selectedCard: CardModel | undefined;
   currentPlayer: 'Blue' | 'Red' | undefined;
   cardSet: CardModel[];
+  firstPlayer: 'Blue' | 'Red';
 }
 export interface GameContextProperties extends State {
   getBoard: () => (Piece | null)[][];
