@@ -1,4 +1,4 @@
-import { Coordinates } from '../interfaces/context.interface';
+import { Coordinate } from '../interfaces/context.interface';
 import { BOARD_GAME, coordinateToID } from '../utils';
 import { CellData } from '../interfaces/context.interface';
 const { ROWS, COLS } = BOARD_GAME;
@@ -11,7 +11,7 @@ const isOccupied = (positionID: number, board: CellData[]): boolean =>
   !board[positionID].isEmpty;
 
 export default (
-  clickedCoordinates: Coordinates,
+  clickedCoordinates: Coordinate,
   validMovesFromCard: number[][],
   board: CellData[]
 ): number[] => {

@@ -3,7 +3,7 @@ import isEqual from 'lodash.isequal';
 import { Box } from './_BoardStyles';
 import Piece from '../Piece/Piece';
 import { getTempleID, idToCoordinate } from '../../utils';
-import { Piece as IPiece } from '../../interfaces/context.interface';
+import { CellData, Piece as IPiece } from '../../interfaces/context.interface';
 import useGameContext from '../../context/useGameContext';
 
 const {
@@ -12,17 +12,17 @@ const {
 } = getTempleID();
 
 interface CellProps {
-  id: number;
-  piece: IPiece | null;
-  isValidCell: boolean;
+  data: CellData;
 }
 
-const Cell: React.FC<CellProps> = ({ id, piece, isValidCell }) => {
+const Cell: React.FC<CellProps> = ({ data }) => {
+  const { id, piece, isValidMove } = data;
   const {
     currentPlayer,
-    clickedCoordinates,
-    setClickedCoordinates,
+    selectedCell,
+    setSelectedCell,
     selectedCard,
+    movePiece,
   } = useGameContext();
 
   const { x, y } = idToCoordinate(id);
@@ -34,8 +34,12 @@ const Cell: React.FC<CellProps> = ({ id, piece, isValidCell }) => {
     id: number,
     piece: IPiece | null
   ): void => {
-    if (piece?.color === currentPlayer && selectedCard) {
-      setClickedCoordinates({ x: x, y: y, id: id });
+    if (piece && piece.color === currentPlayer && selectedCard) {
+      setSelectedCell(data);
+    }
+
+    if (selectedCell && isValidMove) {
+      movePiece(selectedCell, id);
     }
   };
 
@@ -43,9 +47,11 @@ const Cell: React.FC<CellProps> = ({ id, piece, isValidCell }) => {
     <Box
       key={id}
       selectedCell={
-        clickedCoordinates && isEqual(clickedCoordinates, { x, y, id })
+        !!selectedCell &&
+        !!selectedCell.piece &&
+        isEqual(selectedCell.piece.currentPosition, { x, y })
       }
-      validCellHighlight={isValidCell}
+      validCellHighlight={isValidMove}
       hasBackground={
         !piece &&
         ((id === blueTempleID && 'blue') || (id === redTempleID && 'red'))

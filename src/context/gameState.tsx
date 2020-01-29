@@ -2,14 +2,16 @@ import React, { useReducer } from 'react';
 import gameReducer from './gameReducer';
 import GameContext from './gameContext';
 import { generateCardSet } from '../utils';
+import cloneDeep from 'lodash.clonedeep';
 
-import { State, Coordinates, CellData } from '../interfaces/context.interface';
+import { State, CellData } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
 import {
-  SET_COORDINATES,
+  SET_SELECTED_CELL,
   SET_CURRENT_CARD,
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
+  MOVE_PIECE,
 } from '../types';
 
 import moveChecker from '../interactive/moveChecker';
@@ -17,7 +19,7 @@ import moveChecker from '../interactive/moveChecker';
 const Opponent: CellData[] = [
   {
     id: 0,
-    piece: { color: 'Red', type: 'Student', startPosition: { x: 0, y: 0 } },
+    piece: { color: 'Red', type: 'Student', currentPosition: { x: 0, y: 0 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: false,
@@ -25,7 +27,7 @@ const Opponent: CellData[] = [
   },
   {
     id: 1,
-    piece: { color: 'Red', type: 'Student', startPosition: { x: 0, y: 1 } },
+    piece: { color: 'Red', type: 'Student', currentPosition: { x: 0, y: 1 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: false,
@@ -33,7 +35,7 @@ const Opponent: CellData[] = [
   },
   {
     id: 2,
-    piece: { color: 'Red', type: 'Master', startPosition: { x: 0, y: 2 } },
+    piece: { color: 'Red', type: 'Master', currentPosition: { x: 0, y: 2 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: false,
@@ -41,7 +43,7 @@ const Opponent: CellData[] = [
   },
   {
     id: 3,
-    piece: { color: 'Red', type: 'Student', startPosition: { x: 0, y: 3 } },
+    piece: { color: 'Red', type: 'Student', currentPosition: { x: 0, y: 3 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: false,
@@ -49,7 +51,7 @@ const Opponent: CellData[] = [
   },
   {
     id: 4,
-    piece: { color: 'Red', type: 'Student', startPosition: { x: 0, y: 4 } },
+    piece: { color: 'Red', type: 'Student', currentPosition: { x: 0, y: 4 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: false,
@@ -60,7 +62,7 @@ const Opponent: CellData[] = [
 const Player: CellData[] = [
   {
     id: 20,
-    piece: { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 0 } },
+    piece: { color: 'Blue', type: 'Student', currentPosition: { x: 4, y: 0 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: true,
@@ -68,7 +70,7 @@ const Player: CellData[] = [
   },
   {
     id: 21,
-    piece: { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 1 } },
+    piece: { color: 'Blue', type: 'Student', currentPosition: { x: 4, y: 1 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: true,
@@ -76,7 +78,7 @@ const Player: CellData[] = [
   },
   {
     id: 22,
-    piece: { color: 'Blue', type: 'Master', startPosition: { x: 4, y: 2 } },
+    piece: { color: 'Blue', type: 'Master', currentPosition: { x: 4, y: 2 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: true,
@@ -84,7 +86,7 @@ const Player: CellData[] = [
   },
   {
     id: 23,
-    piece: { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 3 } },
+    piece: { color: 'Blue', type: 'Student', currentPosition: { x: 4, y: 3 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: true,
@@ -92,7 +94,7 @@ const Player: CellData[] = [
   },
   {
     id: 24,
-    piece: { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 4 } },
+    piece: { color: 'Blue', type: 'Student', currentPosition: { x: 4, y: 4 } },
     isValidMove: false,
     isEmpty: false,
     isBlue: true,
@@ -118,7 +120,7 @@ const EmptySpaceGenerator = (): CellData[] => {
 const cards = generateCardSet();
 
 const initialState: State = {
-  clickedCoordinates: undefined,
+  selectedCell: undefined,
   selectedCard: undefined,
   currentPlayer: 'Blue',
   cardSet: cards,
@@ -143,16 +145,15 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
-  const setClickedCoordinates = (coordinates: Coordinates): void => {
+  const setSelectedCell = (cell: CellData): void => {
     dispatch({
-      type: SET_COORDINATES,
-      coordinates,
+      type: SET_SELECTED_CELL,
+      cell,
     });
-
     /** Implements move checking when cell is clicked */
-    if (state.selectedCard) {
+    if (cell.piece && state.selectedCard) {
       const validMoves = moveChecker(
-        coordinates,
+        cell.piece.currentPosition,
         state.selectedCard.moves,
         getBoard()
       );
@@ -167,9 +168,9 @@ const GameState: React.FC = ({ children }) => {
     });
 
     /** Implements automatic move checking when the user selects another card */
-    if (state.clickedCoordinates) {
+    if (!!state.selectedCell && !!state.selectedCell.piece) {
       const validMoves = moveChecker(
-        state.clickedCoordinates,
+        state.selectedCell.piece.currentPosition,
         card.moves,
         getBoard()
       );
@@ -184,15 +185,25 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
+  const movePiece = (fromCell: CellData, toID: number): void => {
+    const from = cloneDeep(fromCell);
+    dispatch({
+      type: MOVE_PIECE,
+      fromCell: from,
+      toID,
+    });
+  };
+
   return (
     <GameContext.Provider
       value={{
         ...state,
         getBoard,
-        setClickedCoordinates,
+        setSelectedCell,
         setCurrentCard,
         setCurrentPlayer,
         setValidMoves,
+        movePiece,
       }}
     >
       {children}

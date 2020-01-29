@@ -36,7 +36,7 @@ export const Box = styled.div<{
   ${({ hasBackground }): string =>
     hasBackground
       ? hasBackground === 'red'
-        ? `background: url(${RedTempleArch})`
-        : `background: url(${BlueTempleArch})`
+        ? `background-image: url(${RedTempleArch})`
+        : `background-image: url(${BlueTempleArch})`
       : ''};
 `;

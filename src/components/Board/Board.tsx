@@ -13,12 +13,7 @@ const Board: React.FC = () => {
     <GridWrapper>
       <Grid>
         {board.map(cell => (
-          <Cell
-            key={cell.id}
-            id={cell.id}
-            piece={cell.piece}
-            isValidCell={cell.isValidMove}
-          />
+          <Cell key={cell.id} data={cell} />
         ))}
       </Grid>
     </GridWrapper>

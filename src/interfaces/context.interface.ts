@@ -1,9 +1,10 @@
 import CardModel from '../interfaces/card.interface';
 import {
-  SET_COORDINATES,
   SET_CURRENT_CARD,
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
+  MOVE_PIECE,
+  SET_SELECTED_CELL,
 } from '../types';
 
 export type Coordinate = {
@@ -14,7 +15,7 @@ export type Coordinate = {
 export interface Piece {
   color: 'Blue' | 'Red';
   type: 'Student' | 'Master';
-  startPosition: Coordinate;
+  currentPosition: Coordinate;
 }
 
 export interface Player {
@@ -40,7 +41,7 @@ export interface Coordinates extends Coordinate {
 
 export interface State {
   board: BoardState;
-  clickedCoordinates: Coordinates | undefined;
+  selectedCell: CellData | undefined;
   selectedCard: CardModel | undefined;
   currentPlayer: 'Blue' | 'Red' | undefined;
   cardSet: CardModel[];
@@ -49,14 +50,15 @@ export interface State {
 }
 export interface GameContextProperties extends State {
   getBoard: () => CellData[];
-  setClickedCoordinates: (coordinates: Coordinates) => void;
+  setSelectedCell: (cell: CellData) => void;
   setCurrentCard: (card: CardModel) => void;
   setCurrentPlayer: (player: 'Blue' | 'Red') => void;
   setValidMoves: (moves: number[]) => void;
+  movePiece: (fromCell: CellData, toID: number) => void;
 }
-interface SetCoordinates {
-  type: typeof SET_COORDINATES;
-  coordinates: Coordinates;
+interface SetSelectedCell {
+  type: typeof SET_SELECTED_CELL;
+  cell: CellData;
 }
 
 interface SetCurrentCard {
@@ -74,8 +76,15 @@ interface SetValidMoves {
   moves: number[];
 }
 
+interface MovePiece {
+  type: typeof MOVE_PIECE;
+  fromCell: CellData;
+  toID: number;
+}
+
 export type Actions =
-  | SetCoordinates
+  | SetSelectedCell
   | SetCurrentCard
   | SetCurrentPlayer
-  | SetValidMoves;
+  | SetValidMoves
+  | MovePiece;
