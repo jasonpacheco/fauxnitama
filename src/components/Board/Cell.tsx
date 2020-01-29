@@ -2,7 +2,7 @@ import React from 'react';
 import isEqual from 'lodash.isequal';
 import { Box } from './_BoardStyles';
 import Piece from '../Piece/Piece';
-import { getTempleID } from '../../utils';
+import { getTempleID, idToCoordinate } from '../../utils';
 import { Piece as IPiece } from '../../interfaces/context.interface';
 import useGameContext from '../../context/useGameContext';
 import moveChecker from '../../interactive/moveChecker';
@@ -14,12 +14,10 @@ const {
 
 interface CellProps {
   id: number;
-  x: number;
-  y: number;
   piece: IPiece | null;
 }
 
-const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
+const Cell: React.FC<CellProps> = ({ id, piece }) => {
   const {
     currentPlayer,
     clickedCoordinates,
@@ -27,6 +25,8 @@ const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
     selectedCard,
     getBoard,
   } = useGameContext();
+
+  const { x, y } = idToCoordinate(id);
 
   const handleCellClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent>,

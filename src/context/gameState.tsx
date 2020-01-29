@@ -3,12 +3,7 @@ import gameReducer from './gameReducer';
 import GameContext from './gameContext';
 import { generateCardSet } from '../utils';
 
-import {
-  State,
-  Player,
-  Piece,
-  Coordinates,
-} from '../interfaces/context.interface';
+import { State, Coordinates, CellData } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
 import {
   SET_COORDINATES,
@@ -16,24 +11,105 @@ import {
   SET_CURRENT_PLAYER,
 } from '../types';
 
-const Opponent: Player = {
-  pieces: [
-    { color: 'Red', type: 'Student', startPosition: { x: 0, y: 0 } },
-    { color: 'Red', type: 'Student', startPosition: { x: 0, y: 1 } },
-    { color: 'Red', type: 'Master', startPosition: { x: 0, y: 2 } },
-    { color: 'Red', type: 'Student', startPosition: { x: 0, y: 3 } },
-    { color: 'Red', type: 'Student', startPosition: { x: 0, y: 4 } },
-  ],
-};
+const Opponent: CellData[] = [
+  {
+    id: 0,
+    piece: { color: 'Red', type: 'Student', startPosition: { x: 0, y: 0 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: false,
+    isRed: true,
+  },
+  {
+    id: 1,
+    piece: { color: 'Red', type: 'Student', startPosition: { x: 0, y: 1 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: false,
+    isRed: true,
+  },
+  {
+    id: 2,
+    piece: { color: 'Red', type: 'Master', startPosition: { x: 0, y: 2 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: false,
+    isRed: true,
+  },
+  {
+    id: 3,
+    piece: { color: 'Red', type: 'Student', startPosition: { x: 0, y: 3 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: false,
+    isRed: true,
+  },
+  {
+    id: 4,
+    piece: { color: 'Red', type: 'Student', startPosition: { x: 0, y: 4 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: false,
+    isRed: true,
+  },
+];
 
-const User: Player = {
-  pieces: [
-    { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 0 } },
-    { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 1 } },
-    { color: 'Blue', type: 'Master', startPosition: { x: 4, y: 2 } },
-    { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 3 } },
-    { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 4 } },
-  ],
+const Player: CellData[] = [
+  {
+    id: 20,
+    piece: { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 0 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: true,
+    isRed: false,
+  },
+  {
+    id: 21,
+    piece: { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 1 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: true,
+    isRed: false,
+  },
+  {
+    id: 22,
+    piece: { color: 'Blue', type: 'Master', startPosition: { x: 4, y: 2 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: true,
+    isRed: false,
+  },
+  {
+    id: 23,
+    piece: { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 3 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: true,
+    isRed: false,
+  },
+  {
+    id: 24,
+    piece: { color: 'Blue', type: 'Student', startPosition: { x: 4, y: 4 } },
+    isValidMove: false,
+    isEmpty: false,
+    isBlue: true,
+    isRed: false,
+  },
+];
+
+const EmptySpaceGenerator = (): CellData[] => {
+  const cells = [];
+  for (let i = 5; i <= 19; i++) {
+    cells.push({
+      id: i,
+      piece: null,
+      isValidMove: false,
+      isEmpty: true,
+      isBlue: false,
+      isRed: false,
+    });
+  }
+  return cells;
 };
 
 const cards = generateCardSet();
@@ -45,21 +121,15 @@ const initialState: State = {
   cardSet: cards,
   firstPlayer: cards[4].stamp,
   board: {
-    layout: [
-      Opponent.pieces,
-      [null, null, null, null, null],
-      [null, null, null, null, null],
-      [null, null, null, null, null],
-      User.pieces,
-    ],
+    cells: [...Opponent, ...EmptySpaceGenerator(), ...Player],
   },
 };
 
 const GameState: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
-  const getBoard = (): (Piece | null)[][] => {
-    return initialState.board.layout;
+  const getBoard = (): CellData[] => {
+    return initialState.board.cells;
   };
 
   const setClickedCoordinates = (coordinates: Coordinates): void => {

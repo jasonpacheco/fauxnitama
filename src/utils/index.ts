@@ -88,10 +88,13 @@ export const coordinateToID = (
  * @param id
  * @param rows
  */
-export const idToCoordinate = (id: number, rows = BOARD_GAME.ROWS): SpaceID => {
+export const idToCoordinate = (
+  id: number,
+  rows = BOARD_GAME.ROWS
+): Coordinate => {
   const x = Math.floor(id / rows);
   const y = id % rows;
-  return { id, x, y };
+  return { x, y };
 };
 
 /**

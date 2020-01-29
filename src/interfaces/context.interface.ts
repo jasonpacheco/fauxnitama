@@ -20,8 +20,17 @@ export interface Player {
   pieces: Piece[];
 }
 
+export interface CellData {
+  id: number;
+  piece: Piece | null;
+  isValidMove: boolean;
+  isEmpty: boolean;
+  isBlue: boolean;
+  isRed: boolean;
+}
+
 interface BoardState {
-  layout: (Piece | null)[][];
+  cells: CellData[];
 }
 
 export interface Coordinates extends Coordinate {
@@ -37,7 +46,7 @@ export interface State {
   firstPlayer: 'Blue' | 'Red';
 }
 export interface GameContextProperties extends State {
-  getBoard: () => (Piece | null)[][];
+  getBoard: () => CellData[];
   setClickedCoordinates: (coordinates: Coordinates) => void;
   setCurrentCard: (card: CardModel) => void;
   setCurrentPlayer: (player: 'Blue' | 'Red') => void;
