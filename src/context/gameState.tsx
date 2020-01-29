@@ -136,18 +136,28 @@ const GameState: React.FC = ({ children }) => {
     return state.board.cells;
   };
 
-  const setClickedCoordinates = (coordinates: Coordinates): void => {
-    dispatch({
-      type: SET_COORDINATES,
-      coordinates,
-    });
-  };
-
   const setValidMoves = (moves: number[]): void => {
     dispatch({
       type: SET_VALID_MOVES,
       moves,
     });
+  };
+
+  const setClickedCoordinates = (coordinates: Coordinates): void => {
+    dispatch({
+      type: SET_COORDINATES,
+      coordinates,
+    });
+
+    /** Implements move checking when cell is clicked */
+    if (state.selectedCard) {
+      const validMoves = moveChecker(
+        coordinates,
+        state.selectedCard.moves,
+        getBoard()
+      );
+      setValidMoves(validMoves);
+    }
   };
 
   const setCurrentCard = (card: CardModel): void => {
@@ -156,13 +166,13 @@ const GameState: React.FC = ({ children }) => {
       card,
     });
 
+    /** Implements automatic move checking when the user selects another card */
     if (state.clickedCoordinates) {
       const validMoves = moveChecker(
         state.clickedCoordinates,
         card.moves,
         getBoard()
       );
-      console.log('I Ran');
       setValidMoves(validMoves);
     }
   };

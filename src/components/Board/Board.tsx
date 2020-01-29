@@ -4,7 +4,7 @@ import { GridWrapper, Grid } from './_BoardStyles';
 import useGameContext from '../../context/useGameContext';
 
 const Board: React.FC = () => {
-  const { selectedCard, getBoard } = useGameContext();
+  const { getBoard } = useGameContext();
   const board = getBoard();
   // useEffect(() => {
   //   board.current = getBoard();
