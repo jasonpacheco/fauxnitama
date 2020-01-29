@@ -3,9 +3,9 @@ import { BOARD_GAME, coordinateToID } from '../utils';
 import { CellData } from '../interfaces/context.interface';
 const { ROWS, COLS } = BOARD_GAME;
 
-// const transposeCardMovement = (validMoves: number[][]): number[][] => {
-//   return validMoves.map(move => [-move[0], -move[1]]);
-// };
+const transposeCardMovement = (validMoves: number[][]): number[][] => {
+  return validMoves.map(move => [-move[0], -move[1]]);
+};
 
 const isOccupied = (positionID: number, board: CellData[]): boolean =>
   !board[positionID].isEmpty;
@@ -13,9 +13,12 @@ const isOccupied = (positionID: number, board: CellData[]): boolean =>
 export default (
   clickedCoordinates: Coordinate,
   validMovesFromCard: number[][],
-  board: CellData[]
+  board: CellData[],
+  color: 'Blue' | 'Red' = 'Blue'
 ): number[] => {
   const { x, y } = clickedCoordinates;
+  if (color === 'Red')
+    validMovesFromCard = transposeCardMovement(validMovesFromCard);
   return validMovesFromCard.reduce((acc, [moveX, moveY]) => {
     const positionID = coordinateToID({ x: x + moveX, y: y + moveY });
     if (

@@ -16,7 +16,7 @@ const Deck: React.FC<DeckProps> = ({ isFor, cards }) => {
         <Card
           key={keyID++}
           inverted={isFor === 'opponent'}
-          isTurn={isFor === 'user'}
+          isTurn={isFor === 'opponent'}
           card={card}
         />
       ))}

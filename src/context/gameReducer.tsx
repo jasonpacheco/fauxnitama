@@ -1,5 +1,5 @@
 import { CellData, State, Actions } from '../interfaces/context.interface';
-import cloneDeep from 'lodash.clonedeep';
+
 import {
   SET_SELECTED_CELL,
   SET_CURRENT_CARD,
@@ -53,7 +53,6 @@ export default (state: State, action: Actions): State => {
             if (fromCell.piece && cell.id === action.toID) {
               cell.piece = fromCell.piece;
               cell.piece.currentPosition = idToCoordinate(cell.id);
-              console.log(idToCoordinate(cell.id));
               cell.isEmpty = false;
               cell.isBlue = !!fromCell.piece && fromCell.piece.color === 'Blue';
               cell.isRed = !!fromCell.piece && fromCell.piece.color === 'Red';

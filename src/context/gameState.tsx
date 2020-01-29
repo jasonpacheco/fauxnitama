@@ -122,7 +122,7 @@ const cards = generateCardSet();
 const initialState: State = {
   selectedCell: undefined,
   selectedCard: undefined,
-  currentPlayer: 'Blue',
+  currentPlayer: 'Red',
   cardSet: cards,
   firstPlayer: cards[4].stamp,
   validMoves: undefined,
@@ -155,7 +155,8 @@ const GameState: React.FC = ({ children }) => {
       const validMoves = moveChecker(
         cell.piece.currentPosition,
         state.selectedCard.moves,
-        getBoard()
+        getBoard(),
+        state.currentPlayer
       );
       setValidMoves(validMoves);
     }
@@ -172,7 +173,8 @@ const GameState: React.FC = ({ children }) => {
       const validMoves = moveChecker(
         state.selectedCell.piece.currentPosition,
         card.moves,
-        getBoard()
+        getBoard(),
+        state.currentPlayer
       );
       setValidMoves(validMoves);
     }
