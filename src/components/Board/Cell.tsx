@@ -15,15 +15,17 @@ const {
 interface CellProps {
   id: number;
   piece: IPiece | null;
+  isValidCell: boolean;
 }
 
-const Cell: React.FC<CellProps> = ({ id, piece }) => {
+const Cell: React.FC<CellProps> = ({ id, piece, isValidCell }) => {
   const {
     currentPlayer,
     clickedCoordinates,
     setClickedCoordinates,
     selectedCard,
     getBoard,
+    setValidMoves,
   } = useGameContext();
 
   const { x, y } = idToCoordinate(id);
@@ -37,18 +39,23 @@ const Cell: React.FC<CellProps> = ({ id, piece }) => {
   ): void => {
     if (piece?.color === currentPlayer && selectedCard) {
       setClickedCoordinates({ x: x, y: y, id: id });
-      console.log(
-        moveChecker({ x: x, y: y, id: id }, selectedCard.moves, getBoard())
+      // console.log(selectedCard);
+      const validMoves = moveChecker(
+        { x: x, y: y, id: id },
+        selectedCard.moves,
+        getBoard()
       );
+      setValidMoves(validMoves);
     }
   };
 
   return (
     <Box
       key={id}
-      highlighted={
+      selectedCell={
         clickedCoordinates && isEqual(clickedCoordinates, { x, y, id })
       }
+      validCellHighlight={isValidCell}
       hasBackground={
         !piece &&
         ((id === blueTempleID && 'blue') || (id === redTempleID && 'red'))

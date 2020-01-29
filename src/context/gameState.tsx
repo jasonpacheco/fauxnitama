@@ -9,7 +9,10 @@ import {
   SET_COORDINATES,
   SET_CURRENT_CARD,
   SET_CURRENT_PLAYER,
+  SET_VALID_MOVES,
 } from '../types';
+
+import moveChecker from '../interactive/moveChecker';
 
 const Opponent: CellData[] = [
   {
@@ -120,6 +123,7 @@ const initialState: State = {
   currentPlayer: 'Blue',
   cardSet: cards,
   firstPlayer: cards[4].stamp,
+  validMoves: undefined,
   board: {
     cells: [...Opponent, ...EmptySpaceGenerator(), ...Player],
   },
@@ -129,7 +133,7 @@ const GameState: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
   const getBoard = (): CellData[] => {
-    return initialState.board.cells;
+    return state.board.cells;
   };
 
   const setClickedCoordinates = (coordinates: Coordinates): void => {
@@ -139,11 +143,28 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
+  const setValidMoves = (moves: number[]): void => {
+    dispatch({
+      type: SET_VALID_MOVES,
+      moves,
+    });
+  };
+
   const setCurrentCard = (card: CardModel): void => {
     dispatch({
       type: SET_CURRENT_CARD,
       card,
     });
+
+    if (state.clickedCoordinates) {
+      const validMoves = moveChecker(
+        state.clickedCoordinates,
+        card.moves,
+        getBoard()
+      );
+      console.log('I Ran');
+      setValidMoves(validMoves);
+    }
   };
 
   const setCurrentPlayer = (player: 'Blue' | 'Red'): void => {
@@ -153,18 +174,15 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
-  const dispatchFunctions = {
-    getBoard,
-    setClickedCoordinates,
-    setCurrentCard,
-    setCurrentPlayer,
-  };
-
   return (
     <GameContext.Provider
       value={{
         ...state,
-        ...dispatchFunctions,
+        getBoard,
+        setClickedCoordinates,
+        setCurrentCard,
+        setCurrentPlayer,
+        setValidMoves,
       }}
     >
       {children}

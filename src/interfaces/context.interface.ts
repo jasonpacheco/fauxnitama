@@ -3,6 +3,7 @@ import {
   SET_COORDINATES,
   SET_CURRENT_CARD,
   SET_CURRENT_PLAYER,
+  SET_VALID_MOVES,
 } from '../types';
 
 export type Coordinate = {
@@ -44,12 +45,14 @@ export interface State {
   currentPlayer: 'Blue' | 'Red' | undefined;
   cardSet: CardModel[];
   firstPlayer: 'Blue' | 'Red';
+  validMoves: number[] | undefined;
 }
 export interface GameContextProperties extends State {
   getBoard: () => CellData[];
   setClickedCoordinates: (coordinates: Coordinates) => void;
   setCurrentCard: (card: CardModel) => void;
   setCurrentPlayer: (player: 'Blue' | 'Red') => void;
+  setValidMoves: (moves: number[]) => void;
 }
 interface SetCoordinates {
   type: typeof SET_COORDINATES;
@@ -66,4 +69,13 @@ interface SetCurrentPlayer {
   player: 'Blue' | 'Red';
 }
 
-export type Actions = SetCoordinates | SetCurrentCard | SetCurrentPlayer;
+interface SetValidMoves {
+  type: typeof SET_VALID_MOVES;
+  moves: number[];
+}
+
+export type Actions =
+  | SetCoordinates
+  | SetCurrentCard
+  | SetCurrentPlayer
+  | SetValidMoves;

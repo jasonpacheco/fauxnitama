@@ -3,6 +3,7 @@ import {
   SET_COORDINATES,
   SET_CURRENT_CARD,
   SET_CURRENT_PLAYER,
+  SET_VALID_MOVES,
 } from '../types';
 
 export default (state: State, action: Actions): State => {
@@ -21,6 +22,16 @@ export default (state: State, action: Actions): State => {
       return {
         ...state,
         currentPlayer: action.player,
+      };
+    case SET_VALID_MOVES:
+      return {
+        ...state,
+        board: {
+          cells: state.board.cells.map(cell => {
+            cell.isValidMove = action.moves.includes(cell.id);
+            return cell;
+          }),
+        },
       };
     default:
       return state;
