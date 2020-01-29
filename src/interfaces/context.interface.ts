@@ -33,6 +33,7 @@ export interface State {
   clickedCoordinates: Coordinates | undefined;
   selectedCard: CardModel | undefined;
   currentPlayer: 'Blue' | 'Red' | undefined;
+  cardSet: CardModel[];
 }
 export interface GameContextProperties extends State {
   getBoard: () => (Piece | null)[][];

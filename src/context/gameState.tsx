@@ -1,6 +1,8 @@
 import React, { useReducer } from 'react';
 import gameReducer from './gameReducer';
 import GameContext from './gameContext';
+import { generateCardSet } from '../utils';
+
 import {
   State,
   Player,
@@ -38,6 +40,7 @@ const initialState: State = {
   clickedCoordinates: undefined,
   selectedCard: undefined,
   currentPlayer: undefined,
+  cardSet: generateCardSet(),
   board: {
     layout: [
       Opponent.pieces,
