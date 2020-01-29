@@ -7,6 +7,7 @@ import {
   Piece,
   Coordinates,
 } from '../interfaces/context.interface';
+// import CardModel from '../interfaces/card.interface';
 
 const Opponent: Player = {
   pieces: [
@@ -30,6 +31,7 @@ const User: Player = {
 
 const initialState: State = {
   clickedCoordinates: undefined,
+  selectedCard: undefined,
   board: {
     layout: [
       Opponent.pieces,
@@ -54,6 +56,8 @@ const GameState: React.FC = ({ children }) => {
       coordinates,
     });
   };
+
+  // const setCurrentCard = (card: CardM)
 
   const dispatchFunctions = {
     getBoard,

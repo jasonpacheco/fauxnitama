@@ -16,18 +16,34 @@ import {
 
 import { getIDs, coordinateToID, movesToID } from '../../utils';
 
-import { Card as CardType } from './CardTypes';
+import CardModel from '../../interfaces/card.interface';
 
 interface CardProps {
   inverted?: boolean;
-  card: CardType;
+  card: CardModel;
+  isTurn?: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ inverted, card }) => {
+const handleCardClick = (
+  event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+  isTurn: boolean | undefined,
+  card: CardModel
+): void => {
+  if (isTurn) {
+    console.log(card);
+  }
+};
+
+const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
   const { image, moves, name, color, stamp } = card;
   const moveIDs = movesToID(moves);
+
   return (
-    <CardWrapper inverted={inverted}>
+    <CardWrapper
+      inverted={inverted}
+      isTurn={isTurn}
+      onClick={(e): void => handleCardClick(e, isTurn, card)}
+    >
       <Main>
         <LeftHalf>
           <Character>

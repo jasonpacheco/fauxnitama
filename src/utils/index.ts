@@ -1,5 +1,6 @@
 import { Coordinate } from '../interfaces/context.interface';
-import CardTypes, { Card } from '../components/Card/CardTypes';
+import CardModel from '../interfaces/card.interface';
+import CardTypes from '../components/Card/CardTypes';
 const {
   Boar,
   Cobra,
@@ -118,7 +119,7 @@ export const movesToID = (
   );
 };
 
-export const generateCardSet = (numCards = 5): Card[] => {
+export const generateCardSet = (numCards = 5): CardModel[] => {
   const cards = [
     Boar,
     Cobra,
@@ -138,7 +139,7 @@ export const generateCardSet = (numCards = 5): Card[] => {
     Tiger,
   ];
 
-  const cardSet: Card[] = [];
+  const cardSet: CardModel[] = [];
 
   for (let i = 0; i < numCards; i++) {
     const randomIndex = Math.floor(Math.random() * cards.length);

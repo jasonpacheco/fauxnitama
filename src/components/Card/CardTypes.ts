@@ -14,32 +14,9 @@ import OxImage from '../../assets/calligraphy/ox.png';
 import RabbitImage from '../../assets/calligraphy/rabbit.png';
 import RoosterImage from '../../assets/calligraphy/rooster.png';
 import TigerImage from '../../assets/calligraphy/tiger.png';
+import CardModel from '../../interfaces/card.interface';
 
-export interface Card {
-  name:
-    | 'Boar'
-    | 'Cobra'
-    | 'Crab'
-    | 'Crane'
-    | 'Dragon'
-    | 'Eel'
-    | 'Elephant'
-    | 'Frog'
-    | 'Goose'
-    | 'Horse'
-    | 'Mantis'
-    | 'Monkey'
-    | 'Ox'
-    | 'Rabbit'
-    | 'Rooster'
-    | 'Tiger';
-  stamp: 'Red' | 'Blue';
-  image: string;
-  color: string;
-  moves: number[][];
-}
-
-const Boar: Card = {
+const Boar: CardModel = {
   name: 'Boar',
   stamp: 'Red',
   image: BoarImage,
@@ -51,7 +28,7 @@ const Boar: Card = {
   ],
 };
 
-const Cobra: Card = {
+const Cobra: CardModel = {
   name: 'Cobra',
   stamp: 'Red',
   image: CobraImage,
@@ -63,7 +40,7 @@ const Cobra: Card = {
   ],
 };
 
-const Crab: Card = {
+const Crab: CardModel = {
   name: 'Crab',
   stamp: 'Blue',
   image: CrabImage,
@@ -75,7 +52,7 @@ const Crab: Card = {
   ],
 };
 
-const Crane: Card = {
+const Crane: CardModel = {
   name: 'Crane',
   stamp: 'Blue',
   image: CraneImage,
@@ -87,7 +64,7 @@ const Crane: Card = {
   ],
 };
 
-const Dragon: Card = {
+const Dragon: CardModel = {
   name: 'Dragon',
   stamp: 'Red',
   image: DragonImage,
@@ -100,7 +77,7 @@ const Dragon: Card = {
   ],
 };
 
-const Eel: Card = {
+const Eel: CardModel = {
   name: 'Eel',
   stamp: 'Blue',
   image: EelImage,
@@ -112,7 +89,7 @@ const Eel: Card = {
   ],
 };
 
-const Elephant: Card = {
+const Elephant: CardModel = {
   name: 'Elephant',
   stamp: 'Red',
   image: ElephantImage,
@@ -125,7 +102,7 @@ const Elephant: Card = {
   ],
 };
 
-const Frog: Card = {
+const Frog: CardModel = {
   name: 'Frog',
   stamp: 'Red',
   image: FrogImage,
@@ -137,7 +114,7 @@ const Frog: Card = {
   ],
 };
 
-const Goose: Card = {
+const Goose: CardModel = {
   name: 'Goose',
   stamp: 'Blue',
   image: GooseImage,
@@ -150,7 +127,7 @@ const Goose: Card = {
   ],
 };
 
-const Horse: Card = {
+const Horse: CardModel = {
   name: 'Horse',
   stamp: 'Red',
   image: HorseImage,
@@ -162,7 +139,7 @@ const Horse: Card = {
   ],
 };
 
-const Mantis: Card = {
+const Mantis: CardModel = {
   name: 'Mantis',
   stamp: 'Red',
   image: MantisImage,
@@ -174,7 +151,7 @@ const Mantis: Card = {
   ],
 };
 
-const Monkey: Card = {
+const Monkey: CardModel = {
   name: 'Monkey',
   stamp: 'Blue',
   image: MonkeyImage,
@@ -187,7 +164,7 @@ const Monkey: Card = {
   ],
 };
 
-const Ox: Card = {
+const Ox: CardModel = {
   name: 'Ox',
   stamp: 'Blue',
   image: OxImage,
@@ -199,7 +176,7 @@ const Ox: Card = {
   ],
 };
 
-const Rabbit: Card = {
+const Rabbit: CardModel = {
   name: 'Rabbit',
   stamp: 'Blue',
   image: RabbitImage,
@@ -211,7 +188,7 @@ const Rabbit: Card = {
   ],
 };
 
-const Rooster: Card = {
+const Rooster: CardModel = {
   name: 'Rooster',
   stamp: 'Red',
   image: RoosterImage,
@@ -224,7 +201,7 @@ const Rooster: Card = {
   ],
 };
 
-const Tiger: Card = {
+const Tiger: CardModel = {
   name: 'Tiger',
   stamp: 'Blue',
   image: TigerImage,

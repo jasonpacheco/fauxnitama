@@ -1,3 +1,5 @@
+import CardModel from '../interfaces/card.interface';
+
 export type Coordinate = {
   x: number;
   y: number;
@@ -24,6 +26,7 @@ export interface Coordinates extends Coordinate {
 export interface State {
   board: BoardState;
   clickedCoordinates: Coordinates | undefined;
+  selectedCard: CardModel | undefined;
 }
 export interface GameContextProperties extends State {
   getBoard: () => (Piece | null)[][];

@@ -1,11 +1,11 @@
 import React from 'react';
 import Card from '../Card/Card';
 import { DeckWrapper } from './_BoardSetupStyles';
-import { Card as CardType } from '../Card/CardTypes';
+import CardModel from '../../interfaces/card.interface';
 
 interface DeckProps {
   isFor: 'user' | 'opponent';
-  cards: CardType[];
+  cards: CardModel[];
 }
 
 const Deck: React.FC<DeckProps> = ({ isFor, cards }) => {
@@ -13,7 +13,12 @@ const Deck: React.FC<DeckProps> = ({ isFor, cards }) => {
   return (
     <DeckWrapper>
       {cards.map(card => (
-        <Card key={keyID++} inverted={isFor === 'opponent'} card={card} />
+        <Card
+          key={keyID++}
+          inverted={isFor === 'opponent'}
+          isTurn={isFor === 'user'}
+          card={card}
+        />
       ))}
     </DeckWrapper>
   );

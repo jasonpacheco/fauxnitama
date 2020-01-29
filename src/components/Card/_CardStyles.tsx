@@ -5,7 +5,7 @@ import RedShuriken from '../../assets/red_shuriken.svg';
 
 const { COLS } = BOARD_GAME;
 
-export const CardWrapper = styled.div<{ inverted?: boolean }>`
+export const CardWrapper = styled.div<{ inverted?: boolean; isTurn?: boolean }>`
   border: 1px solid #000;
   width: 20rem;
   display: flex;
@@ -13,6 +13,7 @@ export const CardWrapper = styled.div<{ inverted?: boolean }>`
   padding: 1rem;
   background-color: #cacba2;
   ${({ inverted }): string => (inverted ? `transform: rotate(180deg)` : '')};
+  ${({ isTurn }): string => (isTurn ? `&:hover { cursor: pointer; }` : '')};
 `;
 
 export const Main = styled.div`
@@ -111,9 +112,7 @@ export const Stamp = styled.div<{ color: 'Blue' | 'Red' }>`
     color === 'Blue' ? `url(${BlueShuriken})` : `url(${RedShuriken})`};
   align-self: flex-end;
   display: inline-block;
-  &:hover {
-    cursor: pointer;
-  }
+
   &:hover ${StampTooltip} {
     visibility: visible;
   }
