@@ -5,6 +5,7 @@ import Piece from '../Piece/Piece';
 import { getTempleID } from '../../utils';
 import { Piece as IPiece } from '../../interfaces/context.interface';
 import useGameContext from '../../context/useGameContext';
+import moveChecker from '../../interactive/moveChecker';
 
 const {
   blue: { id: blueTempleID },
@@ -24,6 +25,7 @@ const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
     clickedCoordinates,
     setClickedCoordinates,
     selectedCard,
+    getBoard,
   } = useGameContext();
 
   const handleCellClick = (
@@ -35,7 +37,9 @@ const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
   ): void => {
     if (piece?.color === currentPlayer && selectedCard) {
       setClickedCoordinates({ x: x, y: y, id: id });
-      console.log(x, y, id, piece);
+      console.log(
+        moveChecker({ x: x, y: y, id: id }, selectedCard.moves, getBoard())
+      );
     }
   };
 
@@ -51,7 +55,7 @@ const Cell: React.FC<CellProps> = ({ id, x, y, piece }) => {
       }
       onClick={(e): void => handleCellClick(e, x, y, id, piece)}
     >
-      {piece ? <Piece color={piece.color} type={piece.type} /> : ''}
+      {piece ? <Piece color={piece.color} type={piece.type} /> : id}
     </Box>
   );
 };

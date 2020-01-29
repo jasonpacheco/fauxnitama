@@ -1,42 +1,33 @@
-import React from 'react';
-import useGameContext from '../context/useGameContext';
 import { Coordinates } from '../interfaces/context.interface';
-import { BOARD_GAME } from '../utils';
-
+import { BOARD_GAME, coordinateToID } from '../utils';
+import { Piece } from '../interfaces/context.interface';
 const { ROWS, COLS } = BOARD_GAME;
 
-const validMovesFromCard = [
-  [0, 0],
-  [0, 0],
-  [0, 0],
-];
+// const transposeCardMovement = (validMoves: number[][]): number[][] => {
+//   return validMoves.map(move => [-move[0], -move[1]]);
+// };
 
-const transposeCardMovement = (validMoves: number[][]): number[][] => {
-  return validMoves.map(move => [-move[0], -move[1]]);
-};
+const isOccupied = (x: number, y: number, board: (Piece | null)[][]): boolean =>
+  !!board[x][y];
 
-const checkValidMoves = (
+export default (
   clickedCoordinates: Coordinates,
-  validMovesFromCard: number[][]
-): boolean[] => {
+  validMovesFromCard: number[][],
+  board: (Piece | null)[][]
+): number[] => {
   const { x, y } = clickedCoordinates;
-  return validMovesFromCard.map(
-    ([moveX, moveY]) =>
+  return validMovesFromCard.reduce((acc, [moveX, moveY]) => {
+    if (
       !(
         x + moveX >= ROWS ||
         x + moveX < 0 ||
         y + moveY >= COLS ||
-        y + moveY < 0
+        y + moveY < 0 ||
+        isOccupied(x + moveX, y + moveY, board)
       )
-  );
+    ) {
+      acc.push(coordinateToID({ x: x + moveX, y: y + moveY }));
+    }
+    return acc;
+  }, []);
 };
-
-const MoveChecker: React.FC = () => {
-  const { clickedCoordinates } = useGameContext();
-  if (clickedCoordinates) {
-    console.log(checkValidMoves(clickedCoordinates, validMovesFromCard));
-  }
-  return null;
-};
-
-export default MoveChecker;
