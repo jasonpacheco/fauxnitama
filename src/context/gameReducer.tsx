@@ -24,6 +24,7 @@ export default (state: State, action: Actions): State => {
     case SET_CURRENT_PLAYER:
       return {
         ...state,
+        selectedCard: undefined,
         currentPlayer: action.player,
       };
     case SET_VALID_MOVES:

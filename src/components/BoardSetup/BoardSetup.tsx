@@ -11,9 +11,17 @@ const BoardSetup: React.FC = () => {
     <FullWrapper right={currentPlayer}>
       <Card card={nextCard} inverted={currentPlayer === 'Red'} />
       <BoardHandWrapper>
-        <Hand isFor='Red' cards={redHand} />
+        <Hand
+          handFor='Red'
+          cards={redHand}
+          currentHand={currentPlayer === 'Red'}
+        />
         <Board />
-        <Hand isFor='Blue' cards={blueHand} />
+        <Hand
+          handFor='Blue'
+          cards={blueHand}
+          currentHand={currentPlayer === 'Blue'}
+        />
       </BoardHandWrapper>
       <Spacer />
     </FullWrapper>

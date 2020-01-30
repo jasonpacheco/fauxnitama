@@ -194,11 +194,14 @@ const GameState: React.FC = ({ children }) => {
 
   const movePiece = (fromCell: CellData, toID: number): void => {
     const from = cloneDeep(fromCell);
+    const nextPlayer = from.piece?.color === 'Blue' ? 'Red' : 'Blue';
     dispatch({
       type: MOVE_PIECE,
       fromCell: from,
       toID,
     });
+
+    setCurrentPlayer(nextPlayer);
   };
 
   return (
