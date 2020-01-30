@@ -118,7 +118,7 @@ const EmptySpaceGenerator = (): CellData[] => {
 };
 
 const cards = generateCardSet();
-
+// TODO: card switching
 const initialState: State = {
   selectedCell: undefined,
   selectedCard: undefined,
