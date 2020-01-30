@@ -19,19 +19,20 @@ export const Grid = styled.div`
 
 export const Box = styled.div<{
   hasBackground: string | boolean;
-  selectedCell: 'Blue' | 'Red' | boolean | null | undefined;
-  validCellHighlight: boolean;
+  highlightSelectedPiece: boolean | null | undefined;
+  highlightValidCell: 'Blue' | 'Red' | boolean | undefined;
 }>`
   margin: 0;
   padding: 0;
   border: 1px solid #000;
-  background-color: ${({ validCellHighlight }): string =>
-    validCellHighlight ? '#fff9c4' : '#fff'};
-  ${({ selectedCell }): string =>
-    selectedCell
-      ? selectedCell === 'Blue'
-        ? 'background-color: #03a9f4'
-        : 'background-color: #ff5252'
+  ${({ highlightSelectedPiece }): string =>
+    highlightSelectedPiece ? 'background-color: #fff9c4' : ''};
+
+  ${({ highlightValidCell }): string =>
+    highlightValidCell
+      ? highlightValidCell === 'Blue'
+        ? 'background-color: #b3e5fc'
+        : 'background-color: #ffcdd2'
       : ''};
   &:hover {
     cursor: pointer;
