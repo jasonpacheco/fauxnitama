@@ -9,6 +9,7 @@ import {
   MOVE_PIECE,
 } from '../types';
 import { idToCoordinate } from '../utils';
+import isEqual from 'lodash.isequal';
 
 export default (state: State, action: Actions): State => {
   switch (action.type) {
@@ -29,10 +30,21 @@ export default (state: State, action: Actions): State => {
         currentPlayer: action.player,
       };
     case SET_NEXT_CARD:
+      const playerHand = state[action.targetProperty];
+      const keyToReplace = Object.keys(playerHand).find(key =>
+        isEqual(playerHand[key], action.nextCard)
+      );
+
+      if (keyToReplace) {
+        playerHand[keyToReplace] = action.replacementCard;
+      }
+
       return {
         ...state,
+        ...playerHand,
         nextCard: action.nextCard,
       };
+
     case SET_VALID_MOVES:
       return {
         ...state,

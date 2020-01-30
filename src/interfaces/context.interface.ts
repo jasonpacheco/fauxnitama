@@ -41,8 +41,7 @@ export interface Coordinates extends Coordinate {
 }
 
 export interface PlayerHand {
-  first: CardModel;
-  second: CardModel;
+  [key: string]: CardModel;
 }
 
 export interface State {
@@ -63,7 +62,8 @@ export interface GameContextProperties extends State {
   setCurrentCard: (currentCard: CardModel) => void;
   setNextCard: (
     nextCard: CardModel,
-    targetProperty: 'blueHand' | 'redHand'
+    targetProperty: 'blueHand' | 'redHand',
+    replacementCard: CardModel
   ) => void;
   setCurrentPlayer: (player: 'Blue' | 'Red') => void;
   setValidMoves: (moves: number[]) => void;
@@ -83,6 +83,7 @@ interface SetNextCard {
   type: typeof SET_NEXT_CARD;
   nextCard: CardModel;
   targetProperty: 'blueHand' | 'redHand';
+  replacementCard: CardModel;
 }
 
 interface SetCurrentPlayer {
