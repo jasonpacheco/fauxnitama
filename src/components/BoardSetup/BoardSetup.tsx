@@ -15,9 +15,9 @@ const BoardSetup: React.FC<BoardSetupProps> = ({ cards, firstPlayerColor }) => {
     <FullWrapper right={firstPlayerColor}>
       <Card card={cards[4]} inverted={firstPlayerColor === 'Red'} />
       <BoardDeckWrapper>
-        <Deck isFor='opponent' cards={[cards[0], cards[1]]} />
+        <Deck isFor='Red' cards={[cards[0], cards[1]]} />
         <Board />
-        <Deck isFor='user' cards={[cards[2], cards[3]]} />
+        <Deck isFor='Blue' cards={[cards[2], cards[3]]} />
       </BoardDeckWrapper>
       <Spacer />
     </FullWrapper>

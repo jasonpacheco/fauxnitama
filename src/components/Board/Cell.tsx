@@ -47,9 +47,12 @@ const Cell: React.FC<CellProps> = ({ data }) => {
     <Box
       key={id}
       selectedCell={
-        !!selectedCell &&
-        !!selectedCell.piece &&
-        isEqual(selectedCell.piece.currentPosition, { x, y })
+        selectedCell &&
+        selectedCell.piece &&
+        selectedCell.piece.color &&
+        isEqual(selectedCell.piece.currentPosition, { x, y }) &&
+        ((selectedCell.piece.color === 'Blue' && 'Blue') ||
+          (selectedCell.piece.color === 'Red' && 'Red'))
       }
       validCellHighlight={isValidMove}
       hasBackground={

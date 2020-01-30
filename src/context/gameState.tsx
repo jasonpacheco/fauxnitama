@@ -122,7 +122,7 @@ const cards = generateCardSet();
 const initialState: State = {
   selectedCell: undefined,
   selectedCard: undefined,
-  currentPlayer: 'Red',
+  currentPlayer: cards[4].stamp,
   cardSet: cards,
   firstPlayer: cards[4].stamp,
   validMoves: undefined,
