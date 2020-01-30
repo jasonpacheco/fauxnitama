@@ -54,8 +54,8 @@ export default (state: State, action: Actions): State => {
               cell.piece = fromCell.piece;
               cell.piece.currentPosition = idToCoordinate(cell.id);
               cell.isEmpty = false;
-              cell.isBlue = !!fromCell.piece && fromCell.piece.color === 'Blue';
-              cell.isRed = !!fromCell.piece && fromCell.piece.color === 'Red';
+              cell.isBlue = fromCell.piece.color === 'Blue';
+              cell.isRed = fromCell.piece.color === 'Red';
             }
             return cell;
           }),

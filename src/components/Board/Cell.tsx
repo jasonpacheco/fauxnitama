@@ -34,7 +34,7 @@ const Cell: React.FC<CellProps> = ({ data }) => {
     id: number,
     piece: IPiece | null
   ): void => {
-    if (piece && piece.color === currentPlayer && selectedCard) {
+    if (piece?.color === currentPlayer && selectedCard) {
       setSelectedCell(data);
     }
 
@@ -57,7 +57,7 @@ const Cell: React.FC<CellProps> = ({ data }) => {
       }
       onClick={(e): void => handleCellClick(e, x, y, id, piece)}
     >
-      {piece ? <Piece color={piece.color} type={piece.type} /> : id}
+      {piece && <Piece color={piece.color} type={piece.type} />}
     </Box>
   );
 };

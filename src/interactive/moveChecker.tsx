@@ -7,8 +7,12 @@ const transposeCardMovement = (validMoves: number[][]): number[][] => {
   return validMoves.map(move => [-move[0], -move[1]]);
 };
 
-const isOccupied = (positionID: number, board: CellData[]): boolean =>
-  !board[positionID].isEmpty;
+const isOccupied = (
+  positionID: number,
+  board: CellData[],
+  color: 'Blue' | 'Red'
+): boolean =>
+  !board[positionID].isEmpty && board[positionID].piece?.color === color;
 
 export default (
   clickedCoordinates: Coordinate,
@@ -27,7 +31,7 @@ export default (
         x + moveX < 0 ||
         y + moveY >= COLS ||
         y + moveY < 0 ||
-        isOccupied(positionID, board)
+        isOccupied(positionID, board, color)
       )
     ) {
       acc.push(positionID);

@@ -152,13 +152,14 @@ const GameState: React.FC = ({ children }) => {
     });
     /** Implements move checking when cell is clicked */
     if (cell.piece && state.selectedCard) {
-      const validMoves = moveChecker(
-        cell.piece.currentPosition,
-        state.selectedCard.moves,
-        getBoard(),
-        state.currentPlayer
+      setValidMoves(
+        moveChecker(
+          cell.piece.currentPosition,
+          state.selectedCard.moves,
+          getBoard(),
+          state.currentPlayer
+        )
       );
-      setValidMoves(validMoves);
     }
   };
 
@@ -169,14 +170,15 @@ const GameState: React.FC = ({ children }) => {
     });
 
     /** Implements automatic move checking when the user selects another card */
-    if (!!state.selectedCell && !!state.selectedCell.piece) {
-      const validMoves = moveChecker(
-        state.selectedCell.piece.currentPosition,
-        card.moves,
-        getBoard(),
-        state.currentPlayer
+    if (!!state?.selectedCell?.piece) {
+      setValidMoves(
+        moveChecker(
+          state.selectedCell.piece.currentPosition,
+          card.moves,
+          getBoard(),
+          state.currentPlayer
+        )
       );
-      setValidMoves(validMoves);
     }
   };
 
