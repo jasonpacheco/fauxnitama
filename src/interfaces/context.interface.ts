@@ -43,11 +43,13 @@ export interface State {
   board: BoardState;
   selectedCell: CellData | undefined;
   selectedCard: CardModel | undefined;
-  currentPlayer: 'Blue' | 'Red' | undefined;
+  currentPlayer: 'Blue' | 'Red';
   cardSet: CardModel[];
   firstPlayer: 'Blue' | 'Red';
   validMoves: number[] | undefined;
   nextCard: CardModel;
+  redHand: CardModel[];
+  blueHand: CardModel[];
 }
 export interface GameContextProperties extends State {
   getBoard: () => CellData[];

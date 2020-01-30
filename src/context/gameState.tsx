@@ -125,6 +125,8 @@ const initialState: State = {
   currentPlayer: cards[4].stamp,
   cardSet: cards,
   firstPlayer: cards[4].stamp,
+  redHand: [cards[0], cards[1]],
+  blueHand: [cards[2], cards[3]],
   nextCard: cards[4],
   validMoves: undefined,
   board: {
