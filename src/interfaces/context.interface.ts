@@ -39,6 +39,11 @@ export interface Coordinates extends Coordinate {
   id: number;
 }
 
+export interface PlayerHand {
+  first: CardModel;
+  second: CardModel;
+}
+
 export interface State {
   board: BoardState;
   selectedCell: CellData | undefined;
@@ -48,8 +53,8 @@ export interface State {
   firstPlayer: 'Blue' | 'Red';
   validMoves: number[] | undefined;
   nextCard: CardModel;
-  redHand: CardModel[];
-  blueHand: CardModel[];
+  redHand: PlayerHand;
+  blueHand: PlayerHand;
 }
 export interface GameContextProperties extends State {
   getBoard: () => CellData[];

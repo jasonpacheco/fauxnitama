@@ -54,7 +54,7 @@ const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
           </Character>
           <Name>{name}</Name>
         </LeftHalf>
-        <RightHalf id='right'>
+        <RightHalf>
           <MiniBoard>
             {getIDs().map(({ id, x, y }) =>
               moveIDs.includes(coordinateToID({ x, y })) ? (

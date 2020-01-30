@@ -5,7 +5,12 @@ import RedShuriken from '../../assets/_red/shuriken.svg';
 
 const { COLS } = BOARD_GAME;
 
-export const CardWrapper = styled.div<{ inverted?: boolean; isTurn?: boolean }>`
+interface CardWrapperStyleProps {
+  inverted?: boolean;
+  isTurn?: boolean;
+}
+
+export const CardWrapper = styled.div<CardWrapperStyleProps>`
   border: 1px solid #000;
   width: 20rem;
   display: flex;
@@ -61,11 +66,12 @@ export const MiniBoard = styled.div`
   grid-template-rows: repeat(${COLS}, 1.8rem);
   border: 1px solid #cacba2;
 `;
-
-export const MiniBox = styled.div<{
+interface MiniBoxStyleProps {
   center?: boolean;
   hasColor?: string | undefined;
-}>`
+}
+
+export const MiniBox = styled.div<MiniBoxStyleProps>`
   margin: 0;
   padding: 0;
   border: 1px solid #979677;
@@ -73,7 +79,11 @@ export const MiniBox = styled.div<{
     center ? 'black' : hasColor ? hasColor : 'white'};
 `;
 
-export const StampTooltip = styled.div<{ inverted?: boolean }>`
+interface StampTooltipProps {
+  inverted?: boolean;
+}
+
+export const StampTooltip = styled.div<StampTooltipProps>`
   font-family: 'Arvo', 'Georgia', serif;
   font-size: 0.8rem;
   visibility: hidden;
@@ -104,7 +114,11 @@ export const StampTooltip = styled.div<{ inverted?: boolean }>`
   }
 `;
 
-export const Stamp = styled.div<{ color: 'Blue' | 'Red' }>`
+interface StampStyleProps {
+  color: 'Blue' | 'Red';
+}
+
+export const Stamp = styled.div<StampStyleProps>`
   position: relative;
   width: 1.2rem;
   height: 1.2rem;

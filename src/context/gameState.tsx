@@ -117,7 +117,7 @@ const EmptySpaceGenerator = (): CellData[] => {
   return cells;
 };
 
-const cards = generateCardSet();
+const cards: CardModel[] = generateCardSet();
 // TODO: card switching
 const initialState: State = {
   selectedCell: undefined,
@@ -125,8 +125,8 @@ const initialState: State = {
   currentPlayer: cards[4].stamp,
   cardSet: cards,
   firstPlayer: cards[4].stamp,
-  redHand: [cards[0], cards[1]],
-  blueHand: [cards[2], cards[3]],
+  redHand: { first: cards[0], second: cards[1] },
+  blueHand: { first: cards[2], second: cards[3] },
   nextCard: cards[4],
   validMoves: undefined,
   board: {
@@ -194,7 +194,8 @@ const GameState: React.FC = ({ children }) => {
 
   const movePiece = (fromCell: CellData, toID: number): void => {
     const from = cloneDeep(fromCell);
-    const nextPlayer = from.piece?.color === 'Blue' ? 'Red' : 'Blue';
+    const fromPlayer = from.piece?.color;
+    const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
     dispatch({
       type: MOVE_PIECE,
       fromCell: from,

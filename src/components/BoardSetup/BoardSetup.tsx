@@ -13,13 +13,13 @@ const BoardSetup: React.FC = () => {
       <BoardHandWrapper>
         <Hand
           handFor='Red'
-          cards={redHand}
+          hand={redHand}
           currentHand={currentPlayer === 'Red'}
         />
         <Board />
         <Hand
           handFor='Blue'
-          cards={blueHand}
+          hand={blueHand}
           currentHand={currentPlayer === 'Blue'}
         />
       </BoardHandWrapper>
