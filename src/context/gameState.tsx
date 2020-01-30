@@ -186,10 +186,14 @@ const GameState: React.FC = ({ children }) => {
     }
   };
 
-  const setNextCard = (nextCard: CardModel): void => {
+  const setNextCard = (
+    nextCard: CardModel,
+    targetProperty: 'blueHand' | 'redHand'
+  ): void => {
     dispatch({
       type: SET_NEXT_CARD,
       nextCard,
+      targetProperty,
     });
   };
 
@@ -209,6 +213,12 @@ const GameState: React.FC = ({ children }) => {
       fromCell: from,
       toID,
     });
+
+    if (state.selectedCard) {
+      const poppedNextCard = state.nextCard;
+      const targetProperty = fromPlayer === 'Blue' ? 'blueHand' : 'redHand';
+      setNextCard(state.selectedCard, targetProperty);
+    }
 
     setCurrentPlayer(nextPlayer);
   };

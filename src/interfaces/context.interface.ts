@@ -61,7 +61,10 @@ export interface GameContextProperties extends State {
   getBoard: () => CellData[];
   setSelectedCell: (cell: CellData) => void;
   setCurrentCard: (currentCard: CardModel) => void;
-  setNextCard: (nextCard: CardModel) => void;
+  setNextCard: (
+    nextCard: CardModel,
+    targetProperty: 'blueHand' | 'redHand'
+  ) => void;
   setCurrentPlayer: (player: 'Blue' | 'Red') => void;
   setValidMoves: (moves: number[]) => void;
   movePiece: (fromCell: CellData, toID: number) => void;
@@ -79,6 +82,7 @@ interface SetCurrentCard {
 interface SetNextCard {
   type: typeof SET_NEXT_CARD;
   nextCard: CardModel;
+  targetProperty: 'blueHand' | 'redHand';
 }
 
 interface SetCurrentPlayer {
