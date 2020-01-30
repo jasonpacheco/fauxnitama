@@ -1,6 +1,7 @@
 import CardModel from '../interfaces/card.interface';
 import {
   SET_CURRENT_CARD,
+  SET_NEXT_CARD,
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
   MOVE_PIECE,
@@ -59,7 +60,8 @@ export interface State {
 export interface GameContextProperties extends State {
   getBoard: () => CellData[];
   setSelectedCell: (cell: CellData) => void;
-  setCurrentCard: (card: CardModel) => void;
+  setCurrentCard: (currentCard: CardModel) => void;
+  setNextCard: (nextCard: CardModel) => void;
   setCurrentPlayer: (player: 'Blue' | 'Red') => void;
   setValidMoves: (moves: number[]) => void;
   movePiece: (fromCell: CellData, toID: number) => void;
@@ -71,7 +73,12 @@ interface SetSelectedCell {
 
 interface SetCurrentCard {
   type: typeof SET_CURRENT_CARD;
-  card: CardModel;
+  currentCard: CardModel;
+}
+
+interface SetNextCard {
+  type: typeof SET_NEXT_CARD;
+  nextCard: CardModel;
 }
 
 interface SetCurrentPlayer {
@@ -93,6 +100,7 @@ interface MovePiece {
 export type Actions =
   | SetSelectedCell
   | SetCurrentCard
+  | SetNextCard
   | SetCurrentPlayer
   | SetValidMoves
   | MovePiece;

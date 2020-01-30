@@ -9,6 +9,7 @@ import CardModel from '../interfaces/card.interface';
 import {
   SET_SELECTED_CELL,
   SET_CURRENT_CARD,
+  SET_NEXT_CARD,
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
   MOVE_PIECE,
@@ -166,10 +167,10 @@ const GameState: React.FC = ({ children }) => {
     }
   };
 
-  const setCurrentCard = (card: CardModel): void => {
+  const setCurrentCard = (currentCard: CardModel): void => {
     dispatch({
       type: SET_CURRENT_CARD,
-      card,
+      currentCard,
     });
 
     /** Implements automatic move checking when the user selects another card */
@@ -177,12 +178,19 @@ const GameState: React.FC = ({ children }) => {
       setValidMoves(
         moveChecker(
           state.selectedCell.piece.currentPosition,
-          card.moves,
+          currentCard.moves,
           getBoard(),
           state.currentPlayer
         )
       );
     }
+  };
+
+  const setNextCard = (nextCard: CardModel): void => {
+    dispatch({
+      type: SET_NEXT_CARD,
+      nextCard,
+    });
   };
 
   const setCurrentPlayer = (player: 'Blue' | 'Red'): void => {
@@ -212,6 +220,7 @@ const GameState: React.FC = ({ children }) => {
         getBoard,
         setSelectedCell,
         setCurrentCard,
+        setNextCard,
         setCurrentPlayer,
         setValidMoves,
         movePiece,

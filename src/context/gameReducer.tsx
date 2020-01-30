@@ -3,6 +3,7 @@ import { CellData, State, Actions } from '../interfaces/context.interface';
 import {
   SET_SELECTED_CELL,
   SET_CURRENT_CARD,
+  SET_NEXT_CARD,
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
   MOVE_PIECE,
@@ -19,13 +20,18 @@ export default (state: State, action: Actions): State => {
     case SET_CURRENT_CARD:
       return {
         ...state,
-        selectedCard: action.card,
+        selectedCard: action.currentCard,
       };
     case SET_CURRENT_PLAYER:
       return {
         ...state,
         selectedCard: undefined,
         currentPlayer: action.player,
+      };
+    case SET_NEXT_CARD:
+      return {
+        ...state,
+        nextCard: action.nextCard,
       };
     case SET_VALID_MOVES:
       return {
