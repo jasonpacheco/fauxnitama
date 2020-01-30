@@ -11,13 +11,13 @@ export const FullWrapper = styled.div<{ right: string }>`
   justify-content: center;
 `;
 
-export const BoardDeckWrapper = styled.div`
+export const BoardHandWrapper = styled.div`
   margin: 0 auto;
   padding: 0;
   width: 40rem;
 `;
 
-export const DeckWrapper = styled.div`
+export const HandWrapper = styled.div`
   display: flex;
 `;
 

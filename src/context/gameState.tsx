@@ -125,6 +125,7 @@ const initialState: State = {
   currentPlayer: cards[4].stamp,
   cardSet: cards,
   firstPlayer: cards[4].stamp,
+  nextCard: cards[4],
   validMoves: undefined,
   board: {
     cells: [...Opponent, ...EmptySpaceGenerator(), ...Player],

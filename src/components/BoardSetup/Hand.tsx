@@ -1,19 +1,19 @@
 import React from 'react';
 import Card from '../Card/Card';
-import { DeckWrapper } from './_BoardSetupStyles';
+import { HandWrapper } from './_BoardSetupStyles';
 import CardModel from '../../interfaces/card.interface';
 import useGameContext from '../../context/useGameContext';
 
-interface DeckProps {
+interface HandProps {
   isFor: 'Blue' | 'Red';
   cards: CardModel[];
 }
 
-const Deck: React.FC<DeckProps> = ({ isFor, cards }) => {
+const Hand: React.FC<HandProps> = ({ isFor, cards }) => {
   const { currentPlayer } = useGameContext();
   let keyID = 0;
   return (
-    <DeckWrapper>
+    <HandWrapper>
       {cards.map(card => (
         <Card
           key={keyID++}
@@ -22,8 +22,8 @@ const Deck: React.FC<DeckProps> = ({ isFor, cards }) => {
           card={card}
         />
       ))}
-    </DeckWrapper>
+    </HandWrapper>
   );
 };
 
-export default Deck;
+export default Hand;

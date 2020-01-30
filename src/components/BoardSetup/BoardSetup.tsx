@@ -1,9 +1,10 @@
 import React from 'react';
 import Board from '../Board/Board';
-import Deck from './Deck';
+import Hand from './Hand';
 import Card from '../Card/Card';
-import { FullWrapper, BoardDeckWrapper, Spacer } from './_BoardSetupStyles';
+import { FullWrapper, BoardHandWrapper, Spacer } from './_BoardSetupStyles';
 import CardModel from '../../interfaces/card.interface';
+import useGameContext from '../../context/useGameContext';
 
 interface BoardSetupProps {
   cards: CardModel[];
@@ -11,14 +12,15 @@ interface BoardSetupProps {
 }
 
 const BoardSetup: React.FC<BoardSetupProps> = ({ cards, firstPlayerColor }) => {
+  const { nextCard } = useGameContext();
   return (
     <FullWrapper right={firstPlayerColor}>
-      <Card card={cards[4]} inverted={firstPlayerColor === 'Red'} />
-      <BoardDeckWrapper>
-        <Deck isFor='Red' cards={[cards[0], cards[1]]} />
+      <Card card={nextCard} inverted={firstPlayerColor === 'Red'} />
+      <BoardHandWrapper>
+        <Hand isFor='Red' cards={[cards[0], cards[1]]} />
         <Board />
-        <Deck isFor='Blue' cards={[cards[2], cards[3]]} />
-      </BoardDeckWrapper>
+        <Hand isFor='Blue' cards={[cards[2], cards[3]]} />
+      </BoardHandWrapper>
       <Spacer />
     </FullWrapper>
   );
