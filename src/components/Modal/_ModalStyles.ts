@@ -32,5 +32,18 @@ export const EndMessageHeader = styled.div`
   font-size: 2.5rem;
   color: #e64a19;
   font-weight: 700;
-  margin-bottom: 1rem;
+  margin: 0.5rem;
+`;
+
+export const EndMessageButton = styled.button`
+  font-family: 'Arvo', Georgia, 'Times New Roman', Times, serif;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  border-radius: 3px;
+  display: inline-block;
+  & > img {
+    width: 1rem;
+    margin-left: 0.5rem;
+  }
 `;
