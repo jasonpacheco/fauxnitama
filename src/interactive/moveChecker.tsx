@@ -1,4 +1,4 @@
-import { Coordinate } from '../interfaces/context.interface';
+import { Coordinate, PlayerColor } from '../interfaces/context.interface';
 import { BOARD_GAME, coordinateToID } from '../utils';
 import { CellData } from '../interfaces/context.interface';
 const { ROWS, COLS } = BOARD_GAME;
@@ -10,7 +10,7 @@ const transposeCardMovement = (validMoves: number[][]): number[][] => {
 const isOccupied = (
   positionID: number,
   board: CellData[],
-  color: 'Blue' | 'Red'
+  color: PlayerColor
 ): boolean =>
   !board[positionID].isEmpty && board[positionID].piece?.color === color;
 
@@ -18,7 +18,7 @@ export default (
   clickedCoordinates: Coordinate,
   validMovesFromCard: number[][],
   board: CellData[],
-  color: 'Blue' | 'Red' = 'Blue'
+  color: PlayerColor = 'Blue'
 ): number[] => {
   const { x, y } = clickedCoordinates;
   if (color === 'Red')

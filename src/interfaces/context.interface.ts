@@ -7,6 +7,8 @@ import {
   MOVE_PIECE,
   SET_SELECTED_CELL,
   SET_HAS_GAME_FINISHED,
+  SET_WINNER,
+  SET_WIN_METHOD,
 } from '../types';
 
 export type Coordinate = {
@@ -14,9 +16,12 @@ export type Coordinate = {
   y: number;
 };
 
+export type PlayerColor = 'Blue' | 'Red';
+export type PlayerType = 'Master' | 'Student';
+
 export interface Piece {
-  color: 'Blue' | 'Red';
-  type: 'Student' | 'Master';
+  color: PlayerColor;
+  type: PlayerType;
   currentPosition: Coordinate;
 }
 
@@ -45,18 +50,22 @@ export interface PlayerHand {
   [key: string]: CardModel;
 }
 
+export type WinMethods = 'master-check' | 'temple-check';
+
 export interface State {
   board: BoardState;
   selectedCell: CellData | undefined;
   selectedCard: CardModel | undefined;
-  currentPlayer: 'Blue' | 'Red';
+  currentPlayer: PlayerColor;
   cardSet: CardModel[];
-  firstPlayer: 'Blue' | 'Red';
+  firstPlayer: PlayerColor;
   validMoves: number[] | undefined;
   nextCard: CardModel;
   redHand: PlayerHand;
   blueHand: PlayerHand;
   hasGameFinished: boolean;
+  winner: PlayerColor | undefined;
+  winMethod: WinMethods | undefined;
 }
 export interface GameContextProperties extends State {
   getBoard: () => CellData[];
@@ -67,10 +76,12 @@ export interface GameContextProperties extends State {
     targetProperty: 'blueHand' | 'redHand',
     replacementCard: CardModel
   ) => void;
-  setCurrentPlayer: (player: 'Blue' | 'Red') => void;
+  setCurrentPlayer: (player: PlayerColor) => void;
   setValidMoves: (moves: number[]) => void;
   movePiece: (fromCell: CellData, toID: number) => void;
   setHasGameFinished: () => void;
+  setWinner: (winner: PlayerColor) => void;
+  setWinMethod: (winMethod: WinMethods) => void;
 }
 interface SetSelectedCell {
   type: typeof SET_SELECTED_CELL;
@@ -91,7 +102,7 @@ interface SetNextCard {
 
 interface SetCurrentPlayer {
   type: typeof SET_CURRENT_PLAYER;
-  player: 'Blue' | 'Red';
+  player: PlayerColor;
 }
 
 interface SetValidMoves {
@@ -109,6 +120,16 @@ interface MovePiece {
   toID: number;
 }
 
+interface SetWinner {
+  type: typeof SET_WINNER;
+  winner: PlayerColor;
+}
+
+interface SetWinMethod {
+  type: typeof SET_WIN_METHOD;
+  winMethod: WinMethods;
+}
+
 export type Actions =
   | SetSelectedCell
   | SetCurrentCard
@@ -116,4 +137,6 @@ export type Actions =
   | SetCurrentPlayer
   | SetValidMoves
   | MovePiece
-  | SetHasGameFinished;
+  | SetHasGameFinished
+  | SetWinner
+  | SetWinMethod;

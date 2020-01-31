@@ -8,6 +8,8 @@ import {
   SET_VALID_MOVES,
   MOVE_PIECE,
   SET_HAS_GAME_FINISHED,
+  SET_WINNER,
+  SET_WIN_METHOD,
 } from '../types';
 import { idToCoordinate } from '../utils';
 import isEqual from 'lodash.isequal';
@@ -86,6 +88,19 @@ export default (state: State, action: Actions): State => {
         ...state,
         hasGameFinished: true,
       };
+
+    case SET_WINNER:
+      return {
+        ...state,
+        winner: action.winner,
+      };
+
+    case SET_WIN_METHOD:
+      return {
+        ...state,
+        winMethod: action.winMethod,
+      };
+
     default:
       return state;
   }

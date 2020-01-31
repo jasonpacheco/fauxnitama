@@ -4,7 +4,12 @@ import GameContext from './gameContext';
 import { generateCardSet, checkMaster, checkTemple } from '../utils';
 import cloneDeep from 'lodash.clonedeep';
 
-import { State, CellData } from '../interfaces/context.interface';
+import {
+  State,
+  CellData,
+  PlayerColor,
+  WinMethods,
+} from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
 import {
   SET_SELECTED_CELL,
@@ -14,6 +19,8 @@ import {
   SET_VALID_MOVES,
   MOVE_PIECE,
   SET_HAS_GAME_FINISHED,
+  SET_WINNER,
+  SET_WIN_METHOD,
 } from '../types';
 
 import moveChecker from '../interactive/moveChecker';
@@ -132,6 +139,8 @@ const initialState: State = {
   nextCard: cards[4],
   validMoves: undefined,
   hasGameFinished: false,
+  winner: undefined,
+  winMethod: undefined,
   board: {
     cells: [...Opponent, ...EmptySpaceGenerator(), ...Player],
   },
@@ -201,7 +210,7 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
-  const setCurrentPlayer = (player: 'Blue' | 'Red'): void => {
+  const setCurrentPlayer = (player: PlayerColor): void => {
     dispatch({
       type: SET_CURRENT_PLAYER,
       player,
@@ -211,6 +220,20 @@ const GameState: React.FC = ({ children }) => {
   const setHasGameFinished = (): void => {
     dispatch({
       type: SET_HAS_GAME_FINISHED,
+    });
+  };
+
+  const setWinner = (winner: PlayerColor): void => {
+    dispatch({
+      type: SET_WINNER,
+      winner,
+    });
+  };
+
+  const setWinMethod = (winMethod: WinMethods): void => {
+    dispatch({
+      type: SET_WIN_METHOD,
+      winMethod,
     });
   };
 
@@ -255,6 +278,8 @@ const GameState: React.FC = ({ children }) => {
         setValidMoves,
         movePiece,
         setHasGameFinished,
+        setWinner,
+        setWinMethod,
       }}
     >
       {children}

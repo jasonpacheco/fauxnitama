@@ -5,3 +5,5 @@ export const SET_CURRENT_PLAYER = 'SET_CURRENT_PLAYER';
 export const SET_VALID_MOVES = 'SET_VALID_MOVES';
 export const MOVE_PIECE = 'MOVE_PIECE';
 export const SET_HAS_GAME_FINISHED = 'SET_HAS_GAME_FINISHED';
+export const SET_WINNER = 'SET_WINNER';
+export const SET_WIN_METHOD = 'SET_WIN_METHOD';
