@@ -29,14 +29,14 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
   const { image, moves, name, color, stamp } = card;
   const moveIDs = movesToID(moves);
-  const { setCurrentCard } = useGameContext();
+  const { setCurrentCard, hasGameFinished } = useGameContext();
 
   const handleCardClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     isTurn: boolean | undefined,
     card: CardModel
   ): void => {
-    if (isTurn) {
+    if (isTurn && !hasGameFinished) {
       setCurrentCard(card);
     }
   };

@@ -23,6 +23,7 @@ const Cell: React.FC<CellProps> = ({ data }) => {
     setSelectedCell,
     selectedCard,
     movePiece,
+    hasGameFinished,
   } = useGameContext();
 
   const { x, y } = idToCoordinate(id);
@@ -34,12 +35,14 @@ const Cell: React.FC<CellProps> = ({ data }) => {
     id: number,
     piece: IPiece | null
   ): void => {
-    if (piece?.color === currentPlayer && selectedCard) {
-      setSelectedCell(data);
-    }
+    if (!hasGameFinished) {
+      if (piece?.color === currentPlayer && selectedCard) {
+        setSelectedCell(data);
+      }
 
-    if (selectedCell && isValidMove) {
-      movePiece(selectedCell, id);
+      if (selectedCell && isValidMove) {
+        movePiece(selectedCell, id);
+      }
     }
   };
 
