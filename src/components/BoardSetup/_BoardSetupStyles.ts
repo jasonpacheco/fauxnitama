@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const FullWrapper = styled.div<{ right: string }>`
   margin: 0 auto;
   width: 80rem;
-  border: 1px solid #000;
   display: flex;
   flex-direction: ${({ right }): string =>
     right === 'Red' ? 'row' : 'row-reverse'};

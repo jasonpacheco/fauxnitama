@@ -13,6 +13,7 @@ import {
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
   MOVE_PIECE,
+  SET_HAS_GAME_FINISHED,
 } from '../types';
 
 import moveChecker from '../interactive/moveChecker';
@@ -130,7 +131,7 @@ const initialState: State = {
   blueHand: { first: cards[2], second: cards[3] },
   nextCard: cards[4],
   validMoves: undefined,
-  isGameFinished: false,
+  hasGameFinished: false,
   board: {
     cells: [...Opponent, ...EmptySpaceGenerator(), ...Player],
   },
@@ -207,6 +208,12 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
+  const setHasGameFinished = (): void => {
+    dispatch({
+      type: SET_HAS_GAME_FINISHED,
+    });
+  };
+
   const movePiece = (fromCell: CellData, toID: number): void => {
     const from = cloneDeep(fromCell);
     const fromPlayer = from.piece?.color;
@@ -216,9 +223,10 @@ const GameState: React.FC = ({ children }) => {
     const isMoveTempleCapture = checkTemple(fromPlayerType, toID);
     if (isMoveCheckmate) {
       console.log('Opponent master has been captured!');
-      // trigger game end state!
+      setHasGameFinished();
     } else if (isMoveTempleCapture) {
       console.log('Opponent temple has been captured!');
+      setHasGameFinished();
     }
     dispatch({
       type: MOVE_PIECE,
@@ -246,6 +254,7 @@ const GameState: React.FC = ({ children }) => {
         setCurrentPlayer,
         setValidMoves,
         movePiece,
+        setHasGameFinished,
       }}
     >
       {children}

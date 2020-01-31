@@ -7,6 +7,7 @@ import {
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
   MOVE_PIECE,
+  SET_HAS_GAME_FINISHED,
 } from '../types';
 import { idToCoordinate } from '../utils';
 import isEqual from 'lodash.isequal';
@@ -80,7 +81,11 @@ export default (state: State, action: Actions): State => {
           }),
         },
       };
-
+    case SET_HAS_GAME_FINISHED:
+      return {
+        ...state,
+        hasGameFinished: true,
+      };
     default:
       return state;
   }

@@ -6,6 +6,7 @@ import {
   SET_VALID_MOVES,
   MOVE_PIECE,
   SET_SELECTED_CELL,
+  SET_HAS_GAME_FINISHED,
 } from '../types';
 
 export type Coordinate = {
@@ -55,7 +56,7 @@ export interface State {
   nextCard: CardModel;
   redHand: PlayerHand;
   blueHand: PlayerHand;
-  isGameFinished: boolean;
+  hasGameFinished: boolean;
 }
 export interface GameContextProperties extends State {
   getBoard: () => CellData[];
@@ -69,6 +70,7 @@ export interface GameContextProperties extends State {
   setCurrentPlayer: (player: 'Blue' | 'Red') => void;
   setValidMoves: (moves: number[]) => void;
   movePiece: (fromCell: CellData, toID: number) => void;
+  setHasGameFinished: () => void;
 }
 interface SetSelectedCell {
   type: typeof SET_SELECTED_CELL;
@@ -97,6 +99,10 @@ interface SetValidMoves {
   moves: number[];
 }
 
+interface SetHasGameFinished {
+  type: typeof SET_HAS_GAME_FINISHED;
+}
+
 interface MovePiece {
   type: typeof MOVE_PIECE;
   fromCell: CellData;
@@ -109,4 +115,5 @@ export type Actions =
   | SetNextCard
   | SetCurrentPlayer
   | SetValidMoves
-  | MovePiece;
+  | MovePiece
+  | SetHasGameFinished;

@@ -12,7 +12,7 @@ const BoardSetup: React.FC = () => {
     blueHand,
     nextCard,
     currentPlayer,
-    isGameFinished,
+    hasGameFinished,
   } = useGameContext();
   return (
     <FullWrapper right={currentPlayer}>
@@ -30,7 +30,7 @@ const BoardSetup: React.FC = () => {
           currentHand={currentPlayer === 'Blue'}
         />
       </BoardHandWrapper>
-      <Spacer>{isGameFinished ? <GameEndMessage /> : <></>}</Spacer>
+      <Spacer>{hasGameFinished ? <GameEndMessage /> : <></>}</Spacer>
     </FullWrapper>
   );
 };
