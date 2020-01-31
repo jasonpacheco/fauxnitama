@@ -2,6 +2,7 @@ import React from 'react';
 import Board from '../Board/Board';
 import Hand from './Hand';
 import Card from '../Card/Card';
+import GameEndMessage from '../Modal/GameEndMessage';
 import { FullWrapper, BoardHandWrapper, Spacer } from './_BoardSetupStyles';
 import useGameContext from '../../context/useGameContext';
 
@@ -23,7 +24,9 @@ const BoardSetup: React.FC = () => {
           currentHand={currentPlayer === 'Blue'}
         />
       </BoardHandWrapper>
-      <Spacer />
+      <Spacer>
+        <GameEndMessage />
+      </Spacer>
     </FullWrapper>
   );
 };
