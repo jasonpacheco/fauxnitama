@@ -6,7 +6,9 @@ import {
   coordinateToID,
   movesToID,
   generateCardSet,
+  checkMaster,
 } from './index';
+import { CellData } from '../interfaces/context.interface';
 
 describe('tests for assignGridID', () => {
   test('returns an array of length rows * cols', () => {
@@ -139,5 +141,51 @@ describe('tests for moveToID', () => {
 describe('test for generateCardSet', () => {
   test('CardSet returns 5 elements', () => {
     expect(generateCardSet()).toHaveLength(5);
+  });
+});
+
+describe('test for checkMaster', () => {
+  const board: CellData[] = [
+    {
+      id: 0,
+      piece: null,
+      isValidMove: true,
+      isEmpty: true,
+      isBlue: false,
+      isRed: false,
+    },
+    {
+      id: 1,
+      piece: {
+        color: 'Blue',
+        type: 'Student',
+        currentPosition: { x: 0, y: 1 },
+      },
+      isValidMove: true,
+      isEmpty: false,
+      isBlue: true,
+      isRed: false,
+    },
+    {
+      id: 2,
+      piece: {
+        color: 'Blue',
+        type: 'Master',
+        currentPosition: { x: 0, y: 2 },
+      },
+      isValidMove: true,
+      isEmpty: false,
+      isBlue: true,
+      isRed: false,
+    },
+  ];
+  test('return false if cell id is null', () => {
+    expect(checkMaster(0, board)).toBeFalsy();
+  });
+  test('return false if cell id is a piece but not master', () => {
+    expect(checkMaster(1, board)).toBeFalsy();
+  });
+  test('return true if cell id is a master', () => {
+    expect(checkMaster(2, board)).toBeTruthy();
   });
 });

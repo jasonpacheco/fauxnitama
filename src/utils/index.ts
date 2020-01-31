@@ -1,4 +1,4 @@
-import { Coordinate } from '../interfaces/context.interface';
+import { Coordinate, CellData } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
 import CardTypes from '../components/Card/CardTypes';
 const {
@@ -151,4 +151,10 @@ export const generateCardSet = (numCards = 5): CardModel[] => {
   }
 
   return cardSet;
+};
+
+export const checkMaster = (toID: number, board: CellData[]): boolean => {
+  const getCellByID = board[toID];
+  const cellPiece = getCellByID.piece;
+  return cellPiece?.type === 'Master';
 };
