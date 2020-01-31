@@ -55,6 +55,7 @@ export interface State {
   nextCard: CardModel;
   redHand: PlayerHand;
   blueHand: PlayerHand;
+  isGameFinished: boolean;
 }
 export interface GameContextProperties extends State {
   getBoard: () => CellData[];

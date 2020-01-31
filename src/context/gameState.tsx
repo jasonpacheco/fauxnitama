@@ -119,7 +119,7 @@ const EmptySpaceGenerator = (): CellData[] => {
 };
 
 const cards: CardModel[] = generateCardSet();
-// TODO: Game detects when the temple is captured
+
 const initialState: State = {
   selectedCell: undefined,
   selectedCard: undefined,
@@ -130,6 +130,7 @@ const initialState: State = {
   blueHand: { first: cards[2], second: cards[3] },
   nextCard: cards[4],
   validMoves: undefined,
+  isGameFinished: false,
   board: {
     cells: [...Opponent, ...EmptySpaceGenerator(), ...Player],
   },

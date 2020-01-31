@@ -7,7 +7,13 @@ import { FullWrapper, BoardHandWrapper, Spacer } from './_BoardSetupStyles';
 import useGameContext from '../../context/useGameContext';
 
 const BoardSetup: React.FC = () => {
-  const { redHand, blueHand, nextCard, currentPlayer } = useGameContext();
+  const {
+    redHand,
+    blueHand,
+    nextCard,
+    currentPlayer,
+    isGameFinished,
+  } = useGameContext();
   return (
     <FullWrapper right={currentPlayer}>
       <Card card={nextCard} inverted={currentPlayer === 'Red'} />
@@ -24,9 +30,7 @@ const BoardSetup: React.FC = () => {
           currentHand={currentPlayer === 'Blue'}
         />
       </BoardHandWrapper>
-      <Spacer>
-        <GameEndMessage />
-      </Spacer>
+      <Spacer>{isGameFinished ? <GameEndMessage /> : <></>}</Spacer>
     </FullWrapper>
   );
 };

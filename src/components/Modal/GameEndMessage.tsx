@@ -7,17 +7,15 @@ import {
 } from './_ModalStyles';
 
 interface GameEndMessageProps {
-  isGameOver?: boolean;
   winningPlayer?: 'Blue' | 'Red';
   victoryMethod?: 'master-check' | 'temple-check';
 }
 
 const GameEndMessage: React.FC<GameEndMessageProps> = ({
-  isGameOver = true,
   winningPlayer = 'Red',
   victoryMethod = 'master-check',
 }) => {
-  return isGameOver ? (
+  return (
     <EndMessageWrapper>
       <EndMessageHeader>Game Over</EndMessageHeader>
       <EndMessageContent winner={winningPlayer}>
@@ -28,8 +26,6 @@ const GameEndMessage: React.FC<GameEndMessageProps> = ({
         !
       </EndMessageContent>
     </EndMessageWrapper>
-  ) : (
-    <></>
   );
 };
 
