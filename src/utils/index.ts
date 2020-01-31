@@ -160,7 +160,7 @@ export const checkMaster = (toID: number, board: CellData[]): boolean => {
 };
 
 export const checkTemple = (
-  playerType: 'Student' | 'Master',
+  playerType: 'Student' | 'Master' | undefined,
   toID: number
 ): boolean => {
   return playerType === 'Master' && (toID === 2 || toID === 22);

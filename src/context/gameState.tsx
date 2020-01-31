@@ -1,7 +1,7 @@
 import React, { useReducer } from 'react';
 import gameReducer from './gameReducer';
 import GameContext from './gameContext';
-import { generateCardSet, checkMaster } from '../utils';
+import { generateCardSet, checkMaster, checkTemple } from '../utils';
 import cloneDeep from 'lodash.clonedeep';
 
 import { State, CellData } from '../interfaces/context.interface';
@@ -212,9 +212,12 @@ const GameState: React.FC = ({ children }) => {
     const fromPlayerType = from.piece?.type;
     const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
     const isMoveCheckmate = checkMaster(toID, state.board.cells);
+    const isMoveTempleCapture = checkTemple(fromPlayerType, toID);
     if (isMoveCheckmate) {
       console.log('Opponent master has been captured!');
       // trigger game end state!
+    } else if (isMoveTempleCapture) {
+      console.log('Opponent temple has been captured!');
     }
     dispatch({
       type: MOVE_PIECE,
