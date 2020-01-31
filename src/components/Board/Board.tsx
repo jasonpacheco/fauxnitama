@@ -4,15 +4,15 @@ import { GridWrapper, Grid } from './_BoardStyles';
 import useGameContext from '../../context/useGameContext';
 
 const Board: React.FC = () => {
-  const { getBoard } = useGameContext();
-  const board = getBoard();
+  const { board } = useGameContext();
+  // const board = getBoard();
   // useEffect(() => {
   //   board.current = getBoard();
   // }, [selectedCard, getBoard]);
   return (
     <GridWrapper>
       <Grid>
-        {board.map(cell => (
+        {board.cells.map(cell => (
           <Cell key={cell.id} data={cell} />
         ))}
       </Grid>

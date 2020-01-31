@@ -10,9 +10,12 @@ import {
   SET_HAS_GAME_FINISHED,
   SET_WINNER,
   SET_WIN_METHOD,
+  CLEAR_GAME_STATE,
 } from '../types';
-import { idToCoordinate } from '../utils';
+import { idToCoordinate, generateCardSet, generateEmptyCells } from '../utils';
 import isEqual from 'lodash.isequal';
+import CardModel from '../interfaces/card.interface';
+import { Player, Opponent } from '../state/playerState';
 
 export default (state: State, action: Actions): State => {
   switch (action.type) {
@@ -99,6 +102,28 @@ export default (state: State, action: Actions): State => {
       return {
         ...state,
         winMethod: action.winMethod,
+      };
+
+    case CLEAR_GAME_STATE:
+      const newCards: CardModel[] = generateCardSet();
+
+      return {
+        ...state,
+        selectedCell: undefined,
+        selectedCard: undefined,
+        currentPlayer: newCards[4].stamp,
+        cardSet: newCards,
+        firstPlayer: newCards[4].stamp,
+        redHand: { first: newCards[0], second: newCards[1] },
+        blueHand: { first: newCards[2], second: newCards[3] },
+        nextCard: newCards[4],
+        validMoves: undefined,
+        hasGameFinished: false,
+        winner: undefined,
+        winMethod: undefined,
+        board: {
+          cells: [...Opponent, ...generateEmptyCells(), ...Player],
+        },
       };
 
     default:

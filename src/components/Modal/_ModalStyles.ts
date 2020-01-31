@@ -42,6 +42,8 @@ export const EndMessageButton = styled.button`
   font-size: 1.1rem;
   border-radius: 3px;
   display: inline-block;
+  outline: none;
+  cursor: pointer;
   & > img {
     width: 1rem;
     margin-left: 0.5rem;

@@ -7,3 +7,4 @@ export const MOVE_PIECE = 'MOVE_PIECE';
 export const SET_HAS_GAME_FINISHED = 'SET_HAS_GAME_FINISHED';
 export const SET_WINNER = 'SET_WINNER';
 export const SET_WIN_METHOD = 'SET_WIN_METHOD';
+export const CLEAR_GAME_STATE = 'CLEAR_GAME_STATE';

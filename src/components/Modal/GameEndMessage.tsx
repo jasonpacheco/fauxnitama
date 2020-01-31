@@ -13,12 +13,18 @@ import { PlayerColor, WinMethods } from '../../interfaces/context.interface';
 interface GameEndMessageProps {
   winner?: PlayerColor;
   winMethod?: WinMethods;
+  clearFn?: () => void;
 }
 
 const GameEndMessage: React.FC<GameEndMessageProps> = ({
   winner = 'Blue',
   winMethod = 'master-check',
+  clearFn = () => null,
 }) => {
+  const handleButtonClick = (e: React.SyntheticEvent): void => {
+    e.preventDefault();
+    clearFn();
+  };
   return (
     <EndMessageWrapper>
       <EndMessageHeader>Game Over</EndMessageHeader>
@@ -27,7 +33,9 @@ const GameEndMessage: React.FC<GameEndMessageProps> = ({
         <span className='color--loser'>
           {winMethod === 'master-check' ? 'Master' : 'Temple'}
         </span>
-        <EndMessageButton>
+        <EndMessageButton
+          onClick={(e: React.SyntheticEvent): void => handleButtonClick(e)}
+        >
           Restart Game
           <img src={RestartIcon} alt='' />
         </EndMessageButton>

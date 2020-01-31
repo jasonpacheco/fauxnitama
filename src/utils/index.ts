@@ -165,3 +165,18 @@ export const checkTemple = (
 ): boolean => {
   return playerType === 'Master' && (toID === 2 || toID === 22);
 };
+
+export const generateEmptyCells = (): CellData[] => {
+  const cells = [];
+  for (let i = 5; i <= 19; i++) {
+    cells.push({
+      id: i,
+      piece: null,
+      isValidMove: false,
+      isEmpty: true,
+      isBlue: false,
+      isRed: false,
+    });
+  }
+  return cells;
+};
