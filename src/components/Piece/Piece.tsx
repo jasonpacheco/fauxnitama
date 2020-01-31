@@ -33,7 +33,7 @@ const Piece: React.FC<PieceProps> = ({ type, color }) => {
       {typeOfPiece && <img src={typeOfPiece} alt={type} />}
     </PieceWrapper>
   ) : (
-    <>Hello</>
+    <></>
   );
 };
 

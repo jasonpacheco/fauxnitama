@@ -11,19 +11,19 @@ import {
 import { PlayerColor, WinMethods } from '../../interfaces/context.interface';
 
 interface GameEndMessageProps {
-  winner?: PlayerColor;
-  winMethod?: WinMethods;
-  clearFn?: () => void;
+  winner: PlayerColor;
+  winMethod: WinMethods;
+  clearGameState: () => void;
 }
 
 const GameEndMessage: React.FC<GameEndMessageProps> = ({
-  winner = 'Blue',
-  winMethod = 'master-check',
-  clearFn = () => null,
+  winner,
+  winMethod,
+  clearGameState,
 }) => {
   const handleButtonClick = (e: React.SyntheticEvent): void => {
     e.preventDefault();
-    clearFn();
+    clearGameState();
   };
   return (
     <EndMessageWrapper>

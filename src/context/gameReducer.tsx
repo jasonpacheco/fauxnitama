@@ -114,7 +114,7 @@ export default (state: State, action: Actions): State => {
 
     case CLEAR_GAME_STATE:
       const newCards: CardModel[] = generateCardSet();
-
+      const newBoard = [...Opponent, ...generateEmptyCells(), ...Player];
       return {
         selectedCell: undefined,
         selectedCard: undefined,
@@ -129,9 +129,7 @@ export default (state: State, action: Actions): State => {
         winner: undefined,
         winMethod: undefined,
         isCleared: false,
-        board: cloneDeep({
-          cells: [...Opponent, ...generateEmptyCells(), ...Player],
-        }),
+        board: { cells: cloneDeep(newBoard) },
       };
 
     default:

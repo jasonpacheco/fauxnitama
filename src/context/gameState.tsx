@@ -50,7 +50,7 @@ const initialState: State = {
   winMethod: undefined,
   isCleared: false,
   board: {
-    cells: [...Opponent, ...generateEmptyCells(), ...Player],
+    cells: cloneDeep([...Opponent, ...generateEmptyCells(), ...Player]),
   },
 };
 
