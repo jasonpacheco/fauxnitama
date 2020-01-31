@@ -1,13 +1,36 @@
 import React from 'react';
 
-import { MessageWrapper } from './_ModalStyles';
+import {
+  EndMessageWrapper,
+  EndMessageHeader,
+  EndMessageContent,
+} from './_ModalStyles';
 
 interface GameEndMessageProps {
-  test?: string;
+  isGameOver?: boolean;
+  winningPlayer?: 'Blue' | 'Red';
+  victoryMethod?: 'master-check' | 'temple-check';
 }
 
-const GameEndMessage: React.FC<GameEndMessageProps> = ({}) => {
-  return <MessageWrapper>Game Has Ended</MessageWrapper>;
+const GameEndMessage: React.FC<GameEndMessageProps> = ({
+  isGameOver = true,
+  winningPlayer = 'Red',
+  victoryMethod = 'master-check',
+}) => {
+  return isGameOver ? (
+    <EndMessageWrapper>
+      <EndMessageHeader>Game Over</EndMessageHeader>
+      <EndMessageContent winner={winningPlayer}>
+        <span className='color--winner'>{winningPlayer}</span> wins by capturing{' '}
+        <span className='color--loser'>
+          {victoryMethod === 'master-check' ? 'master' : 'temple'}
+        </span>
+        !
+      </EndMessageContent>
+    </EndMessageWrapper>
+  ) : (
+    <></>
+  );
 };
 
 export default GameEndMessage;
