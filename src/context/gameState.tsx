@@ -27,6 +27,7 @@ import {
   SET_WINNER,
   SET_WIN_METHOD,
   CLEAR_GAME_STATE,
+  SET_IS_CLEARED,
 } from '../types';
 
 import moveChecker from '../interactive/moveChecker';
@@ -47,6 +48,7 @@ const initialState: State = {
   hasGameFinished: false,
   winner: undefined,
   winMethod: undefined,
+  isCleared: false,
   board: {
     cells: [...Opponent, ...generateEmptyCells(), ...Player],
   },
@@ -78,6 +80,12 @@ const GameState: React.FC = ({ children }) => {
         )
       );
     }
+  };
+
+  const setIsCleared = (): void => {
+    dispatch({
+      type: SET_IS_CLEARED,
+    });
   };
 
   const setCurrentCard = (currentCard: CardModel): void => {
@@ -173,6 +181,7 @@ const GameState: React.FC = ({ children }) => {
   };
 
   const clearGameState = (): void => {
+    setIsCleared();
     dispatch({
       type: CLEAR_GAME_STATE,
     });
@@ -192,6 +201,7 @@ const GameState: React.FC = ({ children }) => {
         setWinner,
         setWinMethod,
         clearGameState,
+        setIsCleared,
       }}
     >
       {children}

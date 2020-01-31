@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Cell from './Cell';
 import { GridWrapper, Grid } from './_BoardStyles';
 import useGameContext from '../../context/useGameContext';
 
 const Board: React.FC = () => {
-  const { board } = useGameContext();
+  const { board, isCleared } = useGameContext();
   // const board = getBoard();
   // useEffect(() => {
-  //   board.current = getBoard();
-  // }, [selectedCard, getBoard]);
+  //   console.log('useEffect ran');
+  // }, [!isCleared]);
   return (
     <GridWrapper>
       <Grid>

@@ -11,11 +11,13 @@ import {
   SET_WINNER,
   SET_WIN_METHOD,
   CLEAR_GAME_STATE,
+  SET_IS_CLEARED,
 } from '../types';
 import { idToCoordinate, generateCardSet, generateEmptyCells } from '../utils';
 import isEqual from 'lodash.isequal';
 import CardModel from '../interfaces/card.interface';
 import { Player, Opponent } from '../state/playerState';
+import cloneDeep from 'lodash.clonedeep';
 
 export default (state: State, action: Actions): State => {
   switch (action.type) {
@@ -104,11 +106,16 @@ export default (state: State, action: Actions): State => {
         winMethod: action.winMethod,
       };
 
+    case SET_IS_CLEARED:
+      return {
+        ...state,
+        isCleared: true,
+      };
+
     case CLEAR_GAME_STATE:
       const newCards: CardModel[] = generateCardSet();
 
       return {
-        ...state,
         selectedCell: undefined,
         selectedCard: undefined,
         currentPlayer: newCards[4].stamp,
@@ -121,9 +128,10 @@ export default (state: State, action: Actions): State => {
         hasGameFinished: false,
         winner: undefined,
         winMethod: undefined,
-        board: {
+        isCleared: false,
+        board: cloneDeep({
           cells: [...Opponent, ...generateEmptyCells(), ...Player],
-        },
+        }),
       };
 
     default:

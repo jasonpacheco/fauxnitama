@@ -10,6 +10,7 @@ import {
   SET_WINNER,
   SET_WIN_METHOD,
   CLEAR_GAME_STATE,
+  SET_IS_CLEARED,
 } from '../types';
 
 export type Coordinate = {
@@ -66,6 +67,7 @@ export interface State {
   hasGameFinished: boolean;
   winner: PlayerColor | undefined;
   winMethod: WinMethods | undefined;
+  isCleared: boolean;
 }
 export interface GameContextProperties extends State {
   setSelectedCell: (cell: CellData) => void;
@@ -82,6 +84,7 @@ export interface GameContextProperties extends State {
   setWinner: (winner: PlayerColor) => void;
   setWinMethod: (winMethod: WinMethods) => void;
   clearGameState: () => void;
+  setIsCleared: () => void;
 }
 interface SetSelectedCell {
   type: typeof SET_SELECTED_CELL;
@@ -134,6 +137,10 @@ interface ClearGameState {
   type: typeof CLEAR_GAME_STATE;
 }
 
+interface SetIsCleared {
+  type: typeof SET_IS_CLEARED;
+}
+
 export type Actions =
   | SetSelectedCell
   | SetCurrentCard
@@ -144,4 +151,5 @@ export type Actions =
   | SetHasGameFinished
   | SetWinner
   | SetWinMethod
-  | ClearGameState;
+  | ClearGameState
+  | SetIsCleared;

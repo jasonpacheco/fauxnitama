@@ -35,9 +35,15 @@ const BoardSetup: React.FC = () => {
       </BoardHandWrapper>
       <Spacer>
         {hasGameFinished && winner && winMethod ? (
-          <GameEndMessage winner={winner} winMethod={winMethod} />
+          <GameEndMessage
+            winner={winner}
+            winMethod={winMethod}
+            clearFn={clearGameState}
+          />
         ) : (
-          <GameEndMessage clearFn={clearGameState} />
+          <>
+            <GameEndMessage clearFn={clearGameState} />
+          </>
         )}
       </Spacer>
     </FullWrapper>

@@ -8,3 +8,5 @@ export const SET_HAS_GAME_FINISHED = 'SET_HAS_GAME_FINISHED';
 export const SET_WINNER = 'SET_WINNER';
 export const SET_WIN_METHOD = 'SET_WIN_METHOD';
 export const CLEAR_GAME_STATE = 'CLEAR_GAME_STATE';
+export const IS_CLEARED = 'IS_CLEARED';
+export const SET_IS_CLEARED = 'SET_IS_CLEARED';
