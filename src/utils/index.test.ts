@@ -7,6 +7,7 @@ import {
   movesToID,
   generateCardSet,
   checkMaster,
+  checkTemple,
 } from './index';
 import { CellData } from '../interfaces/context.interface';
 
@@ -37,9 +38,11 @@ describe('tests for getTempleID', () => {
     expect(getTempleID()).toHaveProperty('blue');
     expect(getTempleID()).toHaveProperty('red');
   });
+
   test('returns a red temple id of {x: 0, y: 2, id: 2}', () => {
     expect(getTempleID().red).toMatchObject({ x: 0, y: 2, id: 2 });
   });
+
   test('returns a blue temple id of {x: 4, y: 2, id: 22}', () => {
     expect(getTempleID().blue).toMatchObject({ x: 4, y: 2, id: 22 });
   });
@@ -179,13 +182,42 @@ describe('test for checkMaster', () => {
       isRed: false,
     },
   ];
+
   test('return false if cell id is null', () => {
     expect(checkMaster(0, board)).toBeFalsy();
   });
+
   test('return false if cell id is a piece but not master', () => {
     expect(checkMaster(1, board)).toBeFalsy();
   });
+
   test('return true if cell id is a master', () => {
     expect(checkMaster(2, board)).toBeTruthy();
+  });
+});
+
+describe('tests for checkTemple', () => {
+  test('returns false when master is not on a temple id', () => {
+    expect(checkTemple('Master', 21)).toBeFalsy();
+  });
+
+  test('returns false when student is not on a temple id', () => {
+    expect(checkTemple('Student', 21)).toBeFalsy();
+  });
+
+  test('returns false when student is on a temple id of 2', () => {
+    expect(checkTemple('Student', 2)).toBeFalsy();
+  });
+
+  test('returns false when student is on a temple id of 22', () => {
+    expect(checkTemple('Student', 22)).toBeFalsy();
+  });
+
+  test('returns true when master is on a temple id of 2', () => {
+    expect(checkTemple('Master', 2)).toBeTruthy();
+  });
+
+  test('returns true when master is on a temple id of 22', () => {
+    expect(checkTemple('Master', 22)).toBeTruthy();
   });
 });

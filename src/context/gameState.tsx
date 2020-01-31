@@ -119,7 +119,7 @@ const EmptySpaceGenerator = (): CellData[] => {
 };
 
 const cards: CardModel[] = generateCardSet();
-// TODO: Game detects when the master is captured
+// TODO: Game detects when the temple is captured
 const initialState: State = {
   selectedCell: undefined,
   selectedCard: undefined,
@@ -209,6 +209,7 @@ const GameState: React.FC = ({ children }) => {
   const movePiece = (fromCell: CellData, toID: number): void => {
     const from = cloneDeep(fromCell);
     const fromPlayer = from.piece?.color;
+    const fromPlayerType = from.piece?.type;
     const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
     const isMoveCheckmate = checkMaster(toID, state.board.cells);
     if (isMoveCheckmate) {

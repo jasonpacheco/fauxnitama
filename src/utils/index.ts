@@ -158,3 +158,10 @@ export const checkMaster = (toID: number, board: CellData[]): boolean => {
   const cellPiece = getCellByID.piece;
   return cellPiece?.type === 'Master';
 };
+
+export const checkTemple = (
+  playerType: 'Student' | 'Master',
+  toID: number
+): boolean => {
+  return playerType === 'Master' && (toID === 2 || toID === 22);
+};
