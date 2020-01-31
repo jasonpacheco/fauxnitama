@@ -18,6 +18,7 @@ export type Coordinate = {
 
 export type PlayerColor = 'Blue' | 'Red';
 export type PlayerType = 'Master' | 'Student';
+export type WinMethods = 'master-check' | 'temple-check';
 
 export interface Piece {
   color: PlayerColor;
@@ -49,8 +50,6 @@ export interface Coordinates extends Coordinate {
 export interface PlayerHand {
   [key: string]: CardModel;
 }
-
-export type WinMethods = 'master-check' | 'temple-check';
 
 export interface State {
   board: BoardState;

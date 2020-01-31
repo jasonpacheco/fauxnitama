@@ -6,14 +6,16 @@ import {
   EndMessageContent,
 } from './_ModalStyles';
 
+import { PlayerColor, WinMethods } from '../../interfaces/context.interface';
+
 interface GameEndMessageProps {
-  winner?: 'Blue' | 'Red';
-  winMethod?: 'master-check' | 'temple-check';
+  winner: PlayerColor;
+  winMethod: WinMethods;
 }
 
 const GameEndMessage: React.FC<GameEndMessageProps> = ({
-  winner = 'Red',
-  winMethod = 'master-check',
+  winner,
+  winMethod,
 }) => {
   return (
     <EndMessageWrapper>

@@ -244,11 +244,15 @@ const GameState: React.FC = ({ children }) => {
     const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
     const isMoveCheckmate = checkMaster(toID, state.board.cells);
     const isMoveTempleCapture = checkTemple(fromPlayerType, toID);
-    if (isMoveCheckmate) {
+    if (fromPlayer && isMoveCheckmate) {
       console.log('Opponent master has been captured!');
+      setWinner(fromPlayer);
+      setWinMethod('master-check');
       setHasGameFinished();
-    } else if (isMoveTempleCapture) {
+    } else if (fromPlayer && isMoveTempleCapture) {
       console.log('Opponent temple has been captured!');
+      setWinner(fromPlayer);
+      setWinMethod('temple-check');
       setHasGameFinished();
     }
     dispatch({
