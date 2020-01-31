@@ -119,7 +119,7 @@ const EmptySpaceGenerator = (): CellData[] => {
 };
 
 const cards: CardModel[] = generateCardSet();
-// TODO: card switching
+// TODO: Game detects when the master is captured
 const initialState: State = {
   selectedCell: undefined,
   selectedCard: undefined,
