@@ -37,7 +37,9 @@ const Cell: React.FC<CellProps> = ({ data }) => {
   ): void => {
     if (!hasGameFinished) {
       if (piece?.color === currentPlayer && selectedCard) {
-        setSelectedCell(data);
+        if (id !== selectedCell?.id) {
+          setSelectedCell(data);
+        }
       }
 
       if (selectedCell && isValidMove) {

@@ -19,6 +19,7 @@ import { getIDs, coordinateToID, movesToID } from '../../utils';
 import CardModel from '../../interfaces/card.interface';
 
 import useGameContext from '../../context/useGameContext';
+import isEqual from 'lodash.isequal';
 
 interface CardProps {
   inverted?: boolean;
@@ -29,7 +30,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
   const { image, moves, name, color, stamp } = card;
   const moveIDs = movesToID(moves);
-  const { setCurrentCard, hasGameFinished } = useGameContext();
+  const { setCurrentCard, selectedCard, hasGameFinished } = useGameContext();
 
   const handleCardClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -37,9 +38,12 @@ const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
     card: CardModel
   ): void => {
     if (isTurn && !hasGameFinished) {
-      setCurrentCard(card);
+      if (!isEqual(card, selectedCard)) {
+        setCurrentCard(card);
+      }
     }
   };
+  // console.log('Card rendered');
 
   return (
     <CardWrapper
