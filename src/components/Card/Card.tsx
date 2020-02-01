@@ -39,7 +39,7 @@ const Card: React.FC<CardProps> = ({
   const { image, moves, name, color, stamp } = card;
   const moveIDs = movesToID(moves);
 
-  console.log('Card rendered');
+  // console.log('Card rendered');
   return (
     <CardWrapper
       invert={invert}

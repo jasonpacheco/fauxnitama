@@ -47,6 +47,7 @@ const Cell: React.FC<CellProps> = ({ data }) => {
       }
     }
   };
+  // console.log('Cell rendered');
 
   return (
     <Box

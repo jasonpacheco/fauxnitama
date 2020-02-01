@@ -160,10 +160,15 @@ export const checkMaster = (toID: number, board: CellData[]): boolean => {
 };
 
 export const checkTemple = (
+  playerColor: 'Blue' | 'Red' | undefined,
   playerType: 'Student' | 'Master' | undefined,
   toID: number
 ): boolean => {
-  return playerType === 'Master' && (toID === 2 || toID === 22);
+  return (
+    playerType === 'Master' &&
+    ((playerColor === 'Blue' && toID === 2) ||
+      (playerColor === 'Red' && toID === 22))
+  );
 };
 
 export const generateEmptyCells = (): CellData[] => {

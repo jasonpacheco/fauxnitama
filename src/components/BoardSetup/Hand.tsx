@@ -21,7 +21,7 @@ const Hand: React.FC<HandProps> = ({
   invert = false,
   selectedCard = undefined,
 }) => {
-  console.log('Hand rendered');
+  // console.log('Hand rendered');
 
   const onCardClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,

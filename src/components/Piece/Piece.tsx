@@ -27,7 +27,7 @@ const getPieceSVG = (type: string | undefined): string | null => {
 
 const Piece: React.FC<PieceProps> = ({ type, color }) => {
   const typeOfPiece = getPieceSVG(`${color}-${type}`);
-
+  console.log('Piece rendered');
   return type ? (
     <PieceWrapper isRotated={color === 'Red'}>
       {typeOfPiece && <img src={typeOfPiece} alt={type} />}
@@ -37,4 +37,8 @@ const Piece: React.FC<PieceProps> = ({ type, color }) => {
   );
 };
 
-export default Piece;
+export default React.memo(Piece, (prevProps, nextProps) => {
+  return (
+    prevProps.color === nextProps.color && prevProps.type === nextProps.type
+  );
+});
