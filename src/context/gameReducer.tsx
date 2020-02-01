@@ -91,14 +91,12 @@ export default (state: State, action: Actions): State => {
           const fromCell = action.fromCell;
           cell.isValidMove = false;
           if (cell.id === fromCell.id) {
-            cell.piece = null;
-            cell.isEmpty = true;
+            cell.piece = undefined;
           }
 
           if (fromCell.piece && cell.id === action.toID) {
             cell.piece = fromCell.piece;
             cell.piece.currentPosition = idToCoordinate(cell.id);
-            cell.isEmpty = false;
           }
           return cell;
         }),

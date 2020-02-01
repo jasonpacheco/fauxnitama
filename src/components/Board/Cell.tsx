@@ -20,7 +20,7 @@ interface CellProps {
     cellData: CellData,
     id: number,
     isValidMove: boolean,
-    piece: IPiece | null
+    piece: IPiece | undefined
   ) => void;
   renderCell: CellData;
 }

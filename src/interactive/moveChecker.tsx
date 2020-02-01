@@ -12,7 +12,7 @@ const isOccupied = (
   board: CellData[],
   color: PlayerColor
 ): boolean =>
-  !board[positionID].isEmpty && board[positionID].piece?.color === color;
+  !board[positionID].piece && board[positionID].piece?.color === color;
 
 export default (
   clickedCoordinates: Coordinate,

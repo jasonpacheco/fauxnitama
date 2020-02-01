@@ -146,9 +146,8 @@ export const generateEmptyCells = (): CellData[] => {
   for (let i = 5; i <= 19; i++) {
     cells.push({
       id: i,
-      piece: null,
+      piece: undefined,
       isValidMove: false,
-      isEmpty: true,
     });
   }
   return cells;

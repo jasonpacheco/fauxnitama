@@ -29,7 +29,7 @@ const Board: React.FC<BoardProps> = ({
     cellData: CellData,
     id: number,
     isValidMove: boolean,
-    piece: Piece | null
+    piece: Piece | undefined
   ): void => {
     if (!hasGameFinished) {
       if (piece?.color === activePlayer) {

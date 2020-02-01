@@ -34,9 +34,8 @@ export interface Player {
 
 export interface CellData {
   id: number;
-  piece: Piece | null;
+  piece: Piece | undefined;
   isValidMove: boolean;
-  isEmpty: boolean;
 }
 
 export interface Coordinates extends Coordinate {
