@@ -1,5 +1,6 @@
 import React from 'react';
 import CardModel from '../../interfaces/card.interface';
+import MiniBoard from './MiniBoard';
 
 import {
   CardWrapper,
@@ -9,17 +10,13 @@ import {
   RightHalf,
   Character,
   Name,
-  MiniBoard,
-  MiniBox,
   Stamp,
   StampTooltip,
 } from './_CardStyles';
 
-import { getIDs, coordinateToID, movesToID } from '../../utils';
-
 interface CardProps {
-  invert: boolean;
   card: CardModel;
+  invert: boolean;
   isActiveCard?: boolean;
   onCardClick?: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -29,15 +26,14 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({
-  invert,
   card,
+  invert,
+  isActiveCard = false,
   onCardClick = (): void => {
     return;
   },
-  isActiveCard = false,
 }) => {
   const { image, moves, name, color, stamp } = card;
-  const moveIDs = movesToID(moves);
 
   // console.log('Card rendered');
   return (
@@ -54,15 +50,7 @@ const Card: React.FC<CardProps> = ({
           <Name>{name}</Name>
         </LeftHalf>
         <RightHalf>
-          <MiniBoard>
-            {getIDs().map(({ id, x, y }) =>
-              moveIDs.includes(coordinateToID({ x, y })) ? (
-                <MiniBox key={id} hasColor={color} />
-              ) : (
-                <MiniBox key={id} center={id === 12} />
-              )
-            )}
-          </MiniBoard>
+          <MiniBoard color={color} moves={moves} />
         </RightHalf>
       </Main>
       <Gutter>

@@ -21,7 +21,6 @@ const Cell: React.FC<CellProps> = ({ data }) => {
     currentPlayer,
     selectedCell,
     setSelectedCell,
-    selectedCard,
     movePiece,
     hasGameFinished,
   } = useGameContext();
@@ -47,7 +46,7 @@ const Cell: React.FC<CellProps> = ({ data }) => {
       }
     }
   };
-  // console.log('Cell rendered');
+  console.log('Cell rendered');
 
   return (
     <Box

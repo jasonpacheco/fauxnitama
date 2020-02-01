@@ -27,7 +27,6 @@ const getPieceSVG = (type: string | undefined): string | null => {
 
 const Piece: React.FC<PieceProps> = ({ type, color }) => {
   const typeOfPiece = getPieceSVG(`${color}-${type}`);
-  console.log('Piece rendered');
   return type ? (
     <PieceWrapper isRotated={color === 'Red'}>
       {typeOfPiece && <img src={typeOfPiece} alt={type} />}

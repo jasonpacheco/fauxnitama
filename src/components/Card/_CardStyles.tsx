@@ -60,7 +60,7 @@ export const Name = styled.div`
   border-bottom: 1px dotted #333;
 `;
 
-export const MiniBoard = styled.div`
+export const MiniBoardWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(${COLS}, 1.8rem);
   grid-template-rows: repeat(${COLS}, 1.8rem);
@@ -76,7 +76,7 @@ export const MiniBox = styled.div<MiniBoxStyleProps>`
   padding: 0;
   border: 1px solid #979677;
   background-color: ${({ center, hasColor }): string =>
-    center ? 'black' : hasColor ? hasColor : 'white'};
+    center ? '#000' : hasColor ? hasColor : '#fff'};
 `;
 
 interface StampTooltipProps {
