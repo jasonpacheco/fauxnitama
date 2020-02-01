@@ -1,9 +1,5 @@
 import styled from 'styled-components';
-import { PlayerColor } from '../../interfaces/context.interface';
-/**
- * blue 1976D2
-  red D32F2F
- */
+import { EndMessageContentStyleProps } from '../../interfaces/styles.interface';
 
 export const EndMessageWrapper = styled.div`
   border: 1px solid #333;
@@ -13,7 +9,7 @@ export const EndMessageWrapper = styled.div`
   padding: 1rem;
 `;
 
-export const EndMessageContent = styled.div<{ winner: PlayerColor }>`
+export const EndMessageContent = styled.div<EndMessageContentStyleProps>`
   & {
     .color--winner {
       color: ${(props): string =>

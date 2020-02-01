@@ -1,14 +1,15 @@
 import styled from 'styled-components';
-import { BOARD_GAME } from '../../utils';
+import {
+  CardWrapperStyleProps,
+  MiniBoxStyleProps,
+  StampStyleProps,
+  StampTooltipStyleProps,
+} from '../../interfaces/styles.interface';
 import BlueShuriken from '../../assets/_blue/shuriken.svg';
 import RedShuriken from '../../assets/_red/shuriken.svg';
+import { BOARD_GAME } from '../../utils';
 
 const { COLS } = BOARD_GAME;
-
-interface CardWrapperStyleProps {
-  invert: boolean;
-  isActive: boolean;
-}
 
 export const CardWrapper = styled.div<CardWrapperStyleProps>`
   border: 1px solid #000;
@@ -66,10 +67,6 @@ export const MiniBoardWrapper = styled.div`
   grid-template-rows: repeat(${COLS}, 1.8rem);
   border: 1px solid #cacba2;
 `;
-interface MiniBoxStyleProps {
-  center?: boolean;
-  hasColor?: string | undefined;
-}
 
 export const MiniBox = styled.div<MiniBoxStyleProps>`
   margin: 0;
@@ -79,11 +76,7 @@ export const MiniBox = styled.div<MiniBoxStyleProps>`
     center ? '#000' : hasColor ? hasColor : '#fff'};
 `;
 
-interface StampTooltipProps {
-  invert: boolean;
-}
-
-export const StampTooltip = styled.div<StampTooltipProps>`
+export const StampTooltip = styled.div<StampTooltipStyleProps>`
   font-family: 'Arvo', 'Georgia', serif;
   font-size: 0.8rem;
   visibility: hidden;
@@ -113,10 +106,6 @@ export const StampTooltip = styled.div<StampTooltipProps>`
     border-color: transparent black transparent transparent;
   }
 `;
-
-interface StampStyleProps {
-  color: 'Blue' | 'Red';
-}
 
 export const Stamp = styled.div<StampStyleProps>`
   position: relative;

@@ -1,10 +1,7 @@
 import styled from 'styled-components';
+import { FullWrapperStyleProps } from '../../interfaces/styles.interface';
 
-interface FullWrapperProps {
-  playerColorToRight: 'Blue' | 'Red';
-}
-
-export const FullWrapper = styled.div<FullWrapperProps>`
+export const FullWrapper = styled.div<FullWrapperStyleProps>`
   margin: 0 auto;
   width: 80rem;
   display: flex;
