@@ -1,11 +1,11 @@
 import CardModel from '../interfaces/card.interface';
 import {
-  SET_CURRENT_CARD,
+  SET_CLICKED_CARD,
+  SET_CLICKED_PIECE,
   SET_NEXT_CARD,
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
   MOVE_PIECE,
-  SET_SELECTED_CELL,
   SET_HAS_GAME_FINISHED,
   SET_WINNER,
   SET_WIN_METHOD,
@@ -43,22 +43,21 @@ export interface PlayerHand {
 
 export interface State {
   board: CellData[];
+  clickedCard: CardModel | undefined;
+  clickedPiece: Piece | undefined;
   currentPlayer: PlayerColor;
-  firstPlayer: PlayerColor;
   isCleared: boolean;
   handBlue: PlayerHand;
   handRed: PlayerHand;
   hasGameFinished: boolean;
   nextCard: CardModel;
-  selectedCard: CardModel | undefined;
-  selectedCell: CellData | undefined;
   validMoves: number[];
   winMethod: WinMethods | undefined;
   winner: PlayerColor | undefined;
 }
 export interface GameContextProperties extends State {
-  setSelectedCell: (cell: CellData) => void;
-  setCurrentCard: (currentCard: CardModel) => void;
+  setClickedCard: (clickedCard: CardModel) => void;
+  setClickedPiece: (clickedPiece: Piece) => void;
   setNextCard: (
     nextCard: CardModel,
     targetProperty: 'handBlue' | 'handRed',
@@ -66,21 +65,21 @@ export interface GameContextProperties extends State {
   ) => void;
   setCurrentPlayer: (player: PlayerColor) => void;
   setValidMoves: (piece: Piece | undefined) => void;
-  movePiece: (fromCell: CellData, toID: number) => void;
+  movePiece: (fromPiece: Piece, toID: number) => void;
   setHasGameFinished: () => void;
   setWinner: (winner: PlayerColor) => void;
   setWinMethod: (winMethod: WinMethods) => void;
   clearGameState: () => void;
   setIsCleared: () => void;
 }
-interface SetSelectedCell {
-  type: typeof SET_SELECTED_CELL;
-  cell: CellData;
+interface SetClickedPiece {
+  type: typeof SET_CLICKED_PIECE;
+  clickedPiece: Piece;
 }
 
-interface SetCurrentCard {
-  type: typeof SET_CURRENT_CARD;
-  currentCard: CardModel;
+interface SetClickedCard {
+  type: typeof SET_CLICKED_CARD;
+  clickedCard: CardModel;
 }
 
 interface SetNextCard {
@@ -106,7 +105,7 @@ interface SetHasGameFinished {
 
 interface MovePiece {
   type: typeof MOVE_PIECE;
-  fromCell: CellData;
+  fromPiece: Piece;
   toID: number;
 }
 
@@ -129,8 +128,8 @@ interface SetIsCleared {
 }
 
 export type Actions =
-  | SetSelectedCell
-  | SetCurrentCard
+  | SetClickedPiece
+  | SetClickedCard
   | SetNextCard
   | SetCurrentPlayer
   | SetValidMoves

@@ -10,7 +10,6 @@ import {
 import cloneDeep from 'lodash.clonedeep';
 
 import {
-  CellData,
   Piece,
   PlayerColor,
   State,
@@ -18,8 +17,8 @@ import {
 } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
 import {
-  SET_SELECTED_CELL,
-  SET_CURRENT_CARD,
+  SET_CLICKED_CARD,
+  SET_CLICKED_PIECE,
   SET_NEXT_CARD,
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
@@ -37,15 +36,14 @@ const cards: CardModel[] = generateCardSet();
 
 const initialState: State = {
   board: cloneDeep([...Opponent, ...generateEmptyCells(), ...Player]),
+  clickedCard: undefined,
+  clickedPiece: undefined,
   currentPlayer: cards[4].stamp,
-  firstPlayer: cards[4].stamp,
   isCleared: false,
   handBlue: { first: cards[2], second: cards[3] },
   handRed: { first: cards[0], second: cards[1] },
   hasGameFinished: false,
   nextCard: cards[4],
-  selectedCell: undefined,
-  selectedCard: undefined,
   validMoves: [],
   winMethod: undefined,
   winner: undefined,
@@ -61,14 +59,14 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
-  const setSelectedCell = (cell: CellData): void => {
+  const setClickedPiece = (clickedPiece: Piece): void => {
     dispatch({
-      type: SET_SELECTED_CELL,
-      cell,
+      type: SET_CLICKED_PIECE,
+      clickedPiece,
     });
     /** Implements move checking when cell is clicked */
-    if (cell.piece && state.selectedCard) {
-      setValidMoves(cell.piece);
+    if (clickedPiece && state.clickedCard) {
+      setValidMoves(clickedPiece);
     }
   };
 
@@ -78,16 +76,16 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
-  const setCurrentCard = (currentCard: CardModel): void => {
+  const setClickedCard = (clickedCard: CardModel): void => {
     dispatch({
-      type: SET_CURRENT_CARD,
-      currentCard,
+      type: SET_CLICKED_CARD,
+      clickedCard,
     });
 
     /** Implements automatic move checking when the user selects another card */
 
-    if (state?.selectedCell?.piece) {
-      setValidMoves(state.selectedCell.piece);
+    if (state?.clickedPiece) {
+      setValidMoves(state.clickedPiece);
     }
   };
 
@@ -131,13 +129,13 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
-  const movePiece = (fromCell: CellData, toID: number): void => {
-    const from = cloneDeep(fromCell);
-    const fromPlayer = from.piece?.color;
-    const fromPlayerType = from.piece?.type;
-    const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
+  const movePiece = (fromPiece: Piece, toID: number): void => {
+    const from = cloneDeep(fromPiece);
+    const fromPlayer = from.color;
+    const fromPlayerType = from.type;
     const isMoveCheckmate = checkMaster(toID, state.board);
     const isMoveTempleCapture = checkTemple(fromPlayer, fromPlayerType, toID);
+    const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
     if (fromPlayer && isMoveCheckmate) {
       console.log('Opponent master has been captured!');
       setWinner(fromPlayer);
@@ -151,14 +149,14 @@ const GameState: React.FC = ({ children }) => {
     }
     dispatch({
       type: MOVE_PIECE,
-      fromCell: from,
+      fromPiece: from,
       toID,
     });
 
-    if (state.selectedCard) {
+    if (state.clickedCard) {
       const poppedNextCard = state.nextCard;
       const targetProperty = fromPlayer === 'Blue' ? 'handBlue' : 'handRed';
-      setNextCard(state.selectedCard, targetProperty, poppedNextCard);
+      setNextCard(state.clickedCard, targetProperty, poppedNextCard);
     }
     setValidMoves(undefined);
     setCurrentPlayer(nextPlayer);
@@ -175,8 +173,8 @@ const GameState: React.FC = ({ children }) => {
     <GameContext.Provider
       value={{
         ...state,
-        setSelectedCell,
-        setCurrentCard,
+        setClickedCard,
+        setClickedPiece,
         setNextCard,
         setCurrentPlayer,
         setValidMoves,

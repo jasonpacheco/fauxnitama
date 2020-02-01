@@ -8,47 +8,45 @@ import {
   BLUE_TEMPLE_ID as blueTempleID,
   RED_TEMPLE_ID as redTempleID,
 } from '../../utils/constants';
+import isEqual from 'lodash.isequal';
 
 interface CellProps {
-  activeCell: CellData | undefined;
-  isValidMove: boolean;
+  cellIsValidMove: boolean;
+  clickedPiece: IPiece | undefined;
   onCellClick: (
-    cellData: CellData,
-    id: number,
-    isValidMove: boolean,
+    clickedCellID: number,
+    clickedCellIsValidMove: boolean,
     piece: IPiece | undefined
   ) => void;
-  renderCell: CellData;
+  renderedCell: CellData;
 }
 
 const Cell: React.FC<CellProps> = ({
-  activeCell,
-  isValidMove,
+  cellIsValidMove,
+  clickedPiece,
   onCellClick,
-  renderCell,
+  renderedCell,
 }) => {
-  const { id: renderCellID, piece: renderCellPiece } = renderCell;
-
-  // console.log('Cell rendered');
-
+  const { id: renderedCellID, piece: renderedCellPiece } = renderedCell;
   return (
     <CellWrapper
-      key={renderCellID}
+      key={renderedCellID}
       highlightSelectedPiece={
-        !!renderCell.piece && activeCell?.piece === renderCell.piece
+        renderedCellPiece !== undefined &&
+        isEqual(clickedPiece, renderedCellPiece)
       }
-      highlightValidCell={isValidMove}
+      highlightValidCell={cellIsValidMove}
       hasTempleBackground={
-        !renderCellPiece &&
-        ((renderCellID === blueTempleID && 'Blue') ||
-          (renderCellID === redTempleID && 'Red'))
+        renderedCellPiece === undefined &&
+        ((renderedCellID === blueTempleID && 'Blue') ||
+          (renderedCellID === redTempleID && 'Red'))
       }
       onClick={(): void =>
-        onCellClick(renderCell, renderCellID, isValidMove, renderCellPiece)
+        onCellClick(renderedCellID, cellIsValidMove, renderedCellPiece)
       }
     >
-      {renderCellPiece && (
-        <Piece color={renderCellPiece.color} type={renderCellPiece.type} />
+      {renderedCellPiece && (
+        <Piece color={renderedCellPiece.color} type={renderedCellPiece.type} />
       )}
     </CellWrapper>
   );

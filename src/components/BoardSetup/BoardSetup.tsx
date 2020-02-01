@@ -10,16 +10,16 @@ const BoardSetup: React.FC = () => {
   const {
     board,
     clearGameState,
+    clickedCard,
+    clickedPiece,
     currentPlayer,
     handBlue,
     handRed,
     hasGameFinished,
     movePiece,
     nextCard,
-    selectedCard,
-    selectedCell,
-    setCurrentCard,
-    setSelectedCell,
+    setClickedCard,
+    setClickedPiece,
     validMoves,
     winner,
     winMethod,
@@ -31,24 +31,24 @@ const BoardSetup: React.FC = () => {
         <Hand
           hand={handRed}
           isActiveHand={currentPlayer === 'Red'}
-          selectedCard={selectedCard}
-          setCurrentCard={setCurrentCard}
+          selectedCard={clickedCard}
+          setCurrentCard={setClickedCard}
           invert
         />
         <Board
-          activeCell={selectedCell}
-          activePlayer={currentPlayer}
           cells={board}
+          clickedPiece={clickedPiece}
+          currentPlayer={currentPlayer}
           hasGameFinished={hasGameFinished}
-          movement={movePiece}
+          movePiece={movePiece}
           validMoves={validMoves}
-          setCell={setSelectedCell}
+          setPiece={setClickedPiece}
         />
         <Hand
           hand={handBlue}
           isActiveHand={currentPlayer === 'Blue'}
-          selectedCard={selectedCard}
-          setCurrentCard={setCurrentCard}
+          selectedCard={clickedCard}
+          setCurrentCard={setClickedCard}
         />
       </BoardHandWrapper>
       <Spacer>

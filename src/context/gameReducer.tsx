@@ -1,8 +1,8 @@
 import { CellData, State, Actions } from '../interfaces/context.interface';
 
 import {
-  SET_SELECTED_CELL,
-  SET_CURRENT_CARD,
+  SET_CLICKED_CARD,
+  SET_CLICKED_PIECE,
   SET_NEXT_CARD,
   SET_CURRENT_PLAYER,
   SET_VALID_MOVES,
@@ -22,20 +22,20 @@ import moveChecker from '../interactive/moveChecker';
 
 export default (state: State, action: Actions): State => {
   switch (action.type) {
-    case SET_SELECTED_CELL:
+    case SET_CLICKED_PIECE:
       return {
         ...state,
-        selectedCell: action.cell,
+        clickedPiece: action.clickedPiece,
       };
-    case SET_CURRENT_CARD:
+    case SET_CLICKED_CARD:
       return {
         ...state,
-        selectedCard: action.currentCard,
+        clickedCard: action.clickedCard,
       };
     case SET_CURRENT_PLAYER:
       return {
         ...state,
-        selectedCard: undefined,
+        clickedCard: undefined,
         currentPlayer: action.player,
       };
     case SET_NEXT_CARD:
@@ -58,7 +58,7 @@ export default (state: State, action: Actions): State => {
       if (action.piece) {
         const moveIDs = moveChecker(
           action.piece,
-          state.selectedCard?.moves,
+          state.clickedCard?.moves,
           state.board
         );
 
@@ -73,19 +73,24 @@ export default (state: State, action: Actions): State => {
         };
       }
     case MOVE_PIECE:
+      const boardCopy = state.board;
+      const fromPiece = action.fromPiece;
+      const fromID = action.fromPiece.currentPositionID;
+      fromPiece.currentPositionID = action.toID;
+
+      boardCopy[action.toID] = {
+        id: action.toID,
+        piece: fromPiece,
+      };
+
+      boardCopy[fromID] = {
+        id: fromID,
+        piece: undefined,
+      };
+
       return {
         ...state,
-        board: state.board.map((cell: CellData) => {
-          const fromCell = action.fromCell;
-          if (cell.id === fromCell.id) {
-            cell.piece = undefined;
-          }
-          if (fromCell.piece && cell.id === action.toID) {
-            cell.piece = fromCell.piece;
-            cell.piece.currentPositionID = cell.id;
-          }
-          return cell;
-        }),
+        board: boardCopy,
       };
 
     case SET_HAS_GAME_FINISHED:
@@ -117,15 +122,14 @@ export default (state: State, action: Actions): State => {
       const newBoard = [...Opponent, ...generateEmptyCells(), ...Player];
       return {
         board: cloneDeep(newBoard),
+        clickedCard: undefined,
+        clickedPiece: undefined,
         currentPlayer: newCards[4].stamp,
-        firstPlayer: newCards[4].stamp,
         handBlue: { first: newCards[2], second: newCards[3] },
         handRed: { first: newCards[0], second: newCards[1] },
         hasGameFinished: false,
         isCleared: false,
         nextCard: newCards[4],
-        selectedCell: undefined,
-        selectedCard: undefined,
         validMoves: [],
         winMethod: undefined,
         winner: undefined,
