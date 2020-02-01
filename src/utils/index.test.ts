@@ -138,8 +138,6 @@ describe('test for checkMaster', () => {
       piece: null,
       isValidMove: true,
       isEmpty: true,
-      isBlue: false,
-      isRed: false,
     },
     {
       id: 1,
@@ -150,8 +148,6 @@ describe('test for checkMaster', () => {
       },
       isValidMove: true,
       isEmpty: false,
-      isBlue: true,
-      isRed: false,
     },
     {
       id: 2,
@@ -162,8 +158,6 @@ describe('test for checkMaster', () => {
       },
       isValidMove: true,
       isEmpty: false,
-      isBlue: true,
-      isRed: false,
     },
   ];
 

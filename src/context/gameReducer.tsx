@@ -54,10 +54,32 @@ export default (state: State, action: Actions): State => {
       };
 
     case SET_VALID_MOVES:
+      /**
+       *
+
+
+          cells: cloneDeep({
+            ...state.board.cells,
+            ...action.moves.map(moveID => {
+              const cell = state.board.cells[moveID];
+              console.log('How many times did I run?', cell);
+              return {
+                ...cell,
+                isValidMove: true,
+              };
+            }),
+          }),
+       *
+       *
+       */
+      console.log('in valid moves reducer');
+      console.log('state.board.cells', state.board.cells);
+      console.log('action.moves', action.moves);
       return {
         ...state,
         board: {
           cells: state.board.cells.map(cell => {
+            console.log('I ran inside valid moves reducer');
             cell.isValidMove = action.moves.includes(cell.id);
             return cell;
           }),
@@ -72,8 +94,6 @@ export default (state: State, action: Actions): State => {
             cell.isValidMove = false;
             if (cell.id === fromCell.id) {
               cell.piece = null;
-              cell.isBlue = false;
-              cell.isRed = false;
               cell.isEmpty = true;
             }
 
@@ -81,8 +101,6 @@ export default (state: State, action: Actions): State => {
               cell.piece = fromCell.piece;
               cell.piece.currentPosition = idToCoordinate(cell.id);
               cell.isEmpty = false;
-              cell.isBlue = fromCell.piece.color === 'Blue';
-              cell.isRed = fromCell.piece.color === 'Red';
             }
             return cell;
           }),

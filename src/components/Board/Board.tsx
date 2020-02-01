@@ -6,7 +6,6 @@ import {
   Piece,
   PlayerColor,
 } from '../../interfaces/context.interface';
-import isEqual from 'lodash.isequal';
 
 interface BoardProps {
   activeCell: CellData | undefined;
@@ -56,6 +55,11 @@ const Board: React.FC<BoardProps> = ({
             renderCell={cell}
           />
         ))}
+        <div id='row-1'></div>
+        <div id='row-2'></div>
+        <div id='row-3'></div>
+        <div id='row-4'></div>
+        <div id='row-5'></div>
       </Grid>
     </GridWrapper>
   );

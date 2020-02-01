@@ -37,8 +37,6 @@ export interface CellData {
   piece: Piece | null;
   isValidMove: boolean;
   isEmpty: boolean;
-  isBlue: boolean;
-  isRed: boolean;
 }
 
 interface BoardState {

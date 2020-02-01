@@ -149,8 +149,6 @@ export const generateEmptyCells = (): CellData[] => {
       piece: null,
       isValidMove: false,
       isEmpty: true,
-      isBlue: false,
-      isRed: false,
     });
   }
   return cells;
