@@ -3,30 +3,59 @@ import Card from '../Card/Card';
 import { HandWrapper } from './_BoardSetupStyles';
 import { PlayerHand } from '../../interfaces/context.interface';
 import isEqual from 'lodash.isequal';
+import CardModel from '../../interfaces/card.interface';
 
 interface HandProps {
-  handFor: 'Blue' | 'Red';
   hand: PlayerHand;
-  currentHand: boolean;
+  hasGameFinished?: boolean;
+  invert?: boolean;
+  isActiveHand: boolean;
+  selectedCard?: CardModel | undefined;
+  setCurrentCard: (currentCard: CardModel) => void;
 }
-const Hand: React.FC<HandProps> = ({ handFor, hand, currentHand }) => {
+const Hand: React.FC<HandProps> = ({
+  hand,
+  isActiveHand,
+  setCurrentCard,
+  hasGameFinished = false,
+  invert = false,
+  selectedCard = undefined,
+}) => {
   console.log('Hand rendered');
+
+  const clickable = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    isActiveCard: boolean,
+    card: CardModel
+  ): void => {
+    if (isActiveCard && !hasGameFinished) {
+      if (!isEqual(card, selectedCard)) {
+        setCurrentCard(card);
+      }
+    }
+  };
+
   return (
     <HandWrapper>
       <Card
-        inverted={handFor === 'Red'}
-        isTurn={currentHand}
+        invert={invert}
+        isActiveCard={isActiveHand}
         card={hand.first}
+        onCardClick={clickable}
       />
+
       <Card
-        inverted={handFor === 'Red'}
-        isTurn={currentHand}
+        invert={invert}
+        isActiveCard={isActiveHand}
         card={hand.second}
+        onCardClick={clickable}
       />
     </HandWrapper>
   );
 };
 
-export default React.memo(Hand, (prevProps, nextProps) => {
-  return isEqual(prevProps.currentHand, nextProps.currentHand);
-});
+// export default React.memo(Hand, (prevProps, nextProps) => {
+//   return isEqual(prevProps.isActiveHand, nextProps.isActiveHand);
+// });
+
+export default Hand;

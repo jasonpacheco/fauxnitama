@@ -8,30 +8,35 @@ import useGameContext from '../../context/useGameContext';
 
 const BoardSetup: React.FC = () => {
   const {
-    redHand,
+    board,
     blueHand,
-    nextCard,
+    clearGameState,
     currentPlayer,
     hasGameFinished,
+    nextCard,
+    redHand,
+    selectedCard,
+    setCurrentCard,
     winner,
     winMethod,
-    clearGameState,
-    board,
   } = useGameContext();
   return (
-    <FullWrapper right={currentPlayer}>
-      <Card card={nextCard} inverted={currentPlayer === 'Red'} />
+    <FullWrapper playerColorToRight={currentPlayer}>
+      <Card card={nextCard} invert={currentPlayer === 'Red'} />
       <BoardHandWrapper>
         <Hand
-          handFor='Red'
           hand={redHand}
-          currentHand={currentPlayer === 'Red'}
+          isActiveHand={currentPlayer === 'Red'}
+          selectedCard={selectedCard}
+          setCurrentCard={setCurrentCard}
+          invert
         />
         <Board cells={board.cells} />
         <Hand
-          handFor='Blue'
           hand={blueHand}
-          currentHand={currentPlayer === 'Blue'}
+          isActiveHand={currentPlayer === 'Blue'}
+          selectedCard={selectedCard}
+          setCurrentCard={setCurrentCard}
         />
       </BoardHandWrapper>
       <Spacer>

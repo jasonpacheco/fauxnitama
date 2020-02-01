@@ -6,8 +6,8 @@ import RedShuriken from '../../assets/_red/shuriken.svg';
 const { COLS } = BOARD_GAME;
 
 interface CardWrapperStyleProps {
-  inverted?: boolean;
-  isTurn?: boolean;
+  invert: boolean;
+  isActive: boolean;
 }
 
 export const CardWrapper = styled.div<CardWrapperStyleProps>`
@@ -17,8 +17,8 @@ export const CardWrapper = styled.div<CardWrapperStyleProps>`
   flex-direction: column;
   padding: 1rem;
   background-color: #cacba2;
-  ${({ inverted }): string => (inverted ? `transform: rotate(180deg)` : '')};
-  ${({ isTurn }): string => (isTurn ? `&:hover { cursor: pointer; }` : '')};
+  ${({ invert }): string => (invert ? `transform: rotate(180deg)` : '')};
+  ${({ isActive }): string => (isActive ? `&:hover { cursor: pointer; }` : '')};
 `;
 
 export const Main = styled.div`
@@ -80,7 +80,7 @@ export const MiniBox = styled.div<MiniBoxStyleProps>`
 `;
 
 interface StampTooltipProps {
-  inverted?: boolean;
+  invert: boolean;
 }
 
 export const StampTooltip = styled.div<StampTooltipProps>`
@@ -99,7 +99,7 @@ export const StampTooltip = styled.div<StampTooltipProps>`
   top: -0.5rem;
 
   & > div {
-    ${({ inverted }): string => (inverted ? `transform: rotate(180deg)` : '')};
+    ${({ invert }): string => (invert ? `transform: rotate(180deg)` : '')};
   }
 
   &::after {

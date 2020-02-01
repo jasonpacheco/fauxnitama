@@ -22,34 +22,34 @@ import useGameContext from '../../context/useGameContext';
 import isEqual from 'lodash.isequal';
 
 interface CardProps {
-  inverted?: boolean;
+  invert: boolean;
   card: CardModel;
-  isTurn?: boolean;
+  isActiveCard?: boolean;
+  onCardClick?: (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    isActiveCard: boolean,
+    card: CardModel
+  ) => void;
 }
 
-const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
+const Card: React.FC<CardProps> = ({
+  invert,
+  card,
+  onCardClick = (): void => {
+    return;
+  },
+  isActiveCard = false,
+}) => {
   const { image, moves, name, color, stamp } = card;
   const moveIDs = movesToID(moves);
-  const { setCurrentCard, selectedCard, hasGameFinished } = useGameContext();
 
-  const handleCardClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    isTurn: boolean | undefined,
-    card: CardModel
-  ): void => {
-    if (isTurn && !hasGameFinished) {
-      if (!isEqual(card, selectedCard)) {
-        setCurrentCard(card);
-      }
-    }
-  };
   console.log('Card rendered');
 
   return (
     <CardWrapper
-      inverted={inverted}
-      isTurn={isTurn}
-      onClick={(e): void => handleCardClick(e, isTurn, card)}
+      invert={invert}
+      isActive={isActiveCard}
+      onClick={(e): void => onCardClick(e, isActiveCard, card)}
     >
       <Main>
         <LeftHalf>
@@ -72,7 +72,7 @@ const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
       </Main>
       <Gutter>
         <Stamp color={stamp}>
-          <StampTooltip inverted={inverted}>
+          <StampTooltip invert={invert}>
             <div>
               <span>{stamp}</span> player goes first.
             </div>

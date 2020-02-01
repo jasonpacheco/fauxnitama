@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 
-export const FullWrapper = styled.div<{ right: string }>`
+interface FullWrapperProps {
+  playerColorToRight: 'Blue' | 'Red';
+}
+
+export const FullWrapper = styled.div<FullWrapperProps>`
   margin: 0 auto;
   width: 80rem;
   display: flex;
-  flex-direction: ${({ right }): string =>
-    right === 'Red' ? 'row' : 'row-reverse'};
+  flex-direction: ${({ playerColorToRight }): string =>
+    playerColorToRight === 'Blue' ? 'row-reverse' : 'row'};
   align-items: center;
   justify-content: center;
 `;
