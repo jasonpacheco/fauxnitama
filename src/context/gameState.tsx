@@ -94,7 +94,8 @@ const GameState: React.FC = ({ children }) => {
     });
 
     /** Implements automatic move checking when the user selects another card */
-    if (!!state?.selectedCell?.piece) {
+
+    if (state?.selectedCell?.piece) {
       setValidMoves(
         moveChecker(
           state.selectedCell.piece.currentPosition,

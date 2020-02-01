@@ -1,4 +1,5 @@
 import React from 'react';
+import CardModel from '../../interfaces/card.interface';
 
 import {
   CardWrapper,
@@ -15,11 +16,6 @@ import {
 } from './_CardStyles';
 
 import { getIDs, coordinateToID, movesToID } from '../../utils';
-
-import CardModel from '../../interfaces/card.interface';
-
-import useGameContext from '../../context/useGameContext';
-import isEqual from 'lodash.isequal';
 
 interface CardProps {
   invert: boolean;
@@ -44,7 +40,6 @@ const Card: React.FC<CardProps> = ({
   const moveIDs = movesToID(moves);
 
   console.log('Card rendered');
-
   return (
     <CardWrapper
       invert={invert}
@@ -83,7 +78,10 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-// export default React.memo(Card, (prevProps, nextProps) =>
-//   isEqual(prevProps.card, nextProps.card)
+// export default React.memo(
+//   Card,
+//   (prevProps, nextProps) =>
+//     isEqual(prevProps.card, nextProps.card) &&
+//     isEqual(prevProps.isActiveCard, nextProps.isActiveCard)
 // );
 export default Card;

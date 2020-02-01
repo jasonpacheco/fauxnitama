@@ -23,7 +23,7 @@ const Hand: React.FC<HandProps> = ({
 }) => {
   console.log('Hand rendered');
 
-  const clickable = (
+  const onCardClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     isActiveCard: boolean,
     card: CardModel
@@ -41,14 +41,14 @@ const Hand: React.FC<HandProps> = ({
         invert={invert}
         isActiveCard={isActiveHand}
         card={hand.first}
-        onCardClick={clickable}
+        onCardClick={onCardClick}
       />
 
       <Card
         invert={invert}
         isActiveCard={isActiveHand}
         card={hand.second}
-        onCardClick={clickable}
+        onCardClick={onCardClick}
       />
     </HandWrapper>
   );
@@ -58,4 +58,6 @@ const Hand: React.FC<HandProps> = ({
 //   return isEqual(prevProps.isActiveHand, nextProps.isActiveHand);
 // });
 
-export default Hand;
+export default React.memo(Hand);
+
+// export default Hand;
