@@ -7,9 +7,7 @@ import {
 } from '../../interfaces/styles.interface';
 import BlueShuriken from '../../assets/_blue/shuriken.svg';
 import RedShuriken from '../../assets/_red/shuriken.svg';
-import { BOARD_GAME } from '../../utils';
-
-const { COLS } = BOARD_GAME;
+import { BOARD_COLS as COLS } from '../../utils/constants';
 
 export const CardWrapper = styled.div<CardWrapperStyleProps>`
   border: 1px solid #000;

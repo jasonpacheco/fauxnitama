@@ -1,12 +1,17 @@
 import React from 'react';
-import { Box } from './_BoardStyles';
 import Piece from '../Piece/Piece';
-import { BOARD_GAME } from '../../utils';
+import { CellWrapper } from './_BoardStyles';
+
 import {
   CellData,
   Piece as IPiece,
   PlayerColor,
 } from '../../interfaces/context.interface';
+
+import {
+  BLUE_TEMPLE_ID as blueTempleID,
+  RED_TEMPLE_ID as redTempleID,
+} from '../../utils/constants';
 
 interface CellProps {
   activeCell: CellData | undefined;
@@ -27,11 +32,6 @@ const Cell: React.FC<CellProps> = ({
   renderCell,
 }) => {
   const {
-    BLUE_TEMPLE_ID: blueTempleID,
-    RED_TEMPLE_ID: redTempleID,
-  } = BOARD_GAME;
-
-  const {
     id: renderCellID,
     piece: renderCellPiece,
     isValidMove: renderCellValidMove,
@@ -40,7 +40,7 @@ const Cell: React.FC<CellProps> = ({
   console.log('Cell rendered');
 
   return (
-    <Box
+    <CellWrapper
       key={renderCellID}
       highlightSelectedPiece={
         !!renderCell.piece && activeCell?.piece === renderCell.piece
@@ -63,7 +63,7 @@ const Cell: React.FC<CellProps> = ({
       {renderCellPiece && (
         <Piece color={renderCellPiece.color} type={renderCellPiece.type} />
       )}
-    </Box>
+    </CellWrapper>
   );
 };
 

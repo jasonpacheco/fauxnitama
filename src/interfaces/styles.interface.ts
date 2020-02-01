@@ -6,7 +6,7 @@ export interface FullWrapperStyleProps {
 }
 
 // Interfaces for Board component(s)
-export interface BoxStyleProps {
+export interface CellWrapperStyleProps {
   hasTempleBackground: string | boolean;
   highlightSelectedPiece: boolean;
   highlightValidCell: PlayerColor | boolean | undefined;

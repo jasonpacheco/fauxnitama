@@ -1,7 +1,7 @@
 import { Coordinate, PlayerColor } from '../interfaces/context.interface';
-import { BOARD_GAME, coordinateToID } from '../utils';
+import { coordinateToID } from '../utils';
 import { CellData } from '../interfaces/context.interface';
-const { ROWS, COLS } = BOARD_GAME;
+import { BOARD_ROWS as ROWS, BOARD_COLS as COLS } from '../utils/constants';
 
 const transposeCardMovement = (validMoves: number[][]): number[][] => {
   return validMoves.map(move => [-move[0], -move[1]]);

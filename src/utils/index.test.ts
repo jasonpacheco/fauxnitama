@@ -1,6 +1,5 @@
 import {
   assignGridID,
-  BOARD_GAME,
   idToCoordinate,
   coordinateToID,
   movesToID,
@@ -8,11 +7,12 @@ import {
   checkMaster,
   checkTemple,
 } from './index';
+import constants from './constants';
 import { CellData } from '../interfaces/context.interface';
 
 describe('tests for assignGridID', () => {
   test('returns an array of length rows * cols', () => {
-    expect(assignGridID()).toHaveLength(BOARD_GAME.SQUARES());
+    expect(assignGridID()).toHaveLength(constants.BOARD_SQUARES);
   });
 
   test('returns {x: 0, y: 0, id: 0} as first element', () => {
@@ -24,7 +24,7 @@ describe('tests for assignGridID', () => {
   });
 
   test('returns {x: 4, y: 4, id: 24} as last element', () => {
-    expect(assignGridID()[BOARD_GAME.SQUARES() - 1]).toMatchObject({
+    expect(assignGridID()[constants.BOARD_SQUARES - 1]).toMatchObject({
       x: 4,
       y: 4,
       id: 24,

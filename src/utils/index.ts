@@ -1,6 +1,7 @@
 import { Coordinate, CellData } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
 import CardTypes from '../components/Card/CardTypes';
+import constants from './constants';
 const {
   Boar,
   Cobra,
@@ -20,16 +21,6 @@ const {
   Tiger,
 } = CardTypes;
 
-export const BOARD_GAME = {
-  ROWS: 5,
-  COLS: 5,
-  SQUARES: function(): number {
-    return this.ROWS * this.COLS;
-  },
-  BLUE_TEMPLE_ID: 22,
-  RED_TEMPLE_ID: 2,
-};
-
 interface SpaceID {
   x: number;
   y: number;
@@ -37,11 +28,11 @@ interface SpaceID {
 }
 
 export const assignGridID = (): Array<SpaceID> => {
-  const { ROWS, COLS } = BOARD_GAME;
+  const { BOARD_ROWS, BOARD_COLS } = constants;
   const idList: SpaceID[] = [];
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
-      idList.push({ x: row, y: col, id: ROWS * row + col });
+  for (let row = 0; row < BOARD_ROWS; row++) {
+    for (let col = 0; col < BOARD_COLS; col++) {
+      idList.push({ x: row, y: col, id: BOARD_ROWS * row + col });
     }
   }
   return idList;
@@ -57,7 +48,7 @@ export const getIDs = (): Array<SpaceID> => assignGridID();
  */
 export const coordinateToID = (
   coordinate: Coordinate,
-  rows = BOARD_GAME.ROWS
+  rows = constants.BOARD_ROWS
 ): number => {
   return rows * coordinate.x + coordinate.y;
 };
@@ -69,7 +60,7 @@ export const coordinateToID = (
  */
 export const idToCoordinate = (
   id: number,
-  rows = BOARD_GAME.ROWS
+  rows = constants.BOARD_ROWS
 ): Coordinate => {
   const x = Math.floor(id / rows);
   const y = id % rows;
@@ -92,9 +83,9 @@ export const movesToID = (
   const refCoordinate = idToCoordinate(refID);
   const { x: refX, y: refY } = refCoordinate;
   return validMoves.map(([x, y]) =>
-    x + refX >= BOARD_GAME.ROWS ||
+    x + refX >= constants.BOARD_ROWS ||
     x + refX < 0 ||
-    y + refY >= BOARD_GAME.COLS ||
+    y + refY >= constants.BOARD_COLS ||
     y + refY < 0
       ? undefined
       : coordinateToID({ x: x + refX, y: y + refY })
@@ -145,8 +136,8 @@ export const checkTemple = (
 ): boolean => {
   return (
     playerType === 'Master' &&
-    ((playerColor === 'Blue' && toID === 2) ||
-      (playerColor === 'Red' && toID === 22))
+    ((playerColor === 'Blue' && toID === constants.BLUE_TEMPLE_ID) ||
+      (playerColor === 'Red' && toID === constants.RED_TEMPLE_ID))
   );
 };
 
