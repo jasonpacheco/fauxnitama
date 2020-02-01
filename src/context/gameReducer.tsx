@@ -75,14 +75,11 @@ export default (state: State, action: Actions): State => {
     case MOVE_PIECE:
       return {
         ...state,
-
         board: state.board.map((cell: CellData) => {
           const fromCell = action.fromCell;
-          cell.isValidMove = false;
           if (cell.id === fromCell.id) {
             cell.piece = undefined;
           }
-
           if (fromCell.piece && cell.id === action.toID) {
             cell.piece = fromCell.piece;
             cell.piece.currentPositionID = cell.id;
@@ -90,6 +87,7 @@ export default (state: State, action: Actions): State => {
           return cell;
         }),
       };
+
     case SET_HAS_GAME_FINISHED:
       return {
         ...state,

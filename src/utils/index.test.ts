@@ -136,7 +136,6 @@ describe('test for checkMaster', () => {
     {
       id: 0,
       piece: undefined,
-      isValidMove: true,
     },
     {
       id: 1,
@@ -145,7 +144,6 @@ describe('test for checkMaster', () => {
         type: 'Student',
         currentPositionID: 1,
       },
-      isValidMove: true,
     },
     {
       id: 2,
@@ -154,7 +152,6 @@ describe('test for checkMaster', () => {
         type: 'Master',
         currentPositionID: 2,
       },
-      isValidMove: true,
     },
   ];
 

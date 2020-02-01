@@ -35,7 +35,6 @@ export interface Player {
 export interface CellData {
   id: number;
   piece: Piece | undefined;
-  isValidMove: boolean;
 }
 
 export interface PlayerHand {

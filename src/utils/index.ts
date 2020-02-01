@@ -147,7 +147,6 @@ export const generateEmptyCells = (): CellData[] => {
     cells.push({
       id: i,
       piece: undefined,
-      isValidMove: false,
     });
   }
   return cells;
