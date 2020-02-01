@@ -43,7 +43,7 @@ const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
       }
     }
   };
-  // console.log('Card rendered');
+  console.log('Card rendered');
 
   return (
     <CardWrapper
@@ -83,4 +83,7 @@ const Card: React.FC<CardProps> = ({ inverted, card, isTurn }) => {
   );
 };
 
+// export default React.memo(Card, (prevProps, nextProps) =>
+//   isEqual(prevProps.card, nextProps.card)
+// );
 export default Card;

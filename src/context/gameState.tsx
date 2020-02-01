@@ -39,7 +39,6 @@ const initialState: State = {
   selectedCell: undefined,
   selectedCard: undefined,
   currentPlayer: cards[4].stamp,
-  cardSet: cards,
   firstPlayer: cards[4].stamp,
   redHand: { first: cards[0], second: cards[1] },
   blueHand: { first: cards[2], second: cards[3] },

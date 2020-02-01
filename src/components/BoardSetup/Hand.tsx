@@ -26,9 +26,7 @@ const Hand: React.FC<HandProps> = ({ handFor, hand, currentHand }) => {
     </HandWrapper>
   );
 };
-// returns false => render
+
 export default React.memo(Hand, (prevProps, nextProps) => {
   return isEqual(prevProps.currentHand, nextProps.currentHand);
 });
-
-// export default Hand;

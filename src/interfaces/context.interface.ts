@@ -58,7 +58,6 @@ export interface State {
   selectedCell: CellData | undefined;
   selectedCard: CardModel | undefined;
   currentPlayer: PlayerColor;
-  cardSet: CardModel[];
   firstPlayer: PlayerColor;
   validMoves: number[] | undefined;
   nextCard: CardModel;

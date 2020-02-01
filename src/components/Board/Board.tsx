@@ -1,14 +1,17 @@
 import React from 'react';
 import Cell from './Cell';
 import { GridWrapper, Grid } from './_BoardStyles';
-import useGameContext from '../../context/useGameContext';
+import { CellData } from '../../interfaces/context.interface';
 
-const Board: React.FC = () => {
-  const { board } = useGameContext();
+interface BoardProps {
+  cells: CellData[];
+}
+
+const Board: React.FC<BoardProps> = ({ cells }) => {
   return (
     <GridWrapper>
       <Grid>
-        {board.cells.map(cell => (
+        {cells.map(cell => (
           <Cell key={cell.id} data={cell} />
         ))}
       </Grid>

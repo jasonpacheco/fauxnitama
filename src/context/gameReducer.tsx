@@ -119,7 +119,6 @@ export default (state: State, action: Actions): State => {
         selectedCell: undefined,
         selectedCard: undefined,
         currentPlayer: newCards[4].stamp,
-        cardSet: newCards,
         firstPlayer: newCards[4].stamp,
         redHand: { first: newCards[0], second: newCards[1] },
         blueHand: { first: newCards[2], second: newCards[3] },

@@ -16,6 +16,7 @@ const BoardSetup: React.FC = () => {
     winner,
     winMethod,
     clearGameState,
+    board,
   } = useGameContext();
   return (
     <FullWrapper right={currentPlayer}>
@@ -26,7 +27,7 @@ const BoardSetup: React.FC = () => {
           hand={redHand}
           currentHand={currentPlayer === 'Red'}
         />
-        <Board />
+        <Board cells={board.cells} />
         <Hand
           handFor='Blue'
           hand={blueHand}
