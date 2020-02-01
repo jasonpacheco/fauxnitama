@@ -14,6 +14,7 @@ interface BoardProps {
   hasGameFinished: boolean;
   movement: (fromCell: CellData, toID: number) => void;
   setCell: (cell: CellData) => void;
+  validMoves: number[];
 }
 
 const Board: React.FC<BoardProps> = ({
@@ -23,6 +24,7 @@ const Board: React.FC<BoardProps> = ({
   hasGameFinished,
   movement,
   setCell,
+  validMoves,
 }) => {
   // console.log('Board rendered');
   const onCellClick = (
@@ -50,9 +52,9 @@ const Board: React.FC<BoardProps> = ({
           <Cell
             key={cell.id}
             activeCell={activeCell}
-            activePlayer={activePlayer}
             onCellClick={onCellClick}
             renderCell={cell}
+            isValidMove={activePlayer && validMoves.includes(cell.id)}
           />
         ))}
         <div id='row-1'></div>

@@ -2,11 +2,7 @@ import React from 'react';
 import Piece from '../Piece/Piece';
 import { CellWrapper } from './_BoardStyles';
 
-import {
-  CellData,
-  Piece as IPiece,
-  PlayerColor,
-} from '../../interfaces/context.interface';
+import { CellData, Piece as IPiece } from '../../interfaces/context.interface';
 
 import {
   BLUE_TEMPLE_ID as blueTempleID,
@@ -15,7 +11,7 @@ import {
 
 interface CellProps {
   activeCell: CellData | undefined;
-  activePlayer: PlayerColor;
+  isValidMove: boolean;
   onCellClick: (
     cellData: CellData,
     id: number,
@@ -27,15 +23,11 @@ interface CellProps {
 
 const Cell: React.FC<CellProps> = ({
   activeCell,
-  activePlayer,
+  isValidMove,
   onCellClick,
   renderCell,
 }) => {
-  const {
-    id: renderCellID,
-    piece: renderCellPiece,
-    isValidMove: renderCellValidMove,
-  } = renderCell;
+  const { id: renderCellID, piece: renderCellPiece } = renderCell;
 
   // console.log('Cell rendered');
 
@@ -45,19 +37,14 @@ const Cell: React.FC<CellProps> = ({
       highlightSelectedPiece={
         !!renderCell.piece && activeCell?.piece === renderCell.piece
       }
-      highlightValidCell={renderCellValidMove && activePlayer}
+      highlightValidCell={isValidMove}
       hasTempleBackground={
         !renderCellPiece &&
         ((renderCellID === blueTempleID && 'Blue') ||
           (renderCellID === redTempleID && 'Red'))
       }
       onClick={(): void =>
-        onCellClick(
-          renderCell,
-          renderCellID,
-          renderCellValidMove,
-          renderCellPiece
-        )
+        onCellClick(renderCell, renderCellID, isValidMove, renderCellPiece)
       }
     >
       {renderCellPiece && (

@@ -10,9 +10,10 @@ import {
 import cloneDeep from 'lodash.clonedeep';
 
 import {
-  State,
   CellData,
+  Piece,
   PlayerColor,
+  State,
   WinMethods,
 } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
@@ -30,7 +31,6 @@ import {
   SET_IS_CLEARED,
 } from '../types';
 
-import moveChecker from '../interactive/moveChecker';
 import { Player, Opponent } from '../state/playerState';
 
 const cards: CardModel[] = generateCardSet();
@@ -46,7 +46,7 @@ const initialState: State = {
   nextCard: cards[4],
   selectedCell: undefined,
   selectedCard: undefined,
-  validMoves: undefined,
+  validMoves: [],
   winMethod: undefined,
   winner: undefined,
 };
@@ -54,10 +54,10 @@ const initialState: State = {
 const GameState: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
-  const setValidMoves = (moves: number[]): void => {
+  const setValidMoves = (piece: Piece | undefined): void => {
     dispatch({
       type: SET_VALID_MOVES,
-      moves,
+      piece,
     });
   };
 
@@ -68,14 +68,7 @@ const GameState: React.FC = ({ children }) => {
     });
     /** Implements move checking when cell is clicked */
     if (cell.piece && state.selectedCard) {
-      setValidMoves(
-        moveChecker(
-          cell.piece.currentPositionID,
-          state.selectedCard.moves,
-          state.board,
-          state.currentPlayer
-        )
-      );
+      setValidMoves(cell.piece);
     }
   };
 
@@ -94,14 +87,7 @@ const GameState: React.FC = ({ children }) => {
     /** Implements automatic move checking when the user selects another card */
 
     if (state?.selectedCell?.piece) {
-      setValidMoves(
-        moveChecker(
-          state.selectedCell.piece.currentPositionID,
-          currentCard.moves,
-          state.board,
-          state.currentPlayer
-        )
-      );
+      setValidMoves(state.selectedCell.piece);
     }
   };
 
@@ -174,7 +160,7 @@ const GameState: React.FC = ({ children }) => {
       const targetProperty = fromPlayer === 'Blue' ? 'handBlue' : 'handRed';
       setNextCard(state.selectedCard, targetProperty, poppedNextCard);
     }
-
+    setValidMoves(undefined);
     setCurrentPlayer(nextPlayer);
   };
 

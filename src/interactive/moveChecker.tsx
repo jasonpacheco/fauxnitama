@@ -1,10 +1,12 @@
-import { PlayerColor } from '../interfaces/context.interface';
+import { Piece, PlayerColor } from '../interfaces/context.interface';
 import { coordinateToID, idToCoordinate } from '../utils';
 import { CellData } from '../interfaces/context.interface';
 import { BOARD_ROWS as ROWS, BOARD_COLS as COLS } from '../utils/constants';
 
-const transposeCardMovement = (validMoves: number[][]): number[][] => {
-  return validMoves.map(move => [-move[0], -move[1]]);
+const transposeCardMovement = (
+  validMoves: number[][] | undefined
+): number[][] => {
+  return validMoves ? validMoves.map(move => [-move[0], -move[1]]) : [];
 };
 
 const isValidSpace = (
@@ -21,26 +23,31 @@ const isValidSpace = (
 };
 
 export default (
-  clickedPieceID: number,
-  validMovesFromCard: number[][],
-  board: CellData[],
-  color: PlayerColor = 'Blue'
+  piece: Piece,
+  validMovesFromCard: number[][] | undefined,
+  board: CellData[]
 ): number[] => {
-  const { x, y } = idToCoordinate(clickedPieceID);
+  const { x, y } = idToCoordinate(piece.currentPositionID);
+  const color = piece.color;
   if (color === 'Red')
     validMovesFromCard = transposeCardMovement(validMovesFromCard);
-  return validMovesFromCard.reduce((acc, [moveX, moveY]) => {
-    const [xDisplacement, yDisplacement] = [x + moveX, y + moveY];
-    const positionID = coordinateToID({ x: xDisplacement, y: yDisplacement });
-    if (
-      xDisplacement < ROWS &&
-      xDisplacement >= 0 &&
-      yDisplacement < COLS &&
-      yDisplacement >= 0 &&
-      isValidSpace(positionID, board, color)
-    ) {
-      acc.push(positionID);
-    }
-    return acc;
-  }, []);
+  return validMovesFromCard
+    ? validMovesFromCard.reduce((acc, [moveX, moveY]) => {
+        const [xDisplacement, yDisplacement] = [x + moveX, y + moveY];
+        const positionID = coordinateToID({
+          x: xDisplacement,
+          y: yDisplacement,
+        });
+        if (
+          xDisplacement < ROWS &&
+          xDisplacement >= 0 &&
+          yDisplacement < COLS &&
+          yDisplacement >= 0 &&
+          isValidSpace(positionID, board, color)
+        ) {
+          acc.push(positionID);
+        }
+        return acc;
+      }, [])
+    : [];
 };

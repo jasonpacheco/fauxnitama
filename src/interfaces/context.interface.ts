@@ -53,7 +53,7 @@ export interface State {
   nextCard: CardModel;
   selectedCard: CardModel | undefined;
   selectedCell: CellData | undefined;
-  validMoves: number[] | undefined;
+  validMoves: number[];
   winMethod: WinMethods | undefined;
   winner: PlayerColor | undefined;
 }
@@ -66,7 +66,7 @@ export interface GameContextProperties extends State {
     replacementCard: CardModel
   ) => void;
   setCurrentPlayer: (player: PlayerColor) => void;
-  setValidMoves: (moves: number[]) => void;
+  setValidMoves: (piece: Piece | undefined) => void;
   movePiece: (fromCell: CellData, toID: number) => void;
   setHasGameFinished: () => void;
   setWinner: (winner: PlayerColor) => void;
@@ -98,7 +98,7 @@ interface SetCurrentPlayer {
 
 interface SetValidMoves {
   type: typeof SET_VALID_MOVES;
-  moves: number[];
+  piece: Piece | undefined;
 }
 
 interface SetHasGameFinished {

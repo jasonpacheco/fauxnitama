@@ -18,6 +18,7 @@ import isEqual from 'lodash.isequal';
 import CardModel from '../interfaces/card.interface';
 import { Player, Opponent } from '../state/playerState';
 import cloneDeep from 'lodash.clonedeep';
+import moveChecker from '../interactive/moveChecker';
 
 export default (state: State, action: Actions): State => {
   switch (action.type) {
@@ -54,35 +55,23 @@ export default (state: State, action: Actions): State => {
       };
 
     case SET_VALID_MOVES:
-      /**
-       *
+      if (action.piece) {
+        const moveIDs = moveChecker(
+          action.piece,
+          state.selectedCard?.moves,
+          state.board
+        );
 
-
-          cells: cloneDeep({
-            ...state.board.cells,
-            ...action.moves.map(moveID => {
-              const cell = state.board.cells[moveID];
-              console.log('How many times did I run?', cell);
-              return {
-                ...cell,
-                isValidMove: true,
-              };
-            }),
-          }),
-       *
-       *
-       */
-      // console.log('in valid moves reducer');
-      // console.log('state.board.cells', state.board);
-      // console.log('action.moves', action.moves);
-      return {
-        ...state,
-        board: state.board.map(cell => {
-          // console.log('I ran inside valid moves reducer');
-          cell.isValidMove = action.moves.includes(cell.id);
-          return cell;
-        }),
-      };
+        return {
+          ...state,
+          validMoves: moveIDs,
+        };
+      } else {
+        return {
+          ...state,
+          validMoves: [],
+        };
+      }
     case MOVE_PIECE:
       return {
         ...state,
@@ -139,7 +128,7 @@ export default (state: State, action: Actions): State => {
         nextCard: newCards[4],
         selectedCell: undefined,
         selectedCard: undefined,
-        validMoves: undefined,
+        validMoves: [],
         winMethod: undefined,
         winner: undefined,
       };
