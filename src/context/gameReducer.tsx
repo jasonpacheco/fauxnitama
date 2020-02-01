@@ -13,7 +13,7 @@ import {
   CLEAR_GAME_STATE,
   SET_IS_CLEARED,
 } from '../types';
-import { idToCoordinate, generateCardSet, generateEmptyCells } from '../utils';
+import { generateCardSet, generateEmptyCells } from '../utils';
 import isEqual from 'lodash.isequal';
 import CardModel from '../interfaces/card.interface';
 import { Player, Opponent } from '../state/playerState';
@@ -96,7 +96,7 @@ export default (state: State, action: Actions): State => {
 
           if (fromCell.piece && cell.id === action.toID) {
             cell.piece = fromCell.piece;
-            cell.piece.currentPosition = idToCoordinate(cell.id);
+            cell.piece.currentPositionID = cell.id;
           }
           return cell;
         }),

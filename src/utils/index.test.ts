@@ -135,29 +135,26 @@ describe('test for checkMaster', () => {
   const board: CellData[] = [
     {
       id: 0,
-      piece: null,
+      piece: undefined,
       isValidMove: true,
-      isEmpty: true,
     },
     {
       id: 1,
       piece: {
         color: 'Blue',
         type: 'Student',
-        currentPosition: { x: 0, y: 1 },
+        currentPositionID: 1,
       },
       isValidMove: true,
-      isEmpty: false,
     },
     {
       id: 2,
       piece: {
         color: 'Blue',
         type: 'Master',
-        currentPosition: { x: 0, y: 2 },
+        currentPositionID: 2,
       },
       isValidMove: true,
-      isEmpty: false,
     },
   ];
 

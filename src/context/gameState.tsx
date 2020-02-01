@@ -70,7 +70,7 @@ const GameState: React.FC = ({ children }) => {
     if (cell.piece && state.selectedCard) {
       setValidMoves(
         moveChecker(
-          cell.piece.currentPosition,
+          cell.piece.currentPositionID,
           state.selectedCard.moves,
           state.board,
           state.currentPlayer
@@ -96,7 +96,7 @@ const GameState: React.FC = ({ children }) => {
     if (state?.selectedCell?.piece) {
       setValidMoves(
         moveChecker(
-          state.selectedCell.piece.currentPosition,
+          state.selectedCell.piece.currentPositionID,
           currentCard.moves,
           state.board,
           state.currentPlayer

@@ -25,7 +25,7 @@ export type WinMethods = 'master-check' | 'temple-check';
 export interface Piece {
   color: PlayerColor;
   type: PlayerType;
-  currentPosition: Coordinate;
+  currentPositionID: number;
 }
 
 export interface Player {
@@ -36,10 +36,6 @@ export interface CellData {
   id: number;
   piece: Piece | undefined;
   isValidMove: boolean;
-}
-
-export interface Coordinates extends Coordinate {
-  id: number;
 }
 
 export interface PlayerHand {
