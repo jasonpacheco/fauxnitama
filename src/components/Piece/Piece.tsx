@@ -6,8 +6,8 @@ import RedMaster from '../../assets/_red/master.svg';
 import RedStudent from '../../assets/_red/student.svg';
 
 interface PieceProps {
-  type: 'Student' | 'Master';
   color: 'Blue' | 'Red';
+  type: 'Master' | 'Student';
 }
 
 const getPieceSVG = (type: string | undefined): string | null => {
@@ -25,14 +25,12 @@ const getPieceSVG = (type: string | undefined): string | null => {
   }
 };
 
-const Piece: React.FC<PieceProps> = ({ type, color }) => {
+const Piece: React.FC<PieceProps> = ({ color, type }) => {
   const typeOfPiece = getPieceSVG(`${color}-${type}`);
-  return type ? (
+  return (
     <PieceWrapper isRotated={color === 'Red'}>
       {typeOfPiece && <img src={typeOfPiece} alt={type} />}
     </PieceWrapper>
-  ) : (
-    <></>
   );
 };
 

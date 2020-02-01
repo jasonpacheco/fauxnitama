@@ -19,7 +19,7 @@ export const Grid = styled.div`
 
 export const Box = styled.div<{
   hasBackground: string | boolean;
-  highlightSelectedPiece: boolean | null | undefined;
+  highlightSelectedPiece: boolean;
   highlightValidCell: 'Blue' | 'Red' | boolean | undefined;
 }>`
   margin: 0;

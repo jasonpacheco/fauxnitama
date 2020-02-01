@@ -13,10 +13,13 @@ const BoardSetup: React.FC = () => {
     clearGameState,
     currentPlayer,
     hasGameFinished,
+    movePiece,
     nextCard,
     redHand,
     selectedCard,
+    selectedCell,
     setCurrentCard,
+    setSelectedCell,
     winner,
     winMethod,
   } = useGameContext();
@@ -31,7 +34,14 @@ const BoardSetup: React.FC = () => {
           setCurrentCard={setCurrentCard}
           invert
         />
-        <Board cells={board.cells} />
+        <Board
+          activeCell={selectedCell}
+          activePlayer={currentPlayer}
+          cells={board.cells}
+          hasGameFinished={hasGameFinished}
+          movement={movePiece}
+          setCell={setSelectedCell}
+        />
         <Hand
           hand={blueHand}
           isActiveHand={currentPlayer === 'Blue'}

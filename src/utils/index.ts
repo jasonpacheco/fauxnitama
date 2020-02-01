@@ -26,16 +26,9 @@ export const BOARD_GAME = {
   SQUARES: function(): number {
     return this.ROWS * this.COLS;
   },
+  BLUE_TEMPLE_ID: 22,
+  RED_TEMPLE_ID: 2,
 };
-
-export enum PIECES {
-  BLUE_MASTER,
-  BLUE_STUDENT,
-  BLUE_TEMPLE_ARCH,
-  RED_MASTER,
-  RED_STUDENT,
-  RED_TEMPLE_ARCH,
-}
 
 interface SpaceID {
   x: number;
@@ -55,20 +48,6 @@ export const assignGridID = (): Array<SpaceID> => {
 };
 
 export const getIDs = (): Array<SpaceID> => assignGridID();
-
-interface TempleIDs {
-  blue: SpaceID;
-  red: SpaceID;
-}
-
-export const getTempleID = (): TempleIDs => {
-  const templeY = Math.floor(BOARD_GAME.COLS / 2);
-  const blueX = BOARD_GAME.ROWS - 1;
-  return {
-    blue: { x: blueX, y: templeY, id: BOARD_GAME.ROWS * blueX + templeY },
-    red: { x: 0, y: templeY, id: templeY },
-  };
-};
 
 /**
  * Converts a [coordinate] of type <Coordinate> { x: number, y: number } to

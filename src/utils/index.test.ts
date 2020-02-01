@@ -1,7 +1,6 @@
 import {
   assignGridID,
   BOARD_GAME,
-  getTempleID,
   idToCoordinate,
   coordinateToID,
   movesToID,
@@ -30,21 +29,6 @@ describe('tests for assignGridID', () => {
       y: 4,
       id: 24,
     });
-  });
-});
-
-describe('tests for getTempleID', () => {
-  test('returns an object', () => {
-    expect(getTempleID()).toHaveProperty('blue');
-    expect(getTempleID()).toHaveProperty('red');
-  });
-
-  test('returns a red temple id of {x: 0, y: 2, id: 2}', () => {
-    expect(getTempleID().red).toMatchObject({ x: 0, y: 2, id: 2 });
-  });
-
-  test('returns a blue temple id of {x: 4, y: 2, id: 22}', () => {
-    expect(getTempleID().blue).toMatchObject({ x: 4, y: 2, id: 22 });
   });
 });
 
@@ -198,26 +182,34 @@ describe('test for checkMaster', () => {
 
 describe('tests for checkTemple', () => {
   test('returns false when master is not on a temple id', () => {
-    expect(checkTemple('Master', 21)).toBeFalsy();
+    expect(checkTemple('Blue', 'Master', 21)).toBeFalsy();
   });
 
   test('returns false when student is not on a temple id', () => {
-    expect(checkTemple('Student', 21)).toBeFalsy();
+    expect(checkTemple('Blue', 'Student', 21)).toBeFalsy();
   });
 
   test('returns false when student is on a temple id of 2', () => {
-    expect(checkTemple('Student', 2)).toBeFalsy();
+    expect(checkTemple('Blue', 'Student', 2)).toBeFalsy();
   });
 
   test('returns false when student is on a temple id of 22', () => {
-    expect(checkTemple('Student', 22)).toBeFalsy();
+    expect(checkTemple('Blue', 'Student', 22)).toBeFalsy();
   });
 
-  test('returns true when master is on a temple id of 2', () => {
-    expect(checkTemple('Master', 2)).toBeTruthy();
+  test('returns true when Blue master is on a temple id of 2', () => {
+    expect(checkTemple('Blue', 'Master', 2)).toBeTruthy();
   });
 
-  test('returns true when master is on a temple id of 22', () => {
-    expect(checkTemple('Master', 22)).toBeTruthy();
+  test('returns false when Blue master is on a temple id of 22', () => {
+    expect(checkTemple('Blue', 'Master', 22)).toBeFalsy();
+  });
+
+  test('returns false when Red master is on a temple id of 2', () => {
+    expect(checkTemple('Red', 'Master', 2)).toBeFalsy();
+  });
+
+  test('returns true when Red master is on a temple id of 22', () => {
+    expect(checkTemple('Red', 'Master', 22)).toBeTruthy();
   });
 });
