@@ -136,8 +136,8 @@ export const checkTemple = (
 ): boolean => {
   return (
     playerType === 'Master' &&
-    ((playerColor === 'Blue' && toID === constants.BLUE_TEMPLE_ID) ||
-      (playerColor === 'Red' && toID === constants.RED_TEMPLE_ID))
+    ((playerColor === 'Blue' && toID === constants.RED_TEMPLE_ID) ||
+      (playerColor === 'Red' && toID === constants.BLUE_TEMPLE_ID))
   );
 };
 

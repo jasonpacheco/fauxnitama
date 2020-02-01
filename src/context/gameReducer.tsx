@@ -129,19 +129,19 @@ export default (state: State, action: Actions): State => {
       const newCards: CardModel[] = generateCardSet();
       const newBoard = [...Opponent, ...generateEmptyCells(), ...Player];
       return {
-        selectedCell: undefined,
-        selectedCard: undefined,
+        board: cloneDeep(newBoard),
         currentPlayer: newCards[4].stamp,
         firstPlayer: newCards[4].stamp,
-        redHand: { first: newCards[0], second: newCards[1] },
-        blueHand: { first: newCards[2], second: newCards[3] },
-        nextCard: newCards[4],
-        validMoves: undefined,
+        handBlue: { first: newCards[2], second: newCards[3] },
+        handRed: { first: newCards[0], second: newCards[1] },
         hasGameFinished: false,
-        winner: undefined,
-        winMethod: undefined,
         isCleared: false,
-        board: cloneDeep(newBoard),
+        nextCard: newCards[4],
+        selectedCell: undefined,
+        selectedCard: undefined,
+        validMoves: undefined,
+        winMethod: undefined,
+        winner: undefined,
       };
 
     default:

@@ -43,14 +43,14 @@ export interface PlayerHand {
 }
 
 export interface State {
-  blueHand: PlayerHand;
   board: CellData[];
   currentPlayer: PlayerColor;
   firstPlayer: PlayerColor;
   isCleared: boolean;
+  handBlue: PlayerHand;
+  handRed: PlayerHand;
   hasGameFinished: boolean;
   nextCard: CardModel;
-  redHand: PlayerHand;
   selectedCard: CardModel | undefined;
   selectedCell: CellData | undefined;
   validMoves: number[] | undefined;
@@ -62,7 +62,7 @@ export interface GameContextProperties extends State {
   setCurrentCard: (currentCard: CardModel) => void;
   setNextCard: (
     nextCard: CardModel,
-    targetProperty: 'blueHand' | 'redHand',
+    targetProperty: 'handBlue' | 'handRed',
     replacementCard: CardModel
   ) => void;
   setCurrentPlayer: (player: PlayerColor) => void;
@@ -87,7 +87,7 @@ interface SetCurrentCard {
 interface SetNextCard {
   type: typeof SET_NEXT_CARD;
   nextCard: CardModel;
-  targetProperty: 'blueHand' | 'redHand';
+  targetProperty: 'handBlue' | 'handRed';
   replacementCard: CardModel;
 }
 

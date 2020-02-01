@@ -7,12 +7,18 @@ const transposeCardMovement = (validMoves: number[][]): number[][] => {
   return validMoves.map(move => [-move[0], -move[1]]);
 };
 
-const isOccupied = (
+const isValidSpace = (
   positionID: number,
   board: CellData[],
-  color: PlayerColor
-): boolean =>
-  !board[positionID].piece && board[positionID].piece?.color === color;
+  currentPlayer: PlayerColor
+): boolean => {
+  if (board[positionID].piece === undefined) {
+    return true;
+  } else if (board[positionID].piece?.color !== currentPlayer) {
+    return true;
+  }
+  return false;
+};
 
 export default (
   clickedPieceID: number,
@@ -24,15 +30,14 @@ export default (
   if (color === 'Red')
     validMovesFromCard = transposeCardMovement(validMovesFromCard);
   return validMovesFromCard.reduce((acc, [moveX, moveY]) => {
-    const positionID = coordinateToID({ x: x + moveX, y: y + moveY });
+    const [xDisplacement, yDisplacement] = [x + moveX, y + moveY];
+    const positionID = coordinateToID({ x: xDisplacement, y: yDisplacement });
     if (
-      !(
-        x + moveX >= ROWS ||
-        x + moveX < 0 ||
-        y + moveY >= COLS ||
-        y + moveY < 0 ||
-        isOccupied(positionID, board, color)
-      )
+      xDisplacement < ROWS &&
+      xDisplacement >= 0 &&
+      yDisplacement < COLS &&
+      yDisplacement >= 0 &&
+      isValidSpace(positionID, board, color)
     ) {
       acc.push(positionID);
     }

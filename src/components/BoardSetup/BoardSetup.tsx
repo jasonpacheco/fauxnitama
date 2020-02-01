@@ -9,13 +9,13 @@ import useGameContext from '../../context/useGameContext';
 const BoardSetup: React.FC = () => {
   const {
     board,
-    blueHand,
     clearGameState,
     currentPlayer,
+    handBlue,
+    handRed,
     hasGameFinished,
     movePiece,
     nextCard,
-    redHand,
     selectedCard,
     selectedCell,
     setCurrentCard,
@@ -28,7 +28,7 @@ const BoardSetup: React.FC = () => {
       <Card card={nextCard} invert={currentPlayer === 'Red'} />
       <BoardHandWrapper>
         <Hand
-          hand={redHand}
+          hand={handRed}
           isActiveHand={currentPlayer === 'Red'}
           selectedCard={selectedCard}
           setCurrentCard={setCurrentCard}
@@ -43,7 +43,7 @@ const BoardSetup: React.FC = () => {
           setCell={setSelectedCell}
         />
         <Hand
-          hand={blueHand}
+          hand={handBlue}
           isActiveHand={currentPlayer === 'Blue'}
           selectedCard={selectedCard}
           setCurrentCard={setCurrentCard}

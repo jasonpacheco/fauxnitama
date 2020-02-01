@@ -36,19 +36,19 @@ import { Player, Opponent } from '../state/playerState';
 const cards: CardModel[] = generateCardSet();
 
 const initialState: State = {
-  selectedCell: undefined,
-  selectedCard: undefined,
+  board: cloneDeep([...Opponent, ...generateEmptyCells(), ...Player]),
   currentPlayer: cards[4].stamp,
   firstPlayer: cards[4].stamp,
-  redHand: { first: cards[0], second: cards[1] },
-  blueHand: { first: cards[2], second: cards[3] },
-  nextCard: cards[4],
-  validMoves: undefined,
-  hasGameFinished: false,
-  winner: undefined,
-  winMethod: undefined,
   isCleared: false,
-  board: cloneDeep([...Opponent, ...generateEmptyCells(), ...Player]),
+  handBlue: { first: cards[2], second: cards[3] },
+  handRed: { first: cards[0], second: cards[1] },
+  hasGameFinished: false,
+  nextCard: cards[4],
+  selectedCell: undefined,
+  selectedCard: undefined,
+  validMoves: undefined,
+  winMethod: undefined,
+  winner: undefined,
 };
 
 const GameState: React.FC = ({ children }) => {
@@ -107,7 +107,7 @@ const GameState: React.FC = ({ children }) => {
 
   const setNextCard = (
     nextCard: CardModel,
-    targetProperty: 'blueHand' | 'redHand',
+    targetProperty: 'handBlue' | 'handRed',
     replacementCard: CardModel
   ): void => {
     dispatch({
@@ -171,7 +171,7 @@ const GameState: React.FC = ({ children }) => {
 
     if (state.selectedCard) {
       const poppedNextCard = state.nextCard;
-      const targetProperty = fromPlayer === 'Blue' ? 'blueHand' : 'redHand';
+      const targetProperty = fromPlayer === 'Blue' ? 'handBlue' : 'handRed';
       setNextCard(state.selectedCard, targetProperty, poppedNextCard);
     }
 
