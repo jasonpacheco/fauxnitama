@@ -31,7 +31,7 @@ const Card: React.FC<CardProps> = ({
     return;
   },
 }) => {
-  const { image, moves, name, color, stamp } = card;
+  const { image, name, color, stamp, miniBoard } = card;
 
   // console.log('Card rendered');
   return (
@@ -48,7 +48,7 @@ const Card: React.FC<CardProps> = ({
           <Name>{name}</Name>
         </LeftHalf>
         <RightHalf>
-          <MiniBoard color={color} moves={moves} />
+          <MiniBoard board={miniBoard} color={color} />
         </RightHalf>
       </Main>
       <Gutter invert={invert} stampColor={stamp} />

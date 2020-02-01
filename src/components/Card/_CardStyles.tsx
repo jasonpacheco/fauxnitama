@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import {
   CardWrapperStyleProps,
-  MiniBoxStyleProps,
+  MiniCellStyleProps,
   StampStyleProps,
   StampTooltipStyleProps,
 } from '../../interfaces/styles.interface';
@@ -66,12 +66,12 @@ export const MiniBoardWrapper = styled.div`
   border: 1px solid #cacba2;
 `;
 
-export const MiniBox = styled.div<MiniBoxStyleProps>`
+export const MiniCell = styled.div<MiniCellStyleProps>`
   margin: 0;
   padding: 0;
   border: 1px solid #979677;
-  background-color: ${({ center, hasColor }): string =>
-    center ? '#000' : hasColor ? hasColor : '#fff'};
+  background-color: ${({ moveColor, value }): string =>
+    value === 'X' ? '#000' : value === 'C' ? moveColor : '#fff'};
 `;
 
 export const StampTooltip = styled.div<StampTooltipStyleProps>`

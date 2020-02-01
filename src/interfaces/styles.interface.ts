@@ -18,9 +18,9 @@ export interface CardWrapperStyleProps {
   isActive: boolean;
 }
 
-export interface MiniBoxStyleProps {
-  center?: boolean;
-  hasColor?: string | undefined;
+export interface MiniCellStyleProps {
+  moveColor: string;
+  value: string;
 }
 
 export interface StampTooltipStyleProps {

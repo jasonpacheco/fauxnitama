@@ -20,4 +20,5 @@ export default interface CardModel {
   image: string;
   color: string;
   moves: number[][];
+  miniBoard: string[][];
 }

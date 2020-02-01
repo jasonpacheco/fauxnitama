@@ -37,7 +37,7 @@ const Cell: React.FC<CellProps> = ({
     isValidMove: renderCellValidMove,
   } = renderCell;
 
-  console.log('Cell rendered');
+  // console.log('Cell rendered');
 
   return (
     <CellWrapper

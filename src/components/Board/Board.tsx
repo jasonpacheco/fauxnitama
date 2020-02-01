@@ -24,7 +24,7 @@ const Board: React.FC<BoardProps> = ({
   movement,
   setCell,
 }) => {
-  console.log('Board rendered');
+  // console.log('Board rendered');
   const onCellClick = (
     cellData: CellData,
     id: number,

@@ -72,13 +72,13 @@ export default (state: State, action: Actions): State => {
        *
        *
        */
-      console.log('in valid moves reducer');
-      console.log('state.board.cells', state.board);
-      console.log('action.moves', action.moves);
+      // console.log('in valid moves reducer');
+      // console.log('state.board.cells', state.board);
+      // console.log('action.moves', action.moves);
       return {
         ...state,
         board: state.board.map(cell => {
-          console.log('I ran inside valid moves reducer');
+          // console.log('I ran inside valid moves reducer');
           cell.isValidMove = action.moves.includes(cell.id);
           return cell;
         }),

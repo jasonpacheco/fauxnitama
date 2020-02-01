@@ -1,22 +1,23 @@
 import React from 'react';
-import { getIDs, coordinateToID, movesToID } from '../../utils';
-import { MiniBoardWrapper, MiniBox } from './_CardStyles';
+import { MiniBoardWrapper, MiniCell } from './_CardStyles';
+import isEqual from 'lodash.isequal';
 
 interface MiniBoardProps {
+  board: string[][];
   color: string;
-  moves: number[][];
 }
 
-const MiniBoard: React.FC<MiniBoardProps> = ({ color, moves }) => {
-  const idsForValidMoves = movesToID(moves);
+const MiniBoard: React.FC<MiniBoardProps> = ({ board, color }) => {
   return (
     <MiniBoardWrapper>
-      {getIDs().map(({ id, x, y }) =>
-        idsForValidMoves.includes(coordinateToID({ x, y })) ? (
-          <MiniBox key={id} hasColor={color} />
-        ) : (
-          <MiniBox key={id} center={id === 12} />
-        )
+      {board.map((row: string[], rowIndex) =>
+        row.map((value, colIndex) => (
+          <MiniCell
+            key={5 * rowIndex + colIndex}
+            moveColor={color}
+            value={value}
+          />
+        ))
       )}
     </MiniBoardWrapper>
   );
@@ -24,6 +25,7 @@ const MiniBoard: React.FC<MiniBoardProps> = ({ color, moves }) => {
 
 export default React.memo(MiniBoard, (prevProps, nextProps) => {
   return (
-    prevProps.color === nextProps.color && prevProps.moves === nextProps.moves
+    prevProps.color === nextProps.color &&
+    isEqual(prevProps.board, nextProps.board)
   );
 });
