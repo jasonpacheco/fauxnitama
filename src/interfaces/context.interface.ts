@@ -39,10 +39,6 @@ export interface CellData {
   isEmpty: boolean;
 }
 
-interface BoardState {
-  cells: CellData[];
-}
-
 export interface Coordinates extends Coordinate {
   id: number;
 }
@@ -52,19 +48,19 @@ export interface PlayerHand {
 }
 
 export interface State {
-  board: BoardState;
-  selectedCell: CellData | undefined;
-  selectedCard: CardModel | undefined;
+  blueHand: PlayerHand;
+  board: CellData[];
   currentPlayer: PlayerColor;
   firstPlayer: PlayerColor;
-  validMoves: number[] | undefined;
+  isCleared: boolean;
+  hasGameFinished: boolean;
   nextCard: CardModel;
   redHand: PlayerHand;
-  blueHand: PlayerHand;
-  hasGameFinished: boolean;
-  winner: PlayerColor | undefined;
+  selectedCard: CardModel | undefined;
+  selectedCell: CellData | undefined;
+  validMoves: number[] | undefined;
   winMethod: WinMethods | undefined;
-  isCleared: boolean;
+  winner: PlayerColor | undefined;
 }
 export interface GameContextProperties extends State {
   setSelectedCell: (cell: CellData) => void;

@@ -73,38 +73,35 @@ export default (state: State, action: Actions): State => {
        *
        */
       console.log('in valid moves reducer');
-      console.log('state.board.cells', state.board.cells);
+      console.log('state.board.cells', state.board);
       console.log('action.moves', action.moves);
       return {
         ...state,
-        board: {
-          cells: state.board.cells.map(cell => {
-            console.log('I ran inside valid moves reducer');
-            cell.isValidMove = action.moves.includes(cell.id);
-            return cell;
-          }),
-        },
+        board: state.board.map(cell => {
+          console.log('I ran inside valid moves reducer');
+          cell.isValidMove = action.moves.includes(cell.id);
+          return cell;
+        }),
       };
     case MOVE_PIECE:
       return {
         ...state,
-        board: {
-          cells: state.board.cells.map((cell: CellData) => {
-            const fromCell = action.fromCell;
-            cell.isValidMove = false;
-            if (cell.id === fromCell.id) {
-              cell.piece = null;
-              cell.isEmpty = true;
-            }
 
-            if (fromCell.piece && cell.id === action.toID) {
-              cell.piece = fromCell.piece;
-              cell.piece.currentPosition = idToCoordinate(cell.id);
-              cell.isEmpty = false;
-            }
-            return cell;
-          }),
-        },
+        board: state.board.map((cell: CellData) => {
+          const fromCell = action.fromCell;
+          cell.isValidMove = false;
+          if (cell.id === fromCell.id) {
+            cell.piece = null;
+            cell.isEmpty = true;
+          }
+
+          if (fromCell.piece && cell.id === action.toID) {
+            cell.piece = fromCell.piece;
+            cell.piece.currentPosition = idToCoordinate(cell.id);
+            cell.isEmpty = false;
+          }
+          return cell;
+        }),
       };
     case SET_HAS_GAME_FINISHED:
       return {
@@ -146,7 +143,7 @@ export default (state: State, action: Actions): State => {
         winner: undefined,
         winMethod: undefined,
         isCleared: false,
-        board: { cells: cloneDeep(newBoard) },
+        board: cloneDeep(newBoard),
       };
 
     default:

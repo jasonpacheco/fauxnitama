@@ -48,9 +48,7 @@ const initialState: State = {
   winner: undefined,
   winMethod: undefined,
   isCleared: false,
-  board: {
-    cells: cloneDeep([...Opponent, ...generateEmptyCells(), ...Player]),
-  },
+  board: cloneDeep([...Opponent, ...generateEmptyCells(), ...Player]),
 };
 
 const GameState: React.FC = ({ children }) => {
@@ -74,7 +72,7 @@ const GameState: React.FC = ({ children }) => {
         moveChecker(
           cell.piece.currentPosition,
           state.selectedCard.moves,
-          state.board.cells,
+          state.board,
           state.currentPlayer
         )
       );
@@ -100,7 +98,7 @@ const GameState: React.FC = ({ children }) => {
         moveChecker(
           state.selectedCell.piece.currentPosition,
           currentCard.moves,
-          state.board.cells,
+          state.board,
           state.currentPlayer
         )
       );
@@ -152,7 +150,7 @@ const GameState: React.FC = ({ children }) => {
     const fromPlayer = from.piece?.color;
     const fromPlayerType = from.piece?.type;
     const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
-    const isMoveCheckmate = checkMaster(toID, state.board.cells);
+    const isMoveCheckmate = checkMaster(toID, state.board);
     const isMoveTempleCapture = checkTemple(fromPlayer, fromPlayerType, toID);
     if (fromPlayer && isMoveCheckmate) {
       console.log('Opponent master has been captured!');

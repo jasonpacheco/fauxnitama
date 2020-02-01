@@ -37,7 +37,7 @@ const BoardSetup: React.FC = () => {
         <Board
           activeCell={selectedCell}
           activePlayer={currentPlayer}
-          cells={board.cells}
+          cells={board}
           hasGameFinished={hasGameFinished}
           movement={movePiece}
           setCell={setSelectedCell}
