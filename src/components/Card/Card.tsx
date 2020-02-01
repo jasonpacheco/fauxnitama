@@ -1,17 +1,15 @@
 import React from 'react';
 import CardModel from '../../interfaces/card.interface';
 import MiniBoard from './MiniBoard';
+import Gutter from './Gutter';
 
 import {
   CardWrapper,
   Main,
-  Gutter,
   LeftHalf,
   RightHalf,
   Character,
   Name,
-  Stamp,
-  StampTooltip,
 } from './_CardStyles';
 
 interface CardProps {
@@ -53,15 +51,7 @@ const Card: React.FC<CardProps> = ({
           <MiniBoard color={color} moves={moves} />
         </RightHalf>
       </Main>
-      <Gutter>
-        <Stamp color={stamp}>
-          <StampTooltip invert={invert}>
-            <div>
-              <span>{stamp}</span> player goes first.
-            </div>
-          </StampTooltip>
-        </Stamp>
-      </Gutter>
+      <Gutter invert={invert} stampColor={stamp} />
     </CardWrapper>
   );
 };

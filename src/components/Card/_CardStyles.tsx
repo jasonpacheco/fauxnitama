@@ -26,7 +26,7 @@ export const Main = styled.div`
   justify-content: space-between;
 `;
 
-export const Gutter = styled.div`
+export const GutterWrapper = styled.div`
   align-self: flex-end;
 `;
 
