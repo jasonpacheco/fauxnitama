@@ -2,7 +2,7 @@ import React from 'react';
 import Piece from '../Piece/Piece';
 import { CellWrapper } from './_BoardStyles';
 
-import { CellData, Piece as IPiece } from '../../interfaces/context.interface';
+import { Piece as IPiece } from '../../interfaces/context.interface';
 
 import {
   BLUE_TEMPLE_ID as blueTempleID,
@@ -18,38 +18,48 @@ interface CellProps {
     clickedCellIsValidMove: boolean,
     piece: IPiece | undefined
   ) => void;
-  renderedCell: CellData;
+  renderedID: number;
+  renderedPiece: IPiece | undefined;
 }
 
 const Cell: React.FC<CellProps> = ({
   cellIsValidMove,
   clickedPiece,
   onCellClick,
-  renderedCell,
+  renderedID,
+  renderedPiece,
 }) => {
-  const { id: renderedCellID, piece: renderedCellPiece } = renderedCell;
+  console.log('Cell rendered');
   return (
     <CellWrapper
-      key={renderedCellID}
+      key={renderedID}
       highlightSelectedPiece={
-        renderedCellPiece !== undefined &&
-        isEqual(clickedPiece, renderedCellPiece)
+        renderedPiece !== undefined && isEqual(clickedPiece, renderedPiece)
       }
       highlightValidCell={cellIsValidMove}
       hasTempleBackground={
-        renderedCellPiece === undefined &&
-        ((renderedCellID === blueTempleID && 'Blue') ||
-          (renderedCellID === redTempleID && 'Red'))
+        renderedPiece === undefined &&
+        ((renderedID === blueTempleID && 'Blue') ||
+          (renderedID === redTempleID && 'Red'))
       }
       onClick={(): void =>
-        onCellClick(renderedCellID, cellIsValidMove, renderedCellPiece)
+        onCellClick(renderedID, cellIsValidMove, renderedPiece)
       }
     >
-      {renderedCellPiece && (
-        <Piece color={renderedCellPiece.color} type={renderedCellPiece.type} />
+      {renderedPiece && (
+        <Piece color={renderedPiece.color} type={renderedPiece.type} />
       )}
     </CellWrapper>
   );
 };
 
-export default Cell;
+// export default Cell;
+export default React.memo(Cell, (prevProps, nextProps) => {
+  return (
+    prevProps.cellIsValidMove === nextProps.cellIsValidMove &&
+    isEqual(prevProps.renderedPiece, nextProps.renderedPiece) &&
+    isEqual(prevProps.clickedPiece, nextProps.clickedPiece) &&
+    isEqual(prevProps.onCellClick, nextProps.onCellClick) &&
+    prevProps.renderedID === nextProps.renderedID
+  );
+});

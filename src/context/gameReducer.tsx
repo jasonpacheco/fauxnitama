@@ -1,4 +1,4 @@
-import { CellData, State, Actions } from '../interfaces/context.interface';
+import { State, Actions } from '../interfaces/context.interface';
 
 import {
   SET_CLICKED_CARD,

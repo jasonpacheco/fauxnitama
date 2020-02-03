@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import BlueTempleArch from '../../assets/_blue/temple_arch.svg';
 import RedTempleArch from '../../assets/_red/temple_arch.svg';
 import { CellWrapperStyleProps } from '../../interfaces/styles.interface';

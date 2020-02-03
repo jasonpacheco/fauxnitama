@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { PieceWrapperStyleProps } from '../../interfaces/styles.interface';
 
 export const PieceWrapper = styled.div<PieceWrapperStyleProps>`

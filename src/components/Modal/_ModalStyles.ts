@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { EndMessageContentStyleProps } from '../../interfaces/styles.interface';
 
 export const EndMessageWrapper = styled.div`

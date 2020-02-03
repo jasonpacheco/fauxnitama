@@ -65,7 +65,7 @@ const GameState: React.FC = ({ children }) => {
       clickedPiece,
     });
     /** Implements move checking when cell is clicked */
-    if (clickedPiece && state.clickedCard) {
+    if (state.clickedCard) {
       setValidMoves(clickedPiece);
     }
   };
@@ -83,10 +83,7 @@ const GameState: React.FC = ({ children }) => {
     });
 
     /** Implements automatic move checking when the user selects another card */
-
-    if (state?.clickedPiece) {
-      setValidMoves(state.clickedPiece);
-    }
+    setValidMoves(state.clickedPiece);
   };
 
   const setNextCard = (

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { FullWrapperStyleProps } from '../../interfaces/styles.interface';
 
 export const FullWrapper = styled.div<FullWrapperStyleProps>`
