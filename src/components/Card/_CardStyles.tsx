@@ -10,7 +10,8 @@ import RedShuriken from '../../assets/_red/shuriken.svg';
 import { BOARD_COLS as COLS } from '../../utils/constants';
 
 export const CardWrapper = styled.div<CardWrapperStyleProps>`
-  border: 1px solid #000;
+  border: 2px solid
+    ${({ isCurrentCard }): string => (isCurrentCard ? '#D32F2F' : '#fff')};
   width: 20rem;
   display: flex;
   flex-direction: column;

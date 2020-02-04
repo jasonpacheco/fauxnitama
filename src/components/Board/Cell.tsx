@@ -29,7 +29,7 @@ const Cell: React.FC<CellProps> = ({
   renderedID,
   renderedPiece,
 }) => {
-  console.log('Cell rendered');
+  // console.log('Cell rendered');
   return (
     <CellWrapper
       key={renderedID}
@@ -53,13 +53,4 @@ const Cell: React.FC<CellProps> = ({
   );
 };
 
-// export default Cell;
-export default React.memo(Cell, (prevProps, nextProps) => {
-  return (
-    prevProps.cellIsValidMove === nextProps.cellIsValidMove &&
-    isEqual(prevProps.renderedPiece, nextProps.renderedPiece) &&
-    isEqual(prevProps.clickedPiece, nextProps.clickedPiece) &&
-    isEqual(prevProps.onCellClick, nextProps.onCellClick) &&
-    prevProps.renderedID === nextProps.renderedID
-  );
-});
+export default Cell;

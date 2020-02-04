@@ -2,62 +2,52 @@ import React from 'react';
 import Card from '../Card/Card';
 import { HandWrapper } from './_BoardSetupStyles';
 import { PlayerHand } from '../../interfaces/context.interface';
-import isEqual from 'lodash.isequal';
 import CardModel from '../../interfaces/card.interface';
 
 interface HandProps {
+  clickedCard?: CardModel | undefined;
   hand: PlayerHand;
-  hasGameFinished?: boolean;
   invert?: boolean;
-  isActiveHand: boolean;
-  selectedCard?: CardModel | undefined;
-  setCurrentCard: (currentCard: CardModel) => void;
-}
-const Hand: React.FC<HandProps> = ({
-  hand,
-  isActiveHand,
-  setCurrentCard,
-  hasGameFinished = false,
-  invert = false,
-  selectedCard = undefined,
-}) => {
-  // console.log('Hand rendered');
-
-  const onCardClick = (
+  isCurrentlyActive: boolean;
+  onCardClick?: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     isActiveCard: boolean,
     card: CardModel
-  ): void => {
-    if (isActiveCard && !hasGameFinished) {
-      if (!isEqual(card, selectedCard)) {
-        setCurrentCard(card);
-      }
-    }
-  };
-
+  ) => void;
+}
+const Hand: React.FC<HandProps> = ({
+  clickedCard = undefined,
+  hand,
+  invert = false,
+  isCurrentlyActive,
+  onCardClick = (): void => {
+    return;
+  },
+}) => {
   return (
     <HandWrapper>
       <Card
-        invert={invert}
-        isActiveCard={isActiveHand}
         card={hand.first}
+        clickedCard={clickedCard}
+        invert={invert}
+        isCurrentlyActive={isCurrentlyActive}
         onCardClick={onCardClick}
       />
 
       <Card
-        invert={invert}
-        isActiveCard={isActiveHand}
         card={hand.second}
+        clickedCard={clickedCard}
+        invert={invert}
+        isCurrentlyActive={isCurrentlyActive}
         onCardClick={onCardClick}
       />
     </HandWrapper>
   );
 };
 
-// export default React.memo(Hand, (prevProps, nextProps) => {
-//   return isEqual(prevProps.isActiveHand, nextProps.isActiveHand);
-// });
-
-export default React.memo(Hand);
-
-// export default Hand;
+export default React.memo(Hand, (prevProps, nextProps) => {
+  return (
+    prevProps.isCurrentlyActive === nextProps.isCurrentlyActive &&
+    prevProps.isCurrentlyActive === false
+  );
+});

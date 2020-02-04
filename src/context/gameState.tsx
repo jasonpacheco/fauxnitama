@@ -83,7 +83,9 @@ const GameState: React.FC = ({ children }) => {
     });
 
     /** Implements automatic move checking when the user selects another card */
-    setValidMoves(state.clickedPiece);
+    if (state.clickedPiece) {
+      setValidMoves(state.clickedPiece);
+    }
   };
 
   const setNextCard = (
@@ -165,6 +167,23 @@ const GameState: React.FC = ({ children }) => {
       type: CLEAR_GAME_STATE,
     });
   };
+
+  // const ctx = React.useMemo(() => {
+  //   return {
+  //     ...state,
+  //     setClickedCard,
+  //     setClickedPiece,
+  //     setNextCard,
+  //     setCurrentPlayer,
+  //     setValidMoves,
+  //     movePiece,
+  //     setHasGameFinished,
+  //     setWinner,
+  //     setWinMethod,
+  //     clearGameState,
+  //     setIsCleared,
+  //   };
+  // }, [state]);
 
   return (
     <GameContext.Provider

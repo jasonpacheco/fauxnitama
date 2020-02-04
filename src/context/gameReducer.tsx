@@ -73,24 +73,22 @@ export default (state: State, action: Actions): State => {
         };
       }
     case MOVE_PIECE:
-      const boardCopy = state.board;
       const fromPiece = action.fromPiece;
       const fromID = action.fromPiece.currentPositionID;
       fromPiece.currentPositionID = action.toID;
 
-      boardCopy[action.toID] = {
+      state.board[action.toID] = {
         id: action.toID,
         piece: fromPiece,
       };
 
-      boardCopy[fromID] = {
+      state.board[fromID] = {
         id: fromID,
         piece: undefined,
       };
 
       return {
         ...state,
-        board: boardCopy,
       };
 
     case SET_HAS_GAME_FINISHED:

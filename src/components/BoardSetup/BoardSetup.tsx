@@ -5,6 +5,8 @@ import Card from '../Card/Card';
 import GameEndMessage from '../Modal/GameEndMessage';
 import { FullWrapper, BoardHandWrapper, Spacer } from './_BoardSetupStyles';
 import useGameContext from '../../context/useGameContext';
+import isEqual from 'lodash.isequal';
+import CardModel from '../../interfaces/card.interface';
 
 const BoardSetup: React.FC = () => {
   const {
@@ -24,16 +26,34 @@ const BoardSetup: React.FC = () => {
     winner,
     winMethod,
   } = useGameContext();
+
+  const onCardClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    isActiveCard: boolean,
+    card: CardModel
+  ): void => {
+    if (isActiveCard && !hasGameFinished) {
+      if (!isEqual(card, clickedCard)) {
+        setClickedCard(card);
+      }
+    }
+  };
+
   return (
     <FullWrapper playerColorToRight={currentPlayer}>
-      <Card card={nextCard} invert={currentPlayer === 'Red'} />
+      <Card
+        card={nextCard}
+        clickedCard={clickedCard}
+        isCurrentlyActive={false}
+        invert={currentPlayer === 'Red'}
+      />
       <BoardHandWrapper>
         <Hand
+          clickedCard={clickedCard}
           hand={handRed}
-          isActiveHand={currentPlayer === 'Red'}
-          selectedCard={clickedCard}
-          setCurrentCard={setClickedCard}
           invert
+          isCurrentlyActive={currentPlayer === 'Red'}
+          onCardClick={onCardClick}
         />
         <Board
           cells={board}
@@ -45,10 +65,10 @@ const BoardSetup: React.FC = () => {
           setPiece={setClickedPiece}
         />
         <Hand
+          clickedCard={clickedCard}
           hand={handBlue}
-          isActiveHand={currentPlayer === 'Blue'}
-          selectedCard={clickedCard}
-          setCurrentCard={setClickedCard}
+          isCurrentlyActive={currentPlayer === 'Blue'}
+          onCardClick={onCardClick}
         />
       </BoardHandWrapper>
       <Spacer>

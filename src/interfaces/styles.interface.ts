@@ -16,6 +16,7 @@ export interface CellWrapperStyleProps {
 export interface CardWrapperStyleProps {
   invert: boolean;
   isActive: boolean;
+  isCurrentCard: boolean;
 }
 
 export interface MiniCellStyleProps {

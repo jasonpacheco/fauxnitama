@@ -11,11 +11,13 @@ import {
   Character,
   Name,
 } from './_CardStyles';
+import isEqual from 'lodash.isequal';
 
 interface CardProps {
   card: CardModel;
+  clickedCard?: CardModel | undefined;
   invert: boolean;
-  isActiveCard?: boolean;
+  isCurrentlyActive: boolean;
   onCardClick?: (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     isActiveCard: boolean,
@@ -25,20 +27,21 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({
   card,
+  clickedCard,
   invert,
-  isActiveCard = false,
+  isCurrentlyActive,
   onCardClick = (): void => {
     return;
   },
 }) => {
   const { image, name, color, stamp, miniBoard } = card;
 
-  // console.log('Card rendered');
   return (
     <CardWrapper
       invert={invert}
-      isActive={isActiveCard}
-      onClick={(e): void => onCardClick(e, isActiveCard, card)}
+      isActive={isCurrentlyActive}
+      onClick={(e): void => onCardClick(e, isCurrentlyActive, card)}
+      isCurrentCard={isEqual(card, clickedCard)}
     >
       <Main>
         <LeftHalf>
@@ -56,10 +59,10 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-// export default React.memo(
-//   Card,
-//   (prevProps, nextProps) =>
-//     isEqual(prevProps.card, nextProps.card) &&
-//     isEqual(prevProps.isActiveCard, nextProps.isActiveCard)
-// );
-export default Card;
+export default React.memo(Card, (prevProps, nextProps) => {
+  return (
+    !prevProps.isCurrentlyActive &&
+    prevProps.isCurrentlyActive === nextProps.isCurrentlyActive &&
+    isEqual(prevProps.card, nextProps.card)
+  );
+});

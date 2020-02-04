@@ -26,30 +26,24 @@ const Board: React.FC<BoardProps> = ({
   setPiece,
   validMoves,
 }) => {
-  const onCellClick = React.useCallback(
-    (
-      clickedCellID: number,
-      clickedCellIsValidMove: boolean,
-      piece: Piece | undefined
-    ): void => {
-      if (!hasGameFinished) {
-        if (piece?.color === currentPlayer) {
-          if (
-            !clickedPiece ||
-            clickedCellID !== clickedPiece.currentPositionID
-          ) {
-            setPiece(piece);
-          }
-        }
-
-        if (clickedPiece && clickedCellIsValidMove) {
-          movePiece(clickedPiece, clickedCellID);
+  const onCellClick = (
+    clickedCellID: number,
+    clickedCellIsValidMove: boolean,
+    piece: Piece | undefined
+  ): void => {
+    if (!hasGameFinished) {
+      if (piece?.color === currentPlayer) {
+        if (!clickedPiece || clickedCellID !== clickedPiece.currentPositionID) {
+          setPiece(piece);
         }
       }
-    },
-    [clickedPiece, currentPlayer, hasGameFinished, movePiece, setPiece]
-  );
-  console.log('Board rendered');
+
+      if (clickedPiece && clickedCellIsValidMove) {
+        movePiece(clickedPiece, clickedCellID);
+      }
+    }
+  };
+  // console.log('Board rendered');
   return (
     <GridWrapper>
       <Grid>
