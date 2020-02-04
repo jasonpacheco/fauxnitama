@@ -29,12 +29,12 @@ const Cell: React.FC<CellProps> = ({
   renderedID,
   renderedPiece,
 }) => {
-  // console.log('Cell rendered');
+  console.log('Cell rendered ' + clickedPiece?.currentPositionID);
   return (
     <CellWrapper
       key={renderedID}
       highlightSelectedPiece={
-        renderedPiece !== undefined && isEqual(clickedPiece, renderedPiece)
+        !!renderedPiece && renderedID === clickedPiece?.currentPositionID
       }
       highlightValidCell={cellIsValidMove}
       hasTempleBackground={
@@ -54,3 +54,10 @@ const Cell: React.FC<CellProps> = ({
 };
 
 export default Cell;
+
+// export default React.memo(Cell, (prevProps, nextProps) => {
+//   return (
+//     prevProps.cellIsValidMove === nextProps.cellIsValidMove &&
+//     !prevProps.cellIsValidMove
+//   );
+// });
