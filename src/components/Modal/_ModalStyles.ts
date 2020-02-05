@@ -1,5 +1,6 @@
 import styled from 'styled-components/macro';
 import { EndMessageContentStyleProps } from '../../interfaces/styles.interface';
+import RestartIcon from '../../assets/restart_icon.svg';
 
 export const EndMessageWrapper = styled.div`
   border: 1px solid #333;
@@ -33,19 +34,24 @@ export const EndMessageHeader = styled.div`
 
 export const EndMessageButton = styled.button`
   font-family: 'Arvo', Georgia, 'Times New Roman', Times, serif;
-  margin-top: 1rem;
+  margin: 0.5rem auto;
   padding: 0.5rem;
   font-size: 1.1rem;
   border-radius: 3px;
-  display: inline-block;
+  display: block;
   outline: none;
   cursor: pointer;
-  & > img {
-    width: 1rem;
-    margin-left: 0.5rem;
-  }
+`;
+
+export const RestartGraphic = styled.img.attrs({ src: RestartIcon })`
+  width: 1rem;
+  margin-left: 0.5rem;
 `;
 
 export const RoundModalWrapper = styled(EndMessageWrapper)``;
 
-export const RoundModalButton = styled(EndMessageButton)``;
+export const RoundModalButton = styled(EndMessageButton)`
+  &:disabled {
+    cursor: not-allowed;
+  }
+`;

@@ -1,11 +1,11 @@
 import React from 'react';
-import RestartIcon from '../../assets/restart_icon.svg';
 
 import {
   EndMessageWrapper,
   EndMessageHeader,
   EndMessageContent,
   EndMessageButton,
+  RestartGraphic,
 } from './_ModalStyles';
 
 import { PlayerColor, WinMethods } from '../../interfaces/context.interface';
@@ -37,7 +37,7 @@ const GameEndMessage: React.FC<GameEndMessageProps> = ({
           onClick={(e: React.SyntheticEvent): void => handleButtonClick(e)}
         >
           Restart Game
-          <img src={RestartIcon} alt='' />
+          <RestartGraphic />
         </EndMessageButton>
       </EndMessageContent>
     </EndMessageWrapper>
