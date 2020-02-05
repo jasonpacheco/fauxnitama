@@ -163,9 +163,22 @@ const GameState: React.FC = ({ children }) => {
 
   const clearGameState = (): void => {
     setIsCleared();
+    setHasGameFinished();
     dispatch({
       type: CLEAR_GAME_STATE,
     });
+  };
+
+  const setPassTurn = (): void => {
+    const replacementCard = state.nextCard;
+    const targetProperty =
+      state.currentPlayer === 'Blue' ? 'handBlue' : 'handRed';
+
+    if (state.clickedCard) {
+      setNextCard(state.clickedCard, targetProperty, replacementCard);
+    }
+    setValidMoves(undefined);
+    setCurrentPlayer(state.currentPlayer === 'Blue' ? 'Red' : 'Blue');
   };
 
   return (
@@ -183,6 +196,7 @@ const GameState: React.FC = ({ children }) => {
         setWinMethod,
         clearGameState,
         setIsCleared,
+        setPassTurn,
       }}
     >
       {children}

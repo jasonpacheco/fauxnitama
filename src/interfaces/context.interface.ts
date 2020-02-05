@@ -11,6 +11,7 @@ import {
   SET_WIN_METHOD,
   CLEAR_GAME_STATE,
   SET_IS_CLEARED,
+  SET_PASS_TURN,
 } from '../types';
 
 export type Coordinate = {
@@ -71,6 +72,7 @@ export interface GameContextProperties extends State {
   setWinMethod: (winMethod: WinMethods) => void;
   clearGameState: () => void;
   setIsCleared: () => void;
+  setPassTurn: () => void;
 }
 interface SetClickedPiece {
   type: typeof SET_CLICKED_PIECE;
@@ -127,6 +129,10 @@ interface SetIsCleared {
   type: typeof SET_IS_CLEARED;
 }
 
+interface SetPassTurn {
+  type: typeof SET_PASS_TURN;
+}
+
 export type Actions =
   | SetClickedPiece
   | SetClickedCard
@@ -138,4 +144,5 @@ export type Actions =
   | SetWinner
   | SetWinMethod
   | ClearGameState
-  | SetIsCleared;
+  | SetIsCleared
+  | SetPassTurn;

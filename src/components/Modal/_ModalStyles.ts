@@ -45,3 +45,7 @@ export const EndMessageButton = styled.button`
     margin-left: 0.5rem;
   }
 `;
+
+export const RoundModalWrapper = styled(EndMessageWrapper)``;
+
+export const RoundModalButton = styled(EndMessageButton)``;

@@ -3,6 +3,7 @@ import Board from '../Board/Board';
 import Hand from './Hand';
 import Card from '../Card/Card';
 import GameEndMessage from '../Modal/GameEndMessage';
+import RoundModal from '../Modal/RoundModal';
 import { FullWrapper, BoardHandWrapper, Spacer } from './_BoardSetupStyles';
 import useGameContext from '../../context/useGameContext';
 import isEqual from 'lodash.isequal';
@@ -22,6 +23,7 @@ const BoardSetup: React.FC = () => {
     nextCard,
     setClickedCard,
     setClickedPiece,
+    setPassTurn,
     validMoves,
     winner,
     winMethod,
@@ -75,6 +77,13 @@ const BoardSetup: React.FC = () => {
         />
       </BoardHandWrapper>
       <Spacer>
+        {!hasGameFinished && (
+          <RoundModal
+            clearGameState={clearGameState}
+            clickedCard={clickedCard}
+            setPassTurn={setPassTurn}
+          />
+        )}
         {hasGameFinished && winner && winMethod && (
           <GameEndMessage
             winner={winner}

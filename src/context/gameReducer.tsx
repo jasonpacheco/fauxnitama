@@ -69,6 +69,7 @@ export default (state: State, action: Actions): State => {
       } else {
         return {
           ...state,
+          clickedPiece: undefined,
           validMoves: [],
         };
       }
