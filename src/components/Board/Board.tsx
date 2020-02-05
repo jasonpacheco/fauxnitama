@@ -44,7 +44,7 @@ const Board: React.FC<BoardProps> = ({
   return (
     <GridWrapper>
       <Grid>
-        {cells.map(cell => (
+        {cells.map((cell: CellData) => (
           <Cell
             key={cell.id}
             highlightClickedPiece={
@@ -55,8 +55,7 @@ const Board: React.FC<BoardProps> = ({
               validMoves.includes(cell.id)
             }
             onCellClick={onCellClick}
-            renderedID={cell.id}
-            renderedPiece={cell.piece}
+            renderedCell={cell}
           />
         ))}
       </Grid>

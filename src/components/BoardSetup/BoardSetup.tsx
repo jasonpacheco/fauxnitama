@@ -46,6 +46,7 @@ const BoardSetup: React.FC = () => {
         clickedCard={clickedCard}
         isCurrentlyActive={false}
         invert={currentPlayer === 'Red'}
+        reset={hasGameFinished}
       />
       <BoardHandWrapper>
         <Hand
@@ -54,6 +55,7 @@ const BoardSetup: React.FC = () => {
           invert
           isCurrentlyActive={currentPlayer === 'Red'}
           onCardClick={onCardClick}
+          reset={hasGameFinished}
         />
         <Board
           cells={board}
@@ -69,6 +71,7 @@ const BoardSetup: React.FC = () => {
           hand={handBlue}
           isCurrentlyActive={currentPlayer === 'Blue'}
           onCardClick={onCardClick}
+          reset={hasGameFinished}
         />
       </BoardHandWrapper>
       <Spacer>

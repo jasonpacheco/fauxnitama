@@ -23,6 +23,7 @@ interface CardProps {
     isActiveCard: boolean,
     card: CardModel
   ) => void;
+  reset: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -59,10 +60,15 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-export default React.memo(Card, (prevProps, nextProps) => {
-  return (
-    !prevProps.isCurrentlyActive &&
-    prevProps.isCurrentlyActive === nextProps.isCurrentlyActive &&
-    isEqual(prevProps.card, nextProps.card)
-  );
-});
+// export default React.memo(Card, (prevProps, nextProps) => {
+//   if (prevProps.reset !== nextProps.reset && nextProps.reset) {
+//     return false;
+//   }
+//   return (
+//     !prevProps.isCurrentlyActive &&
+//     prevProps.isCurrentlyActive === nextProps.isCurrentlyActive &&
+//     isEqual(prevProps.card, nextProps.card)
+//   );
+// });
+
+export default Card;

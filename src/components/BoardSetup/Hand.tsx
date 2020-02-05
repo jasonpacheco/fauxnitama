@@ -14,6 +14,7 @@ interface HandProps {
     isActiveCard: boolean,
     card: CardModel
   ) => void;
+  reset: boolean;
 }
 const Hand: React.FC<HandProps> = ({
   clickedCard = undefined,
@@ -23,6 +24,7 @@ const Hand: React.FC<HandProps> = ({
   onCardClick = (): void => {
     return;
   },
+  reset,
 }) => {
   return (
     <HandWrapper>
@@ -32,6 +34,7 @@ const Hand: React.FC<HandProps> = ({
         invert={invert}
         isCurrentlyActive={isCurrentlyActive}
         onCardClick={onCardClick}
+        reset={reset}
       />
 
       <Card
@@ -40,14 +43,20 @@ const Hand: React.FC<HandProps> = ({
         invert={invert}
         isCurrentlyActive={isCurrentlyActive}
         onCardClick={onCardClick}
+        reset={reset}
       />
     </HandWrapper>
   );
 };
 
-export default React.memo(Hand, (prevProps, nextProps) => {
-  return (
-    prevProps.isCurrentlyActive === nextProps.isCurrentlyActive &&
-    prevProps.isCurrentlyActive === false
-  );
-});
+// export default React.memo(Hand, (prevProps, nextProps) => {
+//   if (prevProps.reset !== nextProps.reset && nextProps.reset) {
+//     return false;
+//   }
+//   return (
+//     prevProps.isCurrentlyActive === nextProps.isCurrentlyActive &&
+//     prevProps.isCurrentlyActive === false
+//   );
+// });
+
+export default Hand;
