@@ -5,7 +5,7 @@ interface Timer {
   resetTimer: () => void;
   startTimer: () => void;
   stopTimer: () => void;
-  formattedTime: (currentTime: number) => string;
+  formattedTime: (currentTime: number, alt?: boolean) => string;
 }
 /**
  * useTimer hook provides:
@@ -35,15 +35,41 @@ export default (): Timer => {
     setElapsedTime(0);
   };
 
-  const formattedTime = (currentTime: number): string => {
+  const formattedTime = (currentTime: number, alt = false): string => {
     if (currentTime < 0) {
       return 'Error: Time cannot be negative?';
     }
 
     const seconds = `${currentTime % 60}`.padStart(2, '0');
     const minutes = `${Math.floor(currentTime / 60) % 60}`.padStart(2, '0');
-    const hours = `${Math.floor(currentTime / 3600)}`;
-    return hours === '0'
+    const hours = `${Math.floor(currentTime / 3600)}`.padStart(2, '0');
+
+    if (alt) {
+      const secSuffix = seconds === '01' ? '' : 's';
+      const minSuffix = minutes === '01' ? '' : 's';
+      const hrSuffix = hours === '01' ? '' : 's';
+      const fmtSec = `${seconds === '01' ? 'one' : seconds} second${secSuffix}`;
+      const fmtMin = `${minutes === '01' ? 'one' : minutes} minute${minSuffix}`;
+      const fmtHr = `${hours === '01' ? 'one' : hours} hour${hrSuffix}`;
+
+      if (hours === '00' && minutes === '00') {
+        return fmtSec;
+      } else if (hours === '00' && seconds === '00') {
+        return fmtMin;
+      } else if (minutes === '00' && seconds === '00') {
+        return fmtHr;
+      } else if (hours === '00') {
+        return `${fmtMin} and ${fmtSec}`;
+      } else if (minutes === '00') {
+        return `${fmtHr} and ${fmtSec}`;
+      } else if (seconds === '00') {
+        return `${fmtHr} and ${fmtMin}`;
+      } else {
+        return `${fmtHr}, ${fmtMin}, and ${fmtSec}`;
+      }
+    }
+
+    return hours === '00'
       ? `${minutes}:${seconds}`
       : `${hours}:${minutes}:${seconds}`;
   };
