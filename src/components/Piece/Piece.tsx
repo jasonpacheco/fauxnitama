@@ -34,8 +34,4 @@ const Piece: React.FC<PieceProps> = ({ color, type }) => {
   );
 };
 
-export default React.memo(Piece, (prevProps, nextProps) => {
-  return (
-    prevProps.color === nextProps.color && prevProps.type === nextProps.type
-  );
-});
+export default Piece;

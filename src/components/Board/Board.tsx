@@ -40,7 +40,6 @@ const Board: React.FC<BoardProps> = ({
     }
   };
 
-  // console.log('Board rendered');
   return (
     <GridWrapper>
       <Grid>

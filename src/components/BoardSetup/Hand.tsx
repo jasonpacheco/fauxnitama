@@ -49,14 +49,4 @@ const Hand: React.FC<HandProps> = ({
   );
 };
 
-// export default React.memo(Hand, (prevProps, nextProps) => {
-//   if (prevProps.reset !== nextProps.reset && nextProps.reset) {
-//     return false;
-//   }
-//   return (
-//     prevProps.isCurrentlyActive === nextProps.isCurrentlyActive &&
-//     prevProps.isCurrentlyActive === false
-//   );
-// });
-
 export default Hand;

@@ -168,23 +168,6 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
-  // const ctx = React.useMemo(() => {
-  //   return {
-  //     ...state,
-  //     setClickedCard,
-  //     setClickedPiece,
-  //     setNextCard,
-  //     setCurrentPlayer,
-  //     setValidMoves,
-  //     movePiece,
-  //     setHasGameFinished,
-  //     setWinner,
-  //     setWinMethod,
-  //     clearGameState,
-  //     setIsCleared,
-  //   };
-  // }, [state]);
-
   return (
     <GameContext.Provider
       value={{
