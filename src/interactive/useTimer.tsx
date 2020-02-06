@@ -35,6 +35,15 @@ export default (): Timer => {
     setElapsedTime(0);
   };
 
+  const fmtTime = (value: string, time: 's' | 'm' | 'h'): string => {
+    const unit =
+      (time === 's' && 'second') ||
+      (time === 'm' && 'minute') ||
+      (time === 'h' && 'hour');
+    const suffix = value === '1' ? '' : 's';
+    return `${value === '1' ? 'one' : value} ${unit}${suffix}`;
+  };
+
   const formattedTime = (currentTime: number, alt = false): string => {
     if (currentTime < 0) {
       return 'Error: Time cannot be negative?';
@@ -45,27 +54,23 @@ export default (): Timer => {
     const hours = `${Math.floor(currentTime / 3600)}`;
 
     if (alt) {
-      const secSuffix = seconds === '1' ? '' : 's';
-      const minSuffix = minutes === '1' ? '' : 's';
-      const hrSuffix = hours === '1' ? '' : 's';
-      const fmtSec = `${seconds === '1' ? 'one' : seconds} second${secSuffix}`;
-      const fmtMin = `${minutes === '1' ? 'one' : minutes} minute${minSuffix}`;
-      const fmtHr = `${hours === '1' ? 'one' : hours} hour${hrSuffix}`;
-
       if (hours === '0' && minutes === '0') {
-        return fmtSec;
+        return fmtTime(seconds, 's');
       } else if (hours === '0' && seconds === '0') {
-        return fmtMin;
+        return fmtTime(minutes, 'm');
       } else if (minutes === '0' && seconds === '0') {
-        return fmtHr;
+        return fmtTime(hours, 'h');
       } else if (hours === '0') {
-        return `${fmtMin} and ${fmtSec}`;
+        return `${fmtTime(minutes, 'm')} and ${fmtTime(seconds, 's')}`;
       } else if (minutes === '0') {
-        return `${fmtHr} and ${fmtSec}`;
+        return `${fmtTime(hours, 'h')} and ${fmtTime(seconds, 's')}`;
       } else if (seconds === '0') {
-        return `${fmtHr} and ${fmtMin}`;
+        return `${fmtTime(hours, 'h')} and ${fmtTime(minutes, 'm')}`;
       } else {
-        return `${fmtHr}, ${fmtMin}, and ${fmtSec}`;
+        return `${fmtTime(hours, 'h')}, ${fmtTime(minutes, 'm')}, and ${fmtTime(
+          seconds,
+          's'
+        )}`;
       }
     }
 
