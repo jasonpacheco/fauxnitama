@@ -8,11 +8,12 @@ import {
 } from '../../interfaces/context.interface';
 
 interface BoardProps {
-  clickedPiece: Piece | undefined;
   cells: CellData[];
+  clickedPiece: Piece | undefined;
   currentPlayer: PlayerColor;
   hasGameFinished: boolean;
   movePiece: (fromPiece: Piece, toID: number) => void;
+  pauseGame: boolean;
   setPiece: (piece: Piece) => void;
   validMoves: number[];
 }
@@ -23,11 +24,12 @@ const Board: React.FC<BoardProps> = ({
   currentPlayer,
   hasGameFinished,
   movePiece,
+  pauseGame,
   setPiece,
   validMoves,
 }) => {
   const onCellClick = (clickedCellID: number): void => {
-    if (!hasGameFinished) {
+    if (!hasGameFinished && !pauseGame) {
       const piece = cells[clickedCellID].piece;
       if (piece?.color === currentPlayer) {
         if (!clickedPiece || clickedCellID !== clickedPiece.currentPositionID) {

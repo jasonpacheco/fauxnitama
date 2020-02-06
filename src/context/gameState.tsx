@@ -1,36 +1,38 @@
 import React, { useReducer } from 'react';
 import gameReducer from './gameReducer';
 import GameContext from './gameContext';
-import {
-  generateCardSet,
-  checkMaster,
-  checkTemple,
-  generateEmptyCells,
-} from '../utils';
-import cloneDeep from 'lodash.clonedeep';
 
+import {
+  CLEAR_GAME_STATE,
+  MOVE_PIECE,
+  SET_CLICKED_CARD,
+  SET_CLICKED_PIECE,
+  SET_CURRENT_PLAYER,
+  SET_HAS_GAME_FINISHED,
+  SET_IS_CLEARED,
+  SET_NEXT_CARD,
+  SET_PAUSE,
+  SET_VALID_MOVES,
+  SET_WIN_METHOD,
+  SET_WINNER,
+} from '../types';
+
+import CardModel from '../interfaces/card.interface';
 import {
   Piece,
   PlayerColor,
   State,
   WinMethods,
 } from '../interfaces/context.interface';
-import CardModel from '../interfaces/card.interface';
-import {
-  SET_CLICKED_CARD,
-  SET_CLICKED_PIECE,
-  SET_NEXT_CARD,
-  SET_CURRENT_PLAYER,
-  SET_VALID_MOVES,
-  MOVE_PIECE,
-  SET_HAS_GAME_FINISHED,
-  SET_WINNER,
-  SET_WIN_METHOD,
-  CLEAR_GAME_STATE,
-  SET_IS_CLEARED,
-} from '../types';
+import { Opponent, Player } from '../state/playerState';
 
-import { Player, Opponent } from '../state/playerState';
+import {
+  checkMaster,
+  checkTemple,
+  generateCardSet,
+  generateEmptyCells,
+} from '../utils';
+import cloneDeep from 'lodash.clonedeep';
 
 const cards: CardModel[] = generateCardSet();
 
@@ -39,11 +41,12 @@ const initialState: State = {
   clickedCard: undefined,
   clickedPiece: undefined,
   currentPlayer: cards[4].stamp,
-  isCleared: false,
   handBlue: { first: cards[2], second: cards[3] },
   handRed: { first: cards[0], second: cards[1] },
   hasGameFinished: false,
+  isCleared: false,
   nextCard: cards[4],
+  pauseGame: false,
   validMoves: [],
   winMethod: undefined,
   winner: undefined,
@@ -181,22 +184,30 @@ const GameState: React.FC = ({ children }) => {
     setCurrentPlayer(state.currentPlayer === 'Blue' ? 'Red' : 'Blue');
   };
 
+  const setPauseGame = (pause: boolean): void => {
+    dispatch({
+      type: SET_PAUSE,
+      pause,
+    });
+  };
+
   return (
     <GameContext.Provider
       value={{
         ...state,
+        clearGameState,
+        movePiece,
         setClickedCard,
         setClickedPiece,
-        setNextCard,
         setCurrentPlayer,
-        setValidMoves,
-        movePiece,
         setHasGameFinished,
-        setWinner,
-        setWinMethod,
-        clearGameState,
         setIsCleared,
+        setNextCard,
         setPassTurn,
+        setPauseGame,
+        setValidMoves,
+        setWinMethod,
+        setWinner,
       }}
     >
       {children}

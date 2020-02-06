@@ -8,8 +8,10 @@ import GameEndMessage from './GameEndMessage';
 interface RoundModalProps {
   clearGameState: () => void;
   clickedCard: CardModel | undefined;
-  setPassTurn: () => void;
   hasGameFinished: boolean;
+  pauseGame: boolean;
+  setPassTurn: () => void;
+  setPauseGame: (pause: boolean) => void;
   winner: PlayerColor | undefined;
   winMethod: WinMethods | undefined;
 }
@@ -17,12 +19,15 @@ interface RoundModalProps {
 const RoundModal: React.FC<RoundModalProps> = ({
   clearGameState,
   clickedCard,
-  setPassTurn,
   hasGameFinished,
-  winner,
+  pauseGame,
+  setPassTurn,
+  setPauseGame,
   winMethod,
+  winner,
 }) => {
   const [showPrompt, setShowPrompt] = useState(false);
+
   const {
     elapsedTime,
     resetTimer,
@@ -37,21 +42,37 @@ const RoundModal: React.FC<RoundModalProps> = ({
   }, []);
 
   const handleClick = (type: string): void => {
-    if (type === 'prompt') {
-      stopTimer();
-      setShowPrompt(true);
-    } else if (type === 'yes') {
-      setShowPrompt(false);
-      clearGameState();
-      resetTimer();
-      startTimer();
-    } else if (type === 'no') {
-      setShowPrompt(false);
-      startTimer();
-    } else {
-      if (clickedCard) {
-        setPassTurn();
-      }
+    switch (type) {
+      case 'prompt':
+        stopTimer();
+        setShowPrompt(true);
+        break;
+      case 'yes':
+        setShowPrompt(false);
+        clearGameState();
+        resetTimer();
+        startTimer();
+        break;
+      case 'no':
+        setShowPrompt(false);
+        startTimer();
+        break;
+      case 'pass':
+        if (clickedCard) {
+          setPassTurn();
+        }
+        break;
+      case 'pause':
+        if (!pauseGame) {
+          stopTimer();
+          setPauseGame(true);
+        } else {
+          setPauseGame(false);
+          startTimer();
+        }
+        break;
+      default:
+        return;
     }
   };
 
@@ -80,6 +101,9 @@ const RoundModal: React.FC<RoundModalProps> = ({
             disabled={clickedCard === undefined}
           >
             Pass Turn
+          </RoundModalButton>
+          <RoundModalButton onClick={(): void => handleClick('pause')}>
+            {pauseGame ? 'Resume Match' : 'Pause'}
           </RoundModalButton>
         </>
       )}

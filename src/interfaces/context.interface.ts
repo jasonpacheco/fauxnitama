@@ -1,17 +1,17 @@
 import CardModel from '../interfaces/card.interface';
 import {
+  CLEAR_GAME_STATE,
+  MOVE_PIECE,
   SET_CLICKED_CARD,
   SET_CLICKED_PIECE,
-  SET_NEXT_CARD,
   SET_CURRENT_PLAYER,
-  SET_VALID_MOVES,
-  MOVE_PIECE,
   SET_HAS_GAME_FINISHED,
-  SET_WINNER,
-  SET_WIN_METHOD,
-  CLEAR_GAME_STATE,
   SET_IS_CLEARED,
-  SET_PASS_TURN,
+  SET_NEXT_CARD,
+  SET_PAUSE,
+  SET_VALID_MOVES,
+  SET_WIN_METHOD,
+  SET_WINNER,
 } from '../types';
 
 export type Coordinate = {
@@ -52,36 +52,63 @@ export interface State {
   handRed: PlayerHand;
   hasGameFinished: boolean;
   nextCard: CardModel;
+  pauseGame: boolean;
   validMoves: number[];
   winMethod: WinMethods | undefined;
   winner: PlayerColor | undefined;
 }
+
 export interface GameContextProperties extends State {
+  clearGameState: () => void;
+  movePiece: (fromPiece: Piece, toID: number) => void;
   setClickedCard: (clickedCard: CardModel) => void;
   setClickedPiece: (clickedPiece: Piece) => void;
+  setCurrentPlayer: (player: PlayerColor) => void;
+  setHasGameFinished: () => void;
+  setIsCleared: () => void;
   setNextCard: (
     nextCard: CardModel,
     targetProperty: 'handBlue' | 'handRed',
     replacementCard: CardModel
   ) => void;
-  setCurrentPlayer: (player: PlayerColor) => void;
-  setValidMoves: (piece: Piece | undefined) => void;
-  movePiece: (fromPiece: Piece, toID: number) => void;
-  setHasGameFinished: () => void;
-  setWinner: (winner: PlayerColor) => void;
-  setWinMethod: (winMethod: WinMethods) => void;
-  clearGameState: () => void;
-  setIsCleared: () => void;
   setPassTurn: () => void;
+  setPauseGame: (pause: boolean) => void;
+  setValidMoves: (piece: Piece | undefined) => void;
+  setWinMethod: (winMethod: WinMethods) => void;
+  setWinner: (winner: PlayerColor) => void;
 }
-interface SetClickedPiece {
-  type: typeof SET_CLICKED_PIECE;
-  clickedPiece: Piece;
+
+interface ClearGameState {
+  type: typeof CLEAR_GAME_STATE;
+}
+
+interface MovePiece {
+  type: typeof MOVE_PIECE;
+  fromPiece: Piece;
+  toID: number;
 }
 
 interface SetClickedCard {
   type: typeof SET_CLICKED_CARD;
   clickedCard: CardModel;
+}
+
+interface SetClickedPiece {
+  type: typeof SET_CLICKED_PIECE;
+  clickedPiece: Piece;
+}
+
+interface SetCurrentPlayer {
+  type: typeof SET_CURRENT_PLAYER;
+  player: PlayerColor;
+}
+
+interface SetHasGameFinished {
+  type: typeof SET_HAS_GAME_FINISHED;
+}
+
+interface SetIsCleared {
+  type: typeof SET_IS_CLEARED;
 }
 
 interface SetNextCard {
@@ -91,9 +118,9 @@ interface SetNextCard {
   replacementCard: CardModel;
 }
 
-interface SetCurrentPlayer {
-  type: typeof SET_CURRENT_PLAYER;
-  player: PlayerColor;
+interface SetPauseGame {
+  type: typeof SET_PAUSE;
+  pause: boolean;
 }
 
 interface SetValidMoves {
@@ -101,14 +128,9 @@ interface SetValidMoves {
   piece: Piece | undefined;
 }
 
-interface SetHasGameFinished {
-  type: typeof SET_HAS_GAME_FINISHED;
-}
-
-interface MovePiece {
-  type: typeof MOVE_PIECE;
-  fromPiece: Piece;
-  toID: number;
+interface SetWinMethod {
+  type: typeof SET_WIN_METHOD;
+  winMethod: WinMethods;
 }
 
 interface SetWinner {
@@ -116,33 +138,16 @@ interface SetWinner {
   winner: PlayerColor;
 }
 
-interface SetWinMethod {
-  type: typeof SET_WIN_METHOD;
-  winMethod: WinMethods;
-}
-
-interface ClearGameState {
-  type: typeof CLEAR_GAME_STATE;
-}
-
-interface SetIsCleared {
-  type: typeof SET_IS_CLEARED;
-}
-
-interface SetPassTurn {
-  type: typeof SET_PASS_TURN;
-}
-
 export type Actions =
-  | SetClickedPiece
-  | SetClickedCard
-  | SetNextCard
-  | SetCurrentPlayer
-  | SetValidMoves
-  | MovePiece
-  | SetHasGameFinished
-  | SetWinner
-  | SetWinMethod
   | ClearGameState
+  | MovePiece
+  | SetClickedCard
+  | SetClickedPiece
+  | SetCurrentPlayer
+  | SetHasGameFinished
   | SetIsCleared
-  | SetPassTurn;
+  | SetNextCard
+  | SetPauseGame
+  | SetValidMoves
+  | SetWinMethod
+  | SetWinner;

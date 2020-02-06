@@ -20,9 +20,11 @@ const BoardSetup: React.FC = () => {
     hasGameFinished,
     movePiece,
     nextCard,
+    pauseGame,
     setClickedCard,
     setClickedPiece,
     setPassTurn,
+    setPauseGame,
     validMoves,
     winner,
     winMethod,
@@ -33,12 +35,13 @@ const BoardSetup: React.FC = () => {
     isActiveCard: boolean,
     card: CardModel
   ): void => {
-    if (isActiveCard && !hasGameFinished) {
+    if (isActiveCard && !hasGameFinished && !pauseGame) {
       if (!isEqual(card, clickedCard)) {
         setClickedCard(card);
       }
     }
   };
+  console.log('Game');
 
   return (
     <FullWrapper playerColorToRight={currentPlayer}>
@@ -66,6 +69,7 @@ const BoardSetup: React.FC = () => {
           movePiece={movePiece}
           validMoves={validMoves}
           setPiece={setClickedPiece}
+          pauseGame={pauseGame}
         />
         <Hand
           clickedCard={clickedCard}
@@ -75,12 +79,15 @@ const BoardSetup: React.FC = () => {
           reset={hasGameFinished}
         />
       </BoardHandWrapper>
+
       <Spacer>
         <RoundModal
           clearGameState={clearGameState}
           clickedCard={clickedCard}
-          setPassTurn={setPassTurn}
           hasGameFinished={hasGameFinished}
+          pauseGame={pauseGame}
+          setPassTurn={setPassTurn}
+          setPauseGame={setPauseGame}
           winMethod={winMethod}
           winner={winner}
         />

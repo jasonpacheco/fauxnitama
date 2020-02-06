@@ -40,38 +40,41 @@ export default (): Timer => {
       return 'Error: Time cannot be negative?';
     }
 
-    const seconds = `${currentTime % 60}`.padStart(2, '0');
-    const minutes = `${Math.floor(currentTime / 60) % 60}`.padStart(2, '0');
-    const hours = `${Math.floor(currentTime / 3600)}`.padStart(2, '0');
+    const seconds = `${currentTime % 60}`;
+    const minutes = `${Math.floor(currentTime / 60) % 60}`;
+    const hours = `${Math.floor(currentTime / 3600)}`;
 
     if (alt) {
-      const secSuffix = seconds === '01' ? '' : 's';
-      const minSuffix = minutes === '01' ? '' : 's';
-      const hrSuffix = hours === '01' ? '' : 's';
-      const fmtSec = `${seconds === '01' ? 'one' : seconds} second${secSuffix}`;
-      const fmtMin = `${minutes === '01' ? 'one' : minutes} minute${minSuffix}`;
-      const fmtHr = `${hours === '01' ? 'one' : hours} hour${hrSuffix}`;
+      const secSuffix = seconds === '1' ? '' : 's';
+      const minSuffix = minutes === '1' ? '' : 's';
+      const hrSuffix = hours === '1' ? '' : 's';
+      const fmtSec = `${seconds === '1' ? 'one' : seconds} second${secSuffix}`;
+      const fmtMin = `${minutes === '1' ? 'one' : minutes} minute${minSuffix}`;
+      const fmtHr = `${hours === '1' ? 'one' : hours} hour${hrSuffix}`;
 
-      if (hours === '00' && minutes === '00') {
+      if (hours === '0' && minutes === '0') {
         return fmtSec;
-      } else if (hours === '00' && seconds === '00') {
+      } else if (hours === '0' && seconds === '0') {
         return fmtMin;
-      } else if (minutes === '00' && seconds === '00') {
+      } else if (minutes === '0' && seconds === '0') {
         return fmtHr;
-      } else if (hours === '00') {
+      } else if (hours === '0') {
         return `${fmtMin} and ${fmtSec}`;
-      } else if (minutes === '00') {
+      } else if (minutes === '0') {
         return `${fmtHr} and ${fmtSec}`;
-      } else if (seconds === '00') {
+      } else if (seconds === '0') {
         return `${fmtHr} and ${fmtMin}`;
       } else {
         return `${fmtHr}, ${fmtMin}, and ${fmtSec}`;
       }
     }
 
-    return hours === '00'
-      ? `${minutes}:${seconds}`
-      : `${hours}:${minutes}:${seconds}`;
+    return hours === '0'
+      ? `${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`
+      : `${hours.padStart(2, '0')}:${minutes.padStart(
+          2,
+          '0'
+        )}:${seconds.padStart(2, '0')}`;
   };
 
   return {
