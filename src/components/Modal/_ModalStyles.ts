@@ -55,3 +55,8 @@ export const RoundModalButton = styled(EndMessageButton)`
     cursor: not-allowed;
   }
 `;
+
+export const MoveToken = styled.span<{ color?: string; bold?: boolean }>`
+  color: ${({ color }): string => (color ? color : '#000')};
+  font-weight: ${({ bold }): string => (bold ? '800' : '400')};
+`;

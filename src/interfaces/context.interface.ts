@@ -61,7 +61,7 @@ export interface State {
 }
 
 export interface GameContextProperties extends State {
-  addMoveHistory: (notation: string) => void;
+  addMoveHistory: (notation: string[]) => void;
   clearGameState: () => void;
   movePiece: (fromPiece: Piece, toID: number) => void;
   setClickedCard: (clickedCard: CardModel) => void;
@@ -83,7 +83,7 @@ export interface GameContextProperties extends State {
 
 interface AddMoveHistory {
   type: typeof ADD_MOVE_HISTORY;
-  notation: string;
+  notation: string[];
 }
 
 interface ClearGameState {

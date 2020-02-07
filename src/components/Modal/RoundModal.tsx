@@ -4,11 +4,13 @@ import CardModel from '../../interfaces/card.interface';
 import useTimer from '../../interactive/useTimer';
 import { PlayerColor, WinMethods } from '../../interfaces/context.interface';
 import GameEndMessage from './GameEndMessage';
+import MoveHistoryModal from './MoveHistoryModal';
 
 interface RoundModalProps {
   clearGameState: () => void;
   clickedCard: CardModel | undefined;
   hasGameFinished: boolean;
+  moveHistory: string[][];
   pauseGame: boolean;
   setPassTurn: () => void;
   setPauseGame: (pause: boolean) => void;
@@ -20,6 +22,7 @@ const RoundModal: React.FC<RoundModalProps> = ({
   clearGameState,
   clickedCard,
   hasGameFinished,
+  moveHistory,
   pauseGame,
   setPassTurn,
   setPauseGame,
@@ -107,6 +110,8 @@ const RoundModal: React.FC<RoundModalProps> = ({
           </RoundModalButton>
         </>
       )}
+
+      <MoveHistoryModal moveHistory={moveHistory} />
     </RoundModalWrapper>
   ) : (
     <>
@@ -120,7 +125,9 @@ const RoundModal: React.FC<RoundModalProps> = ({
           stopTimer={stopTimer}
           resetTimer={resetTimer}
           startTimer={startTimer}
-        />
+        >
+          <MoveHistoryModal moveHistory={moveHistory} />
+        </GameEndMessage>
       )}
     </>
   );

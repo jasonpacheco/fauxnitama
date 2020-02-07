@@ -11,6 +11,7 @@ import {
   SET_VALID_MOVES,
   SET_WIN_METHOD,
   SET_WINNER,
+  ADD_MOVE_HISTORY,
 } from '../types';
 import { State, Actions } from '../interfaces/context.interface';
 import { generateCardSet, generateEmptyCells } from '../utils';
@@ -22,6 +23,12 @@ import moveChecker from '../interactive/moveChecker';
 
 export default (state: State, action: Actions): State => {
   switch (action.type) {
+    case ADD_MOVE_HISTORY:
+      return {
+        ...state,
+        moveHistory: [...state.moveHistory, action.notation],
+      };
+
     case CLEAR_GAME_STATE:
       const newCards: CardModel[] = generateCardSet();
       const newBoard = [...Opponent, ...generateEmptyCells(), ...Player];

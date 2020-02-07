@@ -22,14 +22,15 @@ interface GameEndMessageProps {
 }
 
 const GameEndMessage: React.FC<GameEndMessageProps> = ({
-  winner,
-  winMethod,
+  children,
   clearGameState,
-  formattedTime,
   elapsedTime,
-  stopTimer,
+  formattedTime,
   resetTimer,
   startTimer,
+  stopTimer,
+  winMethod,
+  winner,
 }) => {
   useEffect(() => {
     stopTimer();
@@ -57,6 +58,7 @@ const GameEndMessage: React.FC<GameEndMessageProps> = ({
           Restart Game
           <RestartGraphic />
         </EndMessageButton>
+        {children}
       </EndMessageContent>
     </EndMessageWrapper>
   );

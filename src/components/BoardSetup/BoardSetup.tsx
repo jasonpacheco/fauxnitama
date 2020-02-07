@@ -18,6 +18,7 @@ const BoardSetup: React.FC = () => {
     handBlue,
     handRed,
     hasGameFinished,
+    moveHistory,
     movePiece,
     nextCard,
     pauseGame,
@@ -85,6 +86,7 @@ const BoardSetup: React.FC = () => {
           clearGameState={clearGameState}
           clickedCard={clickedCard}
           hasGameFinished={hasGameFinished}
+          moveHistory={moveHistory}
           pauseGame={pauseGame}
           setPassTurn={setPassTurn}
           setPauseGame={setPauseGame}

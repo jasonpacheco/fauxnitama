@@ -58,7 +58,7 @@ const initialState: State = {
 const GameState: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
-  const addMoveHistory = (notation: string): void => {
+  const addMoveHistory = (notation: string[]): void => {
     dispatch({
       type: ADD_MOVE_HISTORY,
       notation,
@@ -153,7 +153,7 @@ const GameState: React.FC = ({ children }) => {
       const notation = moveNotation(
         fromPlayer,
         false,
-        !!toIDPiece,
+        !!toIDPiece || isMoveTempleCapture,
         state.clickedCard.name,
         from,
         from.currentPositionID,
@@ -161,7 +161,7 @@ const GameState: React.FC = ({ children }) => {
         toIDPiece,
         isMoveTempleCapture
       );
-      console.log(notation.join(''));
+      addMoveHistory(notation);
     }
     if (fromPlayer && isMoveCheckmate) {
       console.log('Opponent master has been captured!');
@@ -204,6 +204,13 @@ const GameState: React.FC = ({ children }) => {
 
     if (state.clickedCard) {
       setNextCard(state.clickedCard, targetProperty, replacementCard);
+      const notation = moveNotation(
+        state.currentPlayer,
+        true,
+        false,
+        state.clickedCard.name
+      );
+      addMoveHistory(notation);
     }
     setValidMoves(undefined);
     setCurrentPlayer(state.currentPlayer === 'Blue' ? 'Red' : 'Blue');
