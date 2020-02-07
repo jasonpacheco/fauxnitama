@@ -11,6 +11,7 @@ import {
 
 interface CellProps {
   cellIsValidMove: boolean;
+  currentPlayer: 'Blue' | 'Red';
   highlightClickedPiece: boolean;
   onCellClick: (clickedCellID: number) => void;
   renderedCell: CellData;
@@ -18,6 +19,7 @@ interface CellProps {
 
 const Cell: React.FC<CellProps> = ({
   cellIsValidMove,
+  currentPlayer,
   highlightClickedPiece,
   onCellClick,
   renderedCell,
@@ -35,7 +37,11 @@ const Cell: React.FC<CellProps> = ({
       onClick={(): void => onCellClick(renderedID)}
     >
       {renderedPiece && (
-        <Piece color={renderedPiece.color} type={renderedPiece.type} />
+        <Piece
+          color={renderedPiece.color}
+          isActive={currentPlayer === renderedPiece.color}
+          type={renderedPiece.type}
+        />
       )}
     </CellWrapper>
   );

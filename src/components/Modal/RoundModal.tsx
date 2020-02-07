@@ -48,6 +48,7 @@ const RoundModal: React.FC<RoundModalProps> = ({
     switch (type) {
       case 'prompt':
         stopTimer();
+        setPauseGame(true);
         setShowPrompt(true);
         break;
       case 'yes':
@@ -58,6 +59,7 @@ const RoundModal: React.FC<RoundModalProps> = ({
         break;
       case 'no':
         setShowPrompt(false);
+        setPauseGame(false);
         startTimer();
         break;
       case 'pass':

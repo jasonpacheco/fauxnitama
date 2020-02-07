@@ -48,12 +48,13 @@ const Board: React.FC<BoardProps> = ({
         {cells.map((cell: CellData) => (
           <Cell
             key={cell.id}
-            highlightClickedPiece={
-              !!cell.piece && cell.id === clickedPiece?.currentPositionID
-            }
             cellIsValidMove={
               currentPlayer === clickedPiece?.color &&
               validMoves.includes(cell.id)
+            }
+            currentPlayer={currentPlayer}
+            highlightClickedPiece={
+              !!cell.piece && cell.id === clickedPiece?.currentPositionID
             }
             onCellClick={onCellClick}
             renderedCell={cell}

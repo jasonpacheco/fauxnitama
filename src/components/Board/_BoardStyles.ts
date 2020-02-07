@@ -30,9 +30,14 @@ export const CellWrapper = styled.div<CellWrapperStyleProps>`
         ? 'background-color: #b3e5fc'
         : 'background-color: #ffcdd2'
       : ''};
-  &:hover {
+
+  ${({ highlightValidCell }): string =>
+    highlightValidCell
+      ? `&:hover {
     cursor: pointer;
-  }
+  }`
+      : ''};
+
   ${({ hasTempleBackground }): string =>
     hasTempleBackground
       ? hasTempleBackground === 'Red'

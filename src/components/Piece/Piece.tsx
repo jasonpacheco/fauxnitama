@@ -7,6 +7,7 @@ import RedStudent from '../../assets/_red/student.svg';
 
 interface PieceProps {
   color: 'Blue' | 'Red';
+  isActive: boolean;
   type: 'Master' | 'Student';
 }
 
@@ -25,10 +26,10 @@ const getPieceSVG = (type: string | undefined): string | null => {
   }
 };
 
-const Piece: React.FC<PieceProps> = ({ color, type }) => {
+const Piece: React.FC<PieceProps> = ({ color, isActive, type }) => {
   const typeOfPiece = getPieceSVG(`${color}-${type}`);
   return (
-    <PieceWrapper isRotated={color === 'Red'}>
+    <PieceWrapper isActive={isActive} isRotated={color === 'Red'}>
       {typeOfPiece && <img src={typeOfPiece} alt={type} />}
     </PieceWrapper>
   );

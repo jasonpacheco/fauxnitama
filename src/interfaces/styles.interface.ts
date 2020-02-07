@@ -39,5 +39,6 @@ export interface EndMessageContentStyleProps {
 
 // Interfaces for Piece component(s)
 export interface PieceWrapperStyleProps {
+  isActive: boolean;
   isRotated: boolean;
 }
