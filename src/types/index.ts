@@ -1,3 +1,4 @@
+export const ADD_MOVE_HISTORY = 'ADD_MOVE_HISTORY';
 export const CLEAR_GAME_STATE = 'CLEAR_GAME_STATE';
 export const IS_CLEARED = 'IS_CLEARED';
 export const MOVE_PIECE = 'MOVE_PIECE';

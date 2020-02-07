@@ -34,6 +34,7 @@ export default (state: State, action: Actions): State => {
         handRed: { first: newCards[0], second: newCards[1] },
         hasGameFinished: false,
         isCleared: false,
+        moveHistory: [],
         nextCard: newCards[4],
         pauseGame: false,
         validMoves: [],

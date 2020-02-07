@@ -12,6 +12,7 @@ import {
   SET_VALID_MOVES,
   SET_WIN_METHOD,
   SET_WINNER,
+  ADD_MOVE_HISTORY,
 } from '../types';
 
 export type Coordinate = {
@@ -51,6 +52,7 @@ export interface State {
   handBlue: PlayerHand;
   handRed: PlayerHand;
   hasGameFinished: boolean;
+  moveHistory: string[][];
   nextCard: CardModel;
   pauseGame: boolean;
   validMoves: number[];
@@ -59,6 +61,7 @@ export interface State {
 }
 
 export interface GameContextProperties extends State {
+  addMoveHistory: (notation: string) => void;
   clearGameState: () => void;
   movePiece: (fromPiece: Piece, toID: number) => void;
   setClickedCard: (clickedCard: CardModel) => void;
@@ -76,6 +79,11 @@ export interface GameContextProperties extends State {
   setValidMoves: (piece: Piece | undefined) => void;
   setWinMethod: (winMethod: WinMethods) => void;
   setWinner: (winner: PlayerColor) => void;
+}
+
+interface AddMoveHistory {
+  type: typeof ADD_MOVE_HISTORY;
+  notation: string;
 }
 
 interface ClearGameState {
@@ -139,6 +147,7 @@ interface SetWinner {
 }
 
 export type Actions =
+  | AddMoveHistory
   | ClearGameState
   | MovePiece
   | SetClickedCard

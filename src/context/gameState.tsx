@@ -15,6 +15,7 @@ import {
   SET_VALID_MOVES,
   SET_WIN_METHOD,
   SET_WINNER,
+  ADD_MOVE_HISTORY,
 } from '../types';
 
 import CardModel from '../interfaces/card.interface';
@@ -32,6 +33,7 @@ import {
   generateCardSet,
   generateEmptyCells,
 } from '../utils';
+import { moveNotation } from '../interactive/notation';
 import cloneDeep from 'lodash.clonedeep';
 
 const cards: CardModel[] = generateCardSet();
@@ -45,6 +47,7 @@ const initialState: State = {
   handRed: { first: cards[0], second: cards[1] },
   hasGameFinished: false,
   isCleared: false,
+  moveHistory: [],
   nextCard: cards[4],
   pauseGame: false,
   validMoves: [],
@@ -54,6 +57,13 @@ const initialState: State = {
 
 const GameState: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(gameReducer, initialState);
+
+  const addMoveHistory = (notation: string): void => {
+    dispatch({
+      type: ADD_MOVE_HISTORY,
+      notation,
+    });
+  };
 
   const setValidMoves = (piece: Piece | undefined): void => {
     dispatch({
@@ -138,6 +148,21 @@ const GameState: React.FC = ({ children }) => {
     const isMoveCheckmate = checkMaster(toID, state.board);
     const isMoveTempleCapture = checkTemple(fromPlayer, fromPlayerType, toID);
     const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
+    const toIDPiece = state.board[toID]?.piece;
+    if (state.clickedCard) {
+      const notation = moveNotation(
+        fromPlayer,
+        false,
+        !!toIDPiece,
+        state.clickedCard.name,
+        from,
+        from.currentPositionID,
+        toID,
+        toIDPiece,
+        isMoveTempleCapture
+      );
+      console.log(notation.join(''));
+    }
     if (fromPlayer && isMoveCheckmate) {
       console.log('Opponent master has been captured!');
       setWinner(fromPlayer);
@@ -195,6 +220,7 @@ const GameState: React.FC = ({ children }) => {
     <GameContext.Provider
       value={{
         ...state,
+        addMoveHistory,
         clearGameState,
         movePiece,
         setClickedCard,
