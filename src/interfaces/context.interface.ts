@@ -63,6 +63,7 @@ export interface State {
 export interface GameContextProperties extends State {
   addMoveHistory: (notation: string[]) => void;
   clearGameState: () => void;
+  getCurrentFEN: () => string;
   movePiece: (fromPiece: Piece, toID: number) => void;
   setClickedCard: (clickedCard: CardModel) => void;
   setClickedPiece: (clickedPiece: Piece) => void;

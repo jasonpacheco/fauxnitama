@@ -35,6 +35,7 @@ import {
 } from '../utils';
 import { moveNotation } from '../interactive/notation';
 import cloneDeep from 'lodash.clonedeep';
+import { getFEN } from '../interactive/getFEN';
 
 const cards: CardModel[] = generateCardSet();
 
@@ -63,6 +64,16 @@ const GameState: React.FC = ({ children }) => {
       type: ADD_MOVE_HISTORY,
       notation,
     });
+  };
+
+  const getCurrentFEN = (): string => {
+    return getFEN(
+      state.board,
+      state.handRed,
+      state.handBlue,
+      state.nextCard,
+      state.currentPlayer
+    );
   };
 
   const setValidMoves = (piece: Piece | undefined): void => {
@@ -229,6 +240,7 @@ const GameState: React.FC = ({ children }) => {
         ...state,
         addMoveHistory,
         clearGameState,
+        getCurrentFEN,
         movePiece,
         setClickedCard,
         setClickedPiece,

@@ -82,3 +82,8 @@ export const HistoryList = styled.ul`
     background-color: #eee;
   }
 `;
+
+export const DisplayFEN = styled.span`
+  font-size: 0.8rem;
+  font-family: Helvetica, Arial, sans-serif;
+`;

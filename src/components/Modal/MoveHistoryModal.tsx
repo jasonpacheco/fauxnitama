@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MoveNotation from './MoveNotation';
-import { HistoryList } from './_ModalStyles';
+import { DisplayFEN, HistoryList, RoundModalButton } from './_ModalStyles';
+import useGameContext from '../../context/useGameContext';
 
 interface MoveHistoryModalProps {
   moveHistory: string[][];
 }
 
 const MoveHistoryModal: React.FC<MoveHistoryModalProps> = ({ moveHistory }) => {
+  const { getCurrentFEN } = useGameContext();
+  const [FEN, setFEN] = useState('');
+
   const createHistoryList = (): JSX.Element[] => {
     const history = [];
     for (let i = 0; i < moveHistory.length; i += 2) {
@@ -25,7 +29,21 @@ const MoveHistoryModal: React.FC<MoveHistoryModalProps> = ({ moveHistory }) => {
     return history;
   };
 
-  return <HistoryList>{createHistoryList()}</HistoryList>;
+  const handleFENClick = (): void => {
+    const currentFEN = getCurrentFEN();
+    setFEN(currentFEN);
+  };
+
+  return (
+    <div>
+      <RoundModalButton onClick={(): void => handleFENClick()}>
+        Get current FEN
+      </RoundModalButton>
+      <br />
+      <DisplayFEN>FEN: {FEN}</DisplayFEN>
+      <HistoryList>{createHistoryList()}</HistoryList>
+    </div>
+  );
 };
 
 export default React.memo(MoveHistoryModal, (prevProps, nextProps) => {
