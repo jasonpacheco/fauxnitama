@@ -6,13 +6,15 @@ import { BOARD_COLS as COLS } from '../../utils/constants';
 
 export const GridWrapper = styled.div`
   margin: 0 auto;
-  width: 30rem;
+  width: 34rem;
 `;
 
 export const Grid = styled.div`
   border: 1px solid #000;
   display: grid;
+  margin: 0 auto;
   height: 30rem;
+  width: 30rem;
   grid-template-columns: repeat(${COLS}, 6rem);
   grid-template-rows: repeat(${COLS}, 6rem);
 `;
@@ -31,8 +33,8 @@ export const CellWrapper = styled.div<CellWrapperStyleProps>`
         : 'background-color: #ffcdd2'
       : ''};
 
-  ${({ highlightValidCell }): string =>
-    highlightValidCell
+  ${({ isActive }): string =>
+    isActive
       ? `&:hover {
     cursor: pointer;
   }`
@@ -44,4 +46,27 @@ export const CellWrapper = styled.div<CellWrapperStyleProps>`
         ? `background-image: url(${RedTempleArch})`
         : `background-image: url(${BlueTempleArch})`
       : ''};
+`;
+
+export const GridLegend = styled.div<{ invert?: boolean }>`
+  display: grid;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 700;
+  & > span {
+    text-align: center;
+    margin: auto;
+  }
+  ${({ invert }): string => (invert ? `transform: rotate(180deg)` : '')};
+`;
+
+export const LetterRow = styled(GridLegend)`
+  grid-template-columns: repeat(${COLS}, 6rem);
+  height: 2rem;
+  width: 30rem;
+  margin: 0 auto;
+`;
+
+export const NumberColumn = styled(GridLegend)`
+  grid-template-rows: repeat(${COLS}, 6rem);
+  width: 2rem;
 `;

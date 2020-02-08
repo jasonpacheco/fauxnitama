@@ -10,6 +10,7 @@ export interface CellWrapperStyleProps {
   hasTempleBackground: string | boolean;
   highlightSelectedPiece: boolean;
   highlightValidCell: PlayerColor | boolean | undefined;
+  isActive: boolean;
 }
 
 // Interfaces for Card component(s)

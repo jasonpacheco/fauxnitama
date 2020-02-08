@@ -14,6 +14,7 @@ interface CellProps {
   currentPlayer: 'Blue' | 'Red';
   highlightClickedPiece: boolean;
   onCellClick: (clickedCellID: number) => void;
+  pauseGame: boolean;
   renderedCell: CellData;
 }
 
@@ -22,6 +23,7 @@ const Cell: React.FC<CellProps> = ({
   currentPlayer,
   highlightClickedPiece,
   onCellClick,
+  pauseGame,
   renderedCell,
 }) => {
   const { id: renderedID, piece: renderedPiece } = renderedCell;
@@ -34,12 +36,13 @@ const Cell: React.FC<CellProps> = ({
         ((renderedID === blueTempleID && 'Blue') ||
           (renderedID === redTempleID && 'Red'))
       }
+      isActive={!pauseGame && cellIsValidMove}
       onClick={(): void => onCellClick(renderedID)}
     >
       {renderedPiece && (
         <Piece
           color={renderedPiece.color}
-          isActive={currentPlayer === renderedPiece.color}
+          isActive={!pauseGame && currentPlayer === renderedPiece.color}
           type={renderedPiece.type}
         />
       )}

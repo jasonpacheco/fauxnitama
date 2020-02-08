@@ -1,6 +1,6 @@
 import React from 'react';
 import Cell from './Cell';
-import { GridWrapper, Grid } from './_BoardStyles';
+import { GridWrapper, Grid, LetterRow, NumberColumn } from './_BoardStyles';
 import {
   CellData,
   Piece,
@@ -44,23 +44,54 @@ const Board: React.FC<BoardProps> = ({
 
   return (
     <GridWrapper>
-      <Grid>
-        {cells.map((cell: CellData) => (
-          <Cell
-            key={cell.id}
-            cellIsValidMove={
-              currentPlayer === clickedPiece?.color &&
-              validMoves.includes(cell.id)
-            }
-            currentPlayer={currentPlayer}
-            highlightClickedPiece={
-              !!cell.piece && cell.id === clickedPiece?.currentPositionID
-            }
-            onCellClick={onCellClick}
-            renderedCell={cell}
-          />
-        ))}
-      </Grid>
+      <LetterRow>
+        <span>A</span>
+        <span>B</span>
+        <span>C</span>
+        <span>D</span>
+        <span>E</span>
+      </LetterRow>
+      <div style={{ display: 'flex' }}>
+        <NumberColumn>
+          <span>1</span>
+          <span>2</span>
+          <span>3</span>
+          <span>4</span>
+          <span>5</span>
+        </NumberColumn>
+        <Grid>
+          {cells.map((cell: CellData) => (
+            <Cell
+              key={cell.id}
+              cellIsValidMove={
+                currentPlayer === clickedPiece?.color &&
+                validMoves.includes(cell.id)
+              }
+              currentPlayer={currentPlayer}
+              highlightClickedPiece={
+                !!cell.piece && cell.id === clickedPiece?.currentPositionID
+              }
+              onCellClick={onCellClick}
+              pauseGame={pauseGame}
+              renderedCell={cell}
+            />
+          ))}
+        </Grid>
+        <NumberColumn invert>
+          <span>5</span>
+          <span>4</span>
+          <span>3</span>
+          <span>2</span>
+          <span>1</span>
+        </NumberColumn>
+      </div>
+      <LetterRow invert>
+        <span>E</span>
+        <span>D</span>
+        <span>C</span>
+        <span>B</span>
+        <span>A</span>
+      </LetterRow>
     </GridWrapper>
   );
 };
