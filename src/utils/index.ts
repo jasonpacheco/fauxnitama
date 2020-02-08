@@ -68,12 +68,12 @@ export const idToCoordinate = (
 };
 
 export const idToGridLocation = (id?: number): string => {
-  if (!id) {
+  if (id === undefined) {
     return '';
   }
-  const cols = ['A', 'B', 'C', 'D', 'E'];
+  const rows = ['a', 'b', 'c', 'd', 'e'];
   const coordinates = idToCoordinate(id);
-  return `${cols[coordinates.y]}${coordinates.x + 1}`;
+  return `${rows[coordinates.x]}${coordinates.y + 1}`;
 };
 
 /**

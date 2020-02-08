@@ -59,14 +59,14 @@ export const GridLegend = styled.div<{ invert?: boolean }>`
   ${({ invert }): string => (invert ? `transform: rotate(180deg)` : '')};
 `;
 
-export const LetterRow = styled(GridLegend)`
+export const NumberRow = styled(GridLegend)`
   grid-template-columns: repeat(${COLS}, 6rem);
   height: 2rem;
   width: 30rem;
   margin: 0 auto;
 `;
 
-export const NumberColumn = styled(GridLegend)`
+export const LetterColumn = styled(GridLegend)`
   grid-template-rows: repeat(${COLS}, 6rem);
   width: 2rem;
 `;

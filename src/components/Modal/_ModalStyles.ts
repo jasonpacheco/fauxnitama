@@ -59,4 +59,26 @@ export const RoundModalButton = styled(EndMessageButton)`
 export const MoveToken = styled.span<{ color?: string; bold?: boolean }>`
   color: ${({ color }): string => (color ? color : '#000')};
   font-weight: ${({ bold }): string => (bold ? '800' : '400')};
+  font-size: 1rem;
+  font-family: Helvetica, Arial, sans-serif;
+`;
+
+export const HistoryList = styled.ul`
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  li {
+    display: flex;
+
+    p {
+      margin: 0 0.5rem 0 0;
+      padding: 0.2rem;
+    }
+  }
+  li:nth-child(odd) {
+    background-color: #eee;
+  }
 `;

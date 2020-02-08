@@ -24,15 +24,21 @@ export const moveNotation = (
   didCaptureTemple?: boolean
 ): string[] => {
   if (didPass) {
-    return [`${player === 'Blue' ? 'BP' : 'RP'}`, 'pt', '', `(${cardName})`];
+    return [`${player === 'Blue' ? 'BP' : 'RP'}`, '', ' pt ', `(${cardName})`];
   }
 
   const currentPlayerColor = player.charAt(0);
   const otherPlayerColor = currentPlayerColor === 'B' ? 'R' : 'B';
-  const captured = didCaptureTemple ? 'T' : capturedPiece?.type.charAt(0);
-  const token1 = `${player.charAt(0)}${piece?.type.charAt(0)}`;
-  const token2 = `[${idToGridLocation(fromID)} ${idToGridLocation(toID)}]`;
-  const token3 = `${didCapture ? `x${otherPlayerColor}${captured}` : ''}`;
-  const token4 = `(${cardName})`;
-  return [token1, token2, token3, token4];
+  const captured = didCaptureTemple
+    ? 'T'
+    : capturedPiece?.type.charAt(0) === 'M'
+    ? 'M'
+    : '';
+  const token0 = `${currentPlayerColor}${
+    piece?.type.charAt(0) === 'M' ? 'M' : ''
+  }${idToGridLocation(fromID)}`;
+  const token1 = `${didCapture ? `x${otherPlayerColor}${captured}` : ' '}`;
+  const token2 = `${idToGridLocation(toID)}`;
+  const token3 = `${cardName}`;
+  return [token0, token1, token2, token3];
 };
