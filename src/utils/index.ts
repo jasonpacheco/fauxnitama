@@ -67,6 +67,15 @@ export const idToCoordinate = (
   return { x, y };
 };
 
+export const idToGridLocation = (id?: number): string => {
+  if (!id) {
+    return '';
+  }
+  const cols = ['A', 'B', 'C', 'D', 'E'];
+  const coordinates = idToCoordinate(id);
+  return `${cols[coordinates.y]}${coordinates.x + 1}`;
+};
+
 /**
  * Returns an array of IDs for a list of valid moves corresponding to a reference
  * point. A [validMoves] argument is an array of a move tuple, e.g. [1, 0], where

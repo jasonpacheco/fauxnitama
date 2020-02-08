@@ -1,5 +1,5 @@
 import { PlayerColor, Piece } from '../interfaces/context.interface';
-
+import { idToGridLocation } from '../utils';
 /**
  *
  * @param player 'Blue' | 'Red', current player color.
@@ -31,7 +31,7 @@ export const moveNotation = (
   const otherPlayerColor = currentPlayerColor === 'B' ? 'R' : 'B';
   const captured = didCaptureTemple ? 'T' : capturedPiece?.type.charAt(0);
   const token1 = `${player.charAt(0)}${piece?.type.charAt(0)}`;
-  const token2 = `[${fromID},${toID}]`;
+  const token2 = `[${idToGridLocation(fromID)} ${idToGridLocation(toID)}]`;
   const token3 = `${didCapture ? `x${otherPlayerColor}${captured}` : ''}`;
   const token4 = `(${cardName})`;
   return [token1, token2, token3, token4];

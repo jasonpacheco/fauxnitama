@@ -6,6 +6,7 @@ import {
   generateCardSet,
   checkMaster,
   checkTemple,
+  idToGridLocation,
 } from './index';
 import constants from './constants';
 import { CellData } from '../interfaces/context.interface';
@@ -199,5 +200,23 @@ describe('tests for checkTemple', () => {
 
   test('returns true when Red master is on a temple id of 22', () => {
     expect(checkTemple('Red', 'Master', 22)).toBeTruthy();
+  });
+});
+
+describe('tests for idToGridLocation', () => {
+  test('returns C5 for id=22', () => {
+    expect(idToGridLocation(22)).toEqual('C5');
+  });
+
+  test('returns C1 for id=2', () => {
+    expect(idToGridLocation(2)).toEqual('C1');
+  });
+
+  test('returns C3 for id=12', () => {
+    expect(idToGridLocation(12)).toEqual('C3');
+  });
+
+  test('returns A1 for id=0', () => {
+    expect(idToGridLocation(0)).toEqual('A1');
   });
 });
