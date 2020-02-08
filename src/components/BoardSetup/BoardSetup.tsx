@@ -58,7 +58,7 @@ const BoardSetup: React.FC = () => {
           clickedCard={clickedCard}
           hand={handRed}
           invert
-          isCurrentlyActive={currentPlayer === 'Red'}
+          isCurrentlyActive={!pauseGame && currentPlayer === 'Red'}
           onCardClick={onCardClick}
           reset={hasGameFinished}
         />
@@ -75,7 +75,7 @@ const BoardSetup: React.FC = () => {
         <Hand
           clickedCard={clickedCard}
           hand={handBlue}
-          isCurrentlyActive={currentPlayer === 'Blue'}
+          isCurrentlyActive={!pauseGame && currentPlayer === 'Blue'}
           onCardClick={onCardClick}
           reset={hasGameFinished}
         />
