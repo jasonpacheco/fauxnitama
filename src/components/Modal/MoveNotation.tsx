@@ -22,11 +22,11 @@ const MoveNotation: React.FC<MoveNotationProps> = ({ tokens }) => {
     <React.Fragment>
       <MoveToken color={'green'}>{`${tokens[3]} `}</MoveToken>
       <MoveToken color={tokens[0].startsWith('B') ? '#1976D2' : '#D32F2F'}>
-        {tokens[0].slice(1)}
+        {tokens[0]}
       </MoveToken>
       <MoveToken bold>{captChar}</MoveToken>
       <MoveToken color={captPiece.startsWith('B') ? '#1976D2' : '#D32F2F'}>
-        {captPiece.slice(1)}
+        {captPiece}
       </MoveToken>
       <MoveToken
         color={
@@ -37,6 +37,7 @@ const MoveNotation: React.FC<MoveNotationProps> = ({ tokens }) => {
       >
         {tokens[2]}
       </MoveToken>
+      <MoveToken bold>{tokens[4]}</MoveToken>
       <br />
     </React.Fragment>
   );

@@ -101,6 +101,6 @@ export const getFEN = (
   fenData.push(
     `${cardToFEN(handBlue.first, true)}-${cardToFEN(handBlue.second, true)}`
   );
-  fenData.push(`${cardToFEN(nextCard, currentPlayer !== 'Blue')}`);
+  fenData.push(`${cardToFEN(nextCard, currentPlayer === 'Blue')}`);
   return fenData.join('/');
 };
