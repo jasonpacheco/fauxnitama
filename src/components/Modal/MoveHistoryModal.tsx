@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MoveNotation from './MoveNotation';
-import { DisplayFEN, HistoryList, RoundModalButton } from './_ModalStyles';
+import { DisplayFEN, HistoryList, Button } from './_ModalStyles';
 import useGameContext from '../../context/useGameContext';
 
 interface MoveHistoryModalProps {
@@ -36,9 +36,7 @@ const MoveHistoryModal: React.FC<MoveHistoryModalProps> = ({ moveHistory }) => {
 
   return (
     <div>
-      <RoundModalButton onClick={(): void => handleFENClick()}>
-        Get current FEN
-      </RoundModalButton>
+      <Button onClick={(): void => handleFENClick()}>Get current FEN</Button>
       <br />
       <DisplayFEN>FEN: {FEN}</DisplayFEN>
       <HistoryList>{createHistoryList()}</HistoryList>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MoveToken } from './_ModalStyles';
+import { NotationToken } from './_ModalStyles';
 
 interface MoveNotationProps {
   tokens: string[];
@@ -19,16 +19,16 @@ const MoveNotation: React.FC<MoveNotationProps> = ({ tokens }) => {
   const captPiece = tokens[1].slice(1); // e.g. 'BM' | 'RM' or 'B' | 'R' for students
 
   return (
-    <React.Fragment>
-      <MoveToken color={'green'}>{`${tokens[3]} `}</MoveToken>
-      <MoveToken color={tokens[0].startsWith('B') ? '#1976D2' : '#D32F2F'}>
+    <>
+      <NotationToken color={'green'}>{`${tokens[3]} `}</NotationToken>
+      <NotationToken color={tokens[0].startsWith('B') ? '#1976D2' : '#D32F2F'}>
         {tokens[0]}
-      </MoveToken>
-      <MoveToken bold>{captChar}</MoveToken>
-      <MoveToken color={captPiece.startsWith('B') ? '#1976D2' : '#D32F2F'}>
+      </NotationToken>
+      <NotationToken bold>{captChar}</NotationToken>
+      <NotationToken color={captPiece.startsWith('B') ? '#1976D2' : '#D32F2F'}>
         {captPiece}
-      </MoveToken>
-      <MoveToken
+      </NotationToken>
+      <NotationToken
         color={
           (captPiece.startsWith('B') && '#1976D2') ||
           (captPiece.startsWith('R') && '#D32F2F') ||
@@ -36,10 +36,10 @@ const MoveNotation: React.FC<MoveNotationProps> = ({ tokens }) => {
         }
       >
         {tokens[2]}
-      </MoveToken>
-      <MoveToken bold>{tokens[4]}</MoveToken>
+      </NotationToken>
+      <NotationToken bold>{tokens[4]}</NotationToken>
       <br />
-    </React.Fragment>
+    </>
   );
 };
 
