@@ -3,7 +3,7 @@ import Board from '../Board/Board';
 import Hand from './Hand';
 import Card from '../Card/Card';
 import RoundModal from '../Modal/RoundModal';
-import { FullWrapper, BoardHandWrapper, Spacer } from './_BoardSetupStyles';
+import { FullWrapper, BoardHandWrapper, Spacer } from './styles/BoardSetup';
 import useGameContext from '../../context/useGameContext';
 import isEqual from 'lodash.isequal';
 import CardModel from '../../interfaces/card.interface';

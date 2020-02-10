@@ -1,7 +1,8 @@
 import { Coordinate, CellData } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
-import CardTypes from '../components/Card/CardTypes';
+import cards from '../types/cards';
 import constants from './constants';
+
 const {
   Boar,
   Cobra,
@@ -19,7 +20,7 @@ const {
   Rabbit,
   Rooster,
   Tiger,
-} = CardTypes;
+} = cards;
 
 interface SpaceID {
   x: number;

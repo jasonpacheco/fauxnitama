@@ -1,5 +1,5 @@
 import React from 'react';
-import { NotationToken } from './_ModalStyles';
+import { NotationToken } from './styles/MoveNotation';
 
 interface MoveNotationProps {
   tokens: string[];

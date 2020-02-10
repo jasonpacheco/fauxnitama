@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { PieceWrapperStyleProps } from '../../interfaces/styles.interface';
+import { PieceWrapperStyleProps } from '../../../interfaces/styles.interface';
 
 export const PieceWrapper = styled.div<PieceWrapperStyleProps>`
   position: relative;

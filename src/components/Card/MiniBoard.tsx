@@ -1,5 +1,5 @@
 import React from 'react';
-import { MiniBoardWrapper, MiniCell } from './_CardStyles';
+import { MiniBoardWrapper, MiniCell } from './styles/MiniBoard';
 import isEqual from 'lodash.isequal';
 
 interface MiniBoardProps {

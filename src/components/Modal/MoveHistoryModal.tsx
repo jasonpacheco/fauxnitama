@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MoveNotation from './MoveNotation';
-import { DisplayFEN, HistoryList, Button } from './_ModalStyles';
+import { DisplayFEN, HistoryList } from './styles/MoveHistoryModal';
+import { Button } from './styles';
 import useGameContext from '../../context/useGameContext';
 
 interface MoveHistoryModalProps {

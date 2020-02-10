@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { RoundModalWrapper, RoundModalButton } from '../Modal/_ModalStyles';
+import { RoundModalWrapper, RoundModalButton } from './styles/RoundModal';
 import CardModel from '../../interfaces/card.interface';
 import useTimer from '../../interactive/useTimer';
 import { PlayerColor, WinMethods } from '../../interfaces/context.interface';

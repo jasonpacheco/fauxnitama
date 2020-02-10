@@ -1,6 +1,6 @@
 import React from 'react';
 import Piece from '../Piece/Piece';
-import { CellWrapper } from './_BoardStyles';
+import { CellWrapper } from './styles/Cell';
 
 import { CellData } from '../../interfaces/context.interface';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Cell from './Cell';
-import { GridWrapper, Grid, LetterColumn, NumberRow } from './_BoardStyles';
+import { GridWrapper, Grid, LetterColumn, NumberRow } from './styles/Board';
 import {
   CellData,
   Piece,

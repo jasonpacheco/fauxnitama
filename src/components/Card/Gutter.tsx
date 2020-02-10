@@ -1,5 +1,5 @@
 import React from 'react';
-import { GutterWrapper, Stamp, StampTooltip } from './_CardStyles';
+import { GutterWrapper, Stamp, StampTooltip } from './styles/Gutter';
 
 interface GutterProps {
   invert: boolean;

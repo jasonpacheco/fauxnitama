@@ -1,20 +1,20 @@
-import BoarImage from '../../assets/calligraphy/boar.png';
-import CobraImage from '../../assets/calligraphy/cobra.png';
-import CrabImage from '../../assets/calligraphy/crab.png';
-import CraneImage from '../../assets/calligraphy/crane.png';
-import DragonImage from '../../assets/calligraphy/dragon.png';
-import EelImage from '../../assets/calligraphy/eel.png';
-import ElephantImage from '../../assets/calligraphy/elephant.png';
-import FrogImage from '../../assets/calligraphy/frog.png';
-import GooseImage from '../../assets/calligraphy/goose.png';
-import HorseImage from '../../assets/calligraphy/horse.png';
-import MantisImage from '../../assets/calligraphy/mantis.png';
-import MonkeyImage from '../../assets/calligraphy/monkey.png';
-import OxImage from '../../assets/calligraphy/ox.png';
-import RabbitImage from '../../assets/calligraphy/rabbit.png';
-import RoosterImage from '../../assets/calligraphy/rooster.png';
-import TigerImage from '../../assets/calligraphy/tiger.png';
-import CardModel from '../../interfaces/card.interface';
+import BoarImage from '../assets/calligraphy/boar.png';
+import CobraImage from '../assets/calligraphy/cobra.png';
+import CrabImage from '../assets/calligraphy/crab.png';
+import CraneImage from '../assets/calligraphy/crane.png';
+import DragonImage from '../assets/calligraphy/dragon.png';
+import EelImage from '../assets/calligraphy/eel.png';
+import ElephantImage from '../assets/calligraphy/elephant.png';
+import FrogImage from '../assets/calligraphy/frog.png';
+import GooseImage from '../assets/calligraphy/goose.png';
+import HorseImage from '../assets/calligraphy/horse.png';
+import MantisImage from '../assets/calligraphy/mantis.png';
+import MonkeyImage from '../assets/calligraphy/monkey.png';
+import OxImage from '../assets/calligraphy/ox.png';
+import RabbitImage from '../assets/calligraphy/rabbit.png';
+import RoosterImage from '../assets/calligraphy/rooster.png';
+import TigerImage from '../assets/calligraphy/tiger.png';
+import CardModel from '../interfaces/card.interface';
 
 const Boar: CardModel = {
   name: 'Boar',

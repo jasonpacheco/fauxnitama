@@ -6,7 +6,7 @@ import {
   EndMessageContent,
   EndMessageButton,
   RestartGraphic,
-} from './_ModalStyles';
+} from './styles/GameEndMessage';
 
 import { PlayerColor, WinMethods } from '../../interfaces/context.interface';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieceWrapper } from './_PieceStyles';
+import { PieceWrapper } from './styles/Piece';
 import BlueMaster from '../../assets/_blue/master.svg';
 import BlueStudent from '../../assets/_blue/student.svg';
 import RedMaster from '../../assets/_red/master.svg';

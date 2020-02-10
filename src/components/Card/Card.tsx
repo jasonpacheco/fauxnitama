@@ -10,8 +10,7 @@ import {
   RightHalf,
   Character,
   Name,
-} from './_CardStyles';
-import isEqual from 'lodash.isequal';
+} from './styles/Card';
 
 interface CardProps {
   card: CardModel;
@@ -42,7 +41,7 @@ const Card: React.FC<CardProps> = ({
       invert={invert}
       isActive={isCurrentlyActive}
       onClick={(e): void => onCardClick(e, isCurrentlyActive, card)}
-      isCurrentCard={isEqual(card, clickedCard)}
+      isCurrentCard={card.name === clickedCard?.name}
     >
       <Main>
         <LeftHalf>

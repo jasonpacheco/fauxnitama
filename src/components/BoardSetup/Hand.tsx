@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from '../Card/Card';
-import { HandWrapper } from './_BoardSetupStyles';
+import { HandWrapper } from './styles/Hand';
 import { PlayerHand } from '../../interfaces/context.interface';
 import CardModel from '../../interfaces/card.interface';
 
