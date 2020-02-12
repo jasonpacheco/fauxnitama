@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { PieceWrapper } from './styles/Piece';
 import BlueMaster from '../../assets/_blue/master.svg';
 import BlueStudent from '../../assets/_blue/student.svg';
@@ -6,11 +6,12 @@ import RedMaster from '../../assets/_red/master.svg';
 import RedStudent from '../../assets/_red/student.svg';
 import { useDrag } from 'react-dnd';
 import ItemTypes from '../../types/ItemTypes';
+import useGameContext from '../../context/useGameContext';
+import { Piece as IPiece } from '../../interfaces/context.interface';
 
 interface PieceProps {
-  color: 'Blue' | 'Red';
   isActive: boolean;
-  type: 'Master' | 'Student';
+  piece: IPiece;
 }
 
 const getPieceSVG = (type: string | undefined): string | null => {
@@ -28,7 +29,11 @@ const getPieceSVG = (type: string | undefined): string | null => {
   }
 };
 
-const Piece: React.FC<PieceProps> = ({ color, isActive, type }) => {
+const Piece: React.FC<PieceProps> = ({ isActive, piece }) => {
+  const { color, type, currentPositionID } = piece;
+
+  const { board, clickedPiece, setClickedPiece } = useGameContext();
+
   const [collectedProps, drag] = useDrag({
     item: { color, pieceType: type, type: ItemTypes.PIECE },
     canDrag: () => isActive,
@@ -36,7 +41,17 @@ const Piece: React.FC<PieceProps> = ({ color, isActive, type }) => {
       isClickedForDrag: monitor.isDragging(),
     }),
   });
-  console.log(collectedProps.isClickedForDrag);
+
+  useEffect(() => {
+    if (collectedProps.isClickedForDrag) {
+      const draggedPiece = board[currentPositionID].piece;
+      if (draggedPiece && draggedPiece !== clickedPiece) {
+        console.log('Piece has been set!');
+        setClickedPiece(draggedPiece);
+      }
+    }
+  }, [collectedProps.isClickedForDrag]);
+
   const typeOfPiece = getPieceSVG(`${color}-${type}`);
   return (
     <PieceWrapper isActive={isActive} isRotated={color === 'Red'} ref={drag}>

@@ -44,9 +44,8 @@ const Square: React.FC<CellProps> = ({ onSquareClick, renderedSquare }) => {
     >
       {renderedPiece && (
         <Piece
-          color={renderedPiece.color}
           isActive={!pauseGame && currentPlayer === renderedPiece.color}
-          type={renderedPiece.type}
+          piece={renderedPiece}
         />
       )}
     </SquareWrapper>

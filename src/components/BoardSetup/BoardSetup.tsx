@@ -37,7 +37,6 @@ const BoardSetup: React.FC = () => {
       }
     }
   };
-  console.log('Game');
 
   return (
     <FullWrapper playerColorToRight={currentPlayer}>
