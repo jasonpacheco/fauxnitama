@@ -16,7 +16,7 @@ const Board: React.FC = () => {
     validMoves,
   } = useGameContext();
 
-  const onCellClick = (clickedCellID: number): void => {
+  const onSquareClick = (clickedCellID: number): void => {
     if (!hasGameFinished && !pauseGame) {
       const piece = board[clickedCellID].piece;
       if (piece?.color === currentPlayer) {
@@ -51,17 +51,8 @@ const Board: React.FC = () => {
           {board.map((square: SquareData) => (
             <Square
               key={square.id}
-              cellIsValidMove={
-                currentPlayer === clickedPiece?.color &&
-                validMoves.includes(square.id)
-              }
-              currentPlayer={currentPlayer}
-              highlightClickedPiece={
-                !!square.piece && square.id === clickedPiece?.currentPositionID
-              }
-              onCellClick={onCellClick}
-              pauseGame={pauseGame}
-              renderedCell={square}
+              onSquareClick={onSquareClick}
+              renderedSquare={square}
             />
           ))}
         </Grid>

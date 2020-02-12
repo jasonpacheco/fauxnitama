@@ -6,10 +6,10 @@ export interface FullWrapperStyleProps {
 }
 
 // Interfaces for Board component(s)
-export interface CellWrapperStyleProps {
+export interface SquareWrapperStyleProps {
   hasTempleBackground: string | boolean;
-  highlightSelectedPiece: boolean;
-  highlightValidCell: PlayerColor | boolean | undefined;
+  highlightClickedPiece: boolean;
+  highlightValidSquare: PlayerColor | boolean | undefined;
   isActive: boolean;
 }
 
