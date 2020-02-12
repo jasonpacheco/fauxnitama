@@ -1,6 +1,6 @@
-import { CellData } from '../interfaces/context.interface';
+import { SquareData } from '../interfaces/context.interface';
 
-export const MockBoard: CellData[] = [
+export const MockBoard: SquareData[] = [
   {
     id: 0,
     piece: { color: 'Red', type: 'Student', currentPositionID: 0 },
@@ -103,7 +103,7 @@ export const MockBoard: CellData[] = [
   },
 ];
 
-export const MockBoard2: CellData[] = [
+export const MockBoard2: SquareData[] = [
   {
     id: 0,
     piece: { color: 'Red', type: 'Student', currentPositionID: 0 },
@@ -206,7 +206,7 @@ export const MockBoard2: CellData[] = [
   },
 ];
 
-export const MockBoard3: CellData[] = [
+export const MockBoard3: SquareData[] = [
   {
     id: 0,
     piece: { color: 'Blue', type: 'Student', currentPositionID: 0 },

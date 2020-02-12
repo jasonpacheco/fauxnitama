@@ -1,6 +1,6 @@
-import { CellData } from '../interfaces/context.interface';
+import { SquareData } from '../interfaces/context.interface';
 
-export const Opponent: CellData[] = [
+export const Opponent: SquareData[] = [
   {
     id: 0,
     piece: { color: 'Red', type: 'Student', currentPositionID: 0 },
@@ -23,7 +23,7 @@ export const Opponent: CellData[] = [
   },
 ];
 
-export const Player: CellData[] = [
+export const Player: SquareData[] = [
   {
     id: 20,
     piece: { color: 'Blue', type: 'Student', currentPositionID: 20 },

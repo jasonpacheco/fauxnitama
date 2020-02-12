@@ -9,7 +9,7 @@ import {
   idToGridLocation,
 } from './index';
 import constants from './constants';
-import { CellData } from '../interfaces/context.interface';
+import { SquareData } from '../interfaces/context.interface';
 
 describe('tests for assignGridID', () => {
   test('returns an array of length rows * cols', () => {
@@ -133,7 +133,7 @@ describe('test for generateCardSet', () => {
 });
 
 describe('test for checkMaster', () => {
-  const board: CellData[] = [
+  const board: SquareData[] = [
     {
       id: 0,
       piece: undefined,

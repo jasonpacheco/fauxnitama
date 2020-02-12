@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { createGlobalStyle } from 'styled-components/macro';
 import GameState from './context/gameState';
+import { DndProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const GlobalStyles = createGlobalStyle`
   body {
@@ -19,7 +21,9 @@ ReactDOM.render(
   <React.Fragment>
     <GlobalStyles />
     <GameState>
-      <App />
+      <DndProvider backend={HTML5Backend}>
+        <App />
+      </DndProvider>
     </GameState>
   </React.Fragment>,
   document.getElementById('root')

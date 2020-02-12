@@ -10,23 +10,18 @@ import CardModel from '../../interfaces/card.interface';
 
 const BoardSetup: React.FC = () => {
   const {
-    board,
     clearGameState,
     clickedCard,
-    clickedPiece,
     currentPlayer,
     handBlue,
     handRed,
     hasGameFinished,
     moveHistory,
-    movePiece,
     nextCard,
     pauseGame,
     setClickedCard,
-    setClickedPiece,
     setPassTurn,
     setPauseGame,
-    validMoves,
     winner,
     winMethod,
   } = useGameContext();
@@ -62,16 +57,7 @@ const BoardSetup: React.FC = () => {
           onCardClick={onCardClick}
           reset={hasGameFinished}
         />
-        <Board
-          cells={board}
-          clickedPiece={clickedPiece}
-          currentPlayer={currentPlayer}
-          hasGameFinished={hasGameFinished}
-          movePiece={movePiece}
-          validMoves={validMoves}
-          setPiece={setClickedPiece}
-          pauseGame={pauseGame}
-        />
+        <Board />
         <Hand
           clickedCard={clickedCard}
           hand={handBlue}

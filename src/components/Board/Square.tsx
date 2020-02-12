@@ -2,7 +2,7 @@ import React from 'react';
 import Piece from '../Piece/Piece';
 import { CellWrapper } from './styles/Cell';
 
-import { CellData } from '../../interfaces/context.interface';
+import { SquareData } from '../../interfaces/context.interface';
 
 import {
   BLUE_TEMPLE_ID as blueTempleID,
@@ -15,10 +15,10 @@ interface CellProps {
   highlightClickedPiece: boolean;
   onCellClick: (clickedCellID: number) => void;
   pauseGame: boolean;
-  renderedCell: CellData;
+  renderedCell: SquareData;
 }
 
-const Cell: React.FC<CellProps> = ({
+const Square: React.FC<CellProps> = ({
   cellIsValidMove,
   currentPlayer,
   highlightClickedPiece,
@@ -50,4 +50,4 @@ const Cell: React.FC<CellProps> = ({
   );
 };
 
-export default Cell;
+export default Square;

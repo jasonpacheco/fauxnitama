@@ -1,5 +1,6 @@
 import CardModel from '../interfaces/card.interface';
 import {
+  ADD_MOVE_HISTORY,
   CLEAR_GAME_STATE,
   MOVE_PIECE,
   SET_CLICKED_CARD,
@@ -12,7 +13,6 @@ import {
   SET_VALID_MOVES,
   SET_WIN_METHOD,
   SET_WINNER,
-  ADD_MOVE_HISTORY,
 } from '../types';
 
 export type Coordinate = {
@@ -34,7 +34,7 @@ export interface Player {
   pieces: Piece[];
 }
 
-export interface CellData {
+export interface SquareData {
   id: number;
   piece: Piece | undefined;
 }
@@ -44,7 +44,7 @@ export interface PlayerHand {
 }
 
 export interface State {
-  board: CellData[];
+  board: SquareData[];
   clickedCard: CardModel | undefined;
   clickedPiece: Piece | undefined;
   currentPlayer: PlayerColor;

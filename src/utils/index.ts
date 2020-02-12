@@ -1,4 +1,4 @@
-import { Coordinate, CellData } from '../interfaces/context.interface';
+import { Coordinate, SquareData } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
 import cards from '../types/cards';
 import constants from './constants';
@@ -133,7 +133,7 @@ export const generateCardSet = (numCards = 5): CardModel[] => {
   return cardSet;
 };
 
-export const checkMaster = (toID: number, board: CellData[]): boolean => {
+export const checkMaster = (toID: number, board: SquareData[]): boolean => {
   const getCellByID = board[toID];
   const cellPiece = getCellByID.piece;
   return cellPiece?.type === 'Master';
@@ -151,7 +151,7 @@ export const checkTemple = (
   );
 };
 
-export const generateEmptyCells = (): CellData[] => {
+export const generateEmptyCells = (): SquareData[] => {
   const cells = [];
   for (let i = 5; i <= 19; i++) {
     cells.push({

@@ -4,6 +4,8 @@ import BlueMaster from '../../assets/_blue/master.svg';
 import BlueStudent from '../../assets/_blue/student.svg';
 import RedMaster from '../../assets/_red/master.svg';
 import RedStudent from '../../assets/_red/student.svg';
+import { useDrag } from 'react-dnd';
+import ItemTypes from '../../types/ItemTypes';
 
 interface PieceProps {
   color: 'Blue' | 'Red';
@@ -27,9 +29,17 @@ const getPieceSVG = (type: string | undefined): string | null => {
 };
 
 const Piece: React.FC<PieceProps> = ({ color, isActive, type }) => {
+  const [collectedProps, drag] = useDrag({
+    item: { color, pieceType: type, type: ItemTypes.PIECE },
+    canDrag: () => isActive,
+    collect: monitor => ({
+      isClickedForDrag: monitor.isDragging(),
+    }),
+  });
+  console.log(collectedProps.isClickedForDrag);
   const typeOfPiece = getPieceSVG(`${color}-${type}`);
   return (
-    <PieceWrapper isActive={isActive} isRotated={color === 'Red'}>
+    <PieceWrapper isActive={isActive} isRotated={color === 'Red'} ref={drag}>
       {typeOfPiece && <img src={typeOfPiece} alt={type} />}
     </PieceWrapper>
   );

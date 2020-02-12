@@ -1,39 +1,27 @@
 import React from 'react';
-import Cell from './Cell';
+import Square from './Square';
 import { GridWrapper, Grid, LetterColumn, NumberRow } from './styles/Board';
-import {
-  CellData,
-  Piece,
-  PlayerColor,
-} from '../../interfaces/context.interface';
+import { SquareData } from '../../interfaces/context.interface';
+import useGameContext from '../../context/useGameContext';
 
-interface BoardProps {
-  cells: CellData[];
-  clickedPiece: Piece | undefined;
-  currentPlayer: PlayerColor;
-  hasGameFinished: boolean;
-  movePiece: (fromPiece: Piece, toID: number) => void;
-  pauseGame: boolean;
-  setPiece: (piece: Piece) => void;
-  validMoves: number[];
-}
+const Board: React.FC = () => {
+  const {
+    board,
+    clickedPiece,
+    currentPlayer,
+    hasGameFinished,
+    movePiece,
+    pauseGame,
+    setClickedPiece,
+    validMoves,
+  } = useGameContext();
 
-const Board: React.FC<BoardProps> = ({
-  cells,
-  clickedPiece,
-  currentPlayer,
-  hasGameFinished,
-  movePiece,
-  pauseGame,
-  setPiece,
-  validMoves,
-}) => {
   const onCellClick = (clickedCellID: number): void => {
     if (!hasGameFinished && !pauseGame) {
-      const piece = cells[clickedCellID].piece;
+      const piece = board[clickedCellID].piece;
       if (piece?.color === currentPlayer) {
         if (!clickedPiece || clickedCellID !== clickedPiece.currentPositionID) {
-          setPiece(piece);
+          setClickedPiece(piece);
         }
       }
       if (clickedPiece && validMoves.includes(clickedCellID)) {
@@ -60,20 +48,20 @@ const Board: React.FC<BoardProps> = ({
           <span>E</span>
         </LetterColumn>
         <Grid>
-          {cells.map((cell: CellData) => (
-            <Cell
-              key={cell.id}
+          {board.map((square: SquareData) => (
+            <Square
+              key={square.id}
               cellIsValidMove={
                 currentPlayer === clickedPiece?.color &&
-                validMoves.includes(cell.id)
+                validMoves.includes(square.id)
               }
               currentPlayer={currentPlayer}
               highlightClickedPiece={
-                !!cell.piece && cell.id === clickedPiece?.currentPositionID
+                !!square.piece && square.id === clickedPiece?.currentPositionID
               }
               onCellClick={onCellClick}
               pauseGame={pauseGame}
-              renderedCell={cell}
+              renderedCell={square}
             />
           ))}
         </Grid>

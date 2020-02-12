@@ -1,5 +1,5 @@
 import {
-  CellData,
+  SquareData,
   Piece,
   PlayerColor,
   PlayerHand,
@@ -69,7 +69,7 @@ const cardToFEN = (card: CardModel, isBlue = false): string => {
 };
 
 export const getFEN = (
-  board: CellData[],
+  board: SquareData[],
   handRed: PlayerHand,
   handBlue: PlayerHand,
   nextCard: CardModel,

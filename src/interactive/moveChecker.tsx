@@ -1,6 +1,6 @@
 import { Piece, PlayerColor } from '../interfaces/context.interface';
 import { coordinateToID, idToCoordinate } from '../utils';
-import { CellData } from '../interfaces/context.interface';
+import { SquareData } from '../interfaces/context.interface';
 import { BOARD_ROWS as ROWS, BOARD_COLS as COLS } from '../utils/constants';
 
 const transposeCardMovement = (
@@ -11,7 +11,7 @@ const transposeCardMovement = (
 
 const isValidSpace = (
   positionID: number,
-  board: CellData[],
+  board: SquareData[],
   currentPlayer: PlayerColor
 ): boolean => {
   if (board[positionID].piece === undefined) {
@@ -25,7 +25,7 @@ const isValidSpace = (
 export default (
   piece: Piece,
   validMovesFromCard: number[][] | undefined,
-  board: CellData[]
+  board: SquareData[]
 ): number[] => {
   const { x, y } = idToCoordinate(piece.currentPositionID);
   const color = piece.color;
