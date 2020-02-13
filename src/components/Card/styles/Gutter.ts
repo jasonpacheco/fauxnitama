@@ -1,14 +1,15 @@
 import styled from 'styled-components/macro';
-import {
-  StampStyleProps,
-  StampTooltipStyleProps,
-} from '../../../interfaces/styles.interface';
 import BlueShuriken from '../../../assets/_blue/shuriken.svg';
 import RedShuriken from '../../../assets/_red/shuriken.svg';
+import { PlayerColor } from '../../../interfaces/context.interface';
 
 export const GutterWrapper = styled.div`
   align-self: flex-end;
 `;
+
+interface StampTooltipStyleProps {
+  invert: boolean;
+}
 
 export const StampTooltip = styled.div<StampTooltipStyleProps>`
   font-family: 'Arvo', 'Georgia', serif;
@@ -40,6 +41,10 @@ export const StampTooltip = styled.div<StampTooltipStyleProps>`
     border-color: transparent black transparent transparent;
   }
 `;
+
+interface StampStyleProps {
+  color: PlayerColor;
+}
 
 export const Stamp = styled.div<StampStyleProps>`
   position: relative;

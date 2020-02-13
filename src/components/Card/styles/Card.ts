@@ -1,5 +1,10 @@
 import styled from 'styled-components/macro';
-import { CardWrapperStyleProps } from '../../../interfaces/styles.interface';
+
+interface CardWrapperStyleProps {
+  invert: boolean;
+  isActive: boolean;
+  isCurrentCard: boolean;
+}
 
 export const CardWrapper = styled.div<CardWrapperStyleProps>`
   border: 2px solid

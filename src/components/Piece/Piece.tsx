@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieceWrapper } from './styles/Piece';
+import { PieceWrapper, DragSource } from './styles/Piece';
 import BlueMaster from '../../assets/_blue/master.svg';
 import BlueStudent from '../../assets/_blue/student.svg';
 import RedMaster from '../../assets/_red/master.svg';
@@ -35,7 +35,8 @@ const Piece: React.FC<PieceProps> = ({ isActive, piece }) => {
   const { board, clickedPiece, setClickedPiece } = useGameContext();
 
   const [collectedProps, drag] = useDrag({
-    item: { color, pieceType: type, type: ItemTypes.PIECE },
+    item: { id: currentPositionID, type: ItemTypes.PIECE },
+    begin: () => ({ id: currentPositionID, type: ItemTypes.PIECE }),
     canDrag: () => isActive,
     collect: monitor => ({
       isClickedForDrag: monitor.isDragging(),
@@ -45,10 +46,17 @@ const Piece: React.FC<PieceProps> = ({ isActive, piece }) => {
   if (collectedProps.isClickedForDrag) {
     const draggedPiece = board[currentPositionID].piece;
     if (draggedPiece && draggedPiece !== clickedPiece) {
-      console.log('Piece has been set!');
       setClickedPiece(draggedPiece);
     }
-    return <div ref={drag} />;
+    return (
+      <DragSource
+        ref={drag}
+        hasTempleBackground={
+          (currentPositionID === 22 && 'Blue') ||
+          (currentPositionID === 2 && 'Red')
+        }
+      />
+    );
   }
 
   const typeOfPiece = getPieceSVG(`${color}-${type}`);

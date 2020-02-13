@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
-import { EndMessageContentStyleProps } from '../../../interfaces/styles.interface';
 import RestartIcon from '../../../assets/restart_icon.svg';
 import { Button, Wrapper } from '../styles';
+import { PlayerColor } from '../../../interfaces/context.interface';
 
 export const EndMessageWrapper = styled(Wrapper)``;
 
@@ -12,6 +12,10 @@ export const EndMessageHeader = styled.div`
   font-weight: 700;
   margin: 0.5rem;
 `;
+
+interface EndMessageContentStyleProps {
+  winner: PlayerColor;
+}
 
 export const EndMessageContent = styled.div<EndMessageContentStyleProps>`
   & {

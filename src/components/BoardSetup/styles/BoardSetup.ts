@@ -1,5 +1,9 @@
 import styled from 'styled-components/macro';
-import { FullWrapperStyleProps } from '../../../interfaces/styles.interface';
+import { PlayerColor } from '../../../interfaces/context.interface';
+
+interface FullWrapperStyleProps {
+  playerColorToRight: PlayerColor;
+}
 
 export const FullWrapper = styled.div<FullWrapperStyleProps>`
   margin: 0 auto;

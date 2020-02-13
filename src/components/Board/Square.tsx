@@ -1,6 +1,6 @@
 import React from 'react';
 import Piece from '../Piece/Piece';
-import { SquareWrapper } from './styles/Square';
+import { SquareWrapper, Overlay } from './styles/Square';
 import { useDrop } from 'react-dnd';
 
 import { SquareData } from '../../interfaces/context.interface';
@@ -31,14 +31,28 @@ const Square: React.FC<CellProps> = ({ onSquareClick, renderedSquare }) => {
     validMoves.includes(renderedSquare.id);
   const { id: renderedID, piece: renderedPiece } = renderedSquare;
 
-  const [, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: ItemTypes.PIECE,
     drop: () => {
       if (squareIsValidMove && clickedPiece) {
         movePiece(clickedPiece, renderedSquare.id);
       }
     },
+    collect: monitor => ({
+      isOver: monitor.isOver(),
+    }),
   });
+
+  const getOverlayColor = (): string => {
+    if (isOver) {
+      return squareIsValidMove
+        ? '#6c0'
+        : renderedID === clickedPiece?.currentPositionID
+        ? ''
+        : '#ffcdd2';
+    }
+    return '';
+  };
 
   return (
     <SquareWrapper
@@ -56,12 +70,14 @@ const Square: React.FC<CellProps> = ({ onSquareClick, renderedSquare }) => {
       onClick={(): void => onSquareClick(renderedID)}
       ref={drop}
     >
-      {renderedPiece && (
-        <Piece
-          isActive={!pauseGame && currentPlayer === renderedPiece.color}
-          piece={renderedPiece}
-        />
-      )}
+      <Overlay color={getOverlayColor()}>
+        {renderedPiece && (
+          <Piece
+            isActive={!pauseGame && currentPlayer === renderedPiece.color}
+            piece={renderedPiece}
+          />
+        )}
+      </Overlay>
     </SquareWrapper>
   );
 };

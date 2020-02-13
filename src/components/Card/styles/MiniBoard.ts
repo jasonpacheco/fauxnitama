@@ -1,5 +1,4 @@
 import styled from 'styled-components/macro';
-import { MiniCellStyleProps } from '../../../interfaces/styles.interface';
 import { BOARD_COLS as COLS } from '../../../utils/constants';
 
 export const MiniBoardWrapper = styled.div`
@@ -8,6 +7,11 @@ export const MiniBoardWrapper = styled.div`
   grid-template-rows: repeat(${COLS}, 1.8rem);
   border: 1px solid #cacba2;
 `;
+
+interface MiniCellStyleProps {
+  moveColor: string;
+  value: string;
+}
 
 export const MiniCell = styled.div<MiniCellStyleProps>`
   margin: 0;

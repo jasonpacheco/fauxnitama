@@ -1,5 +1,13 @@
 import styled from 'styled-components/macro';
-import { PieceWrapperStyleProps } from '../../../interfaces/styles.interface';
+
+import BlueTempleArch from '../../../assets/_blue/temple_arch.svg';
+import RedTempleArch from '../../../assets/_red/temple_arch.svg';
+import { PlayerColor } from '../../../interfaces/context.interface';
+
+interface PieceWrapperStyleProps {
+  isActive: boolean;
+  isRotated: boolean;
+}
 
 export const PieceWrapper = styled.div<PieceWrapperStyleProps>`
   position: relative;
@@ -20,4 +28,19 @@ export const PieceWrapper = styled.div<PieceWrapperStyleProps>`
     }
   }`
       : ''}
+`;
+
+interface DragSourceProps {
+  hasTempleBackground: PlayerColor | boolean;
+}
+
+export const DragSource = styled.div<DragSourceProps>`
+  height: 6rem;
+  width: 6rem;
+  ${({ hasTempleBackground }): string =>
+    hasTempleBackground
+      ? hasTempleBackground === 'Red'
+        ? `background-image: url(${RedTempleArch})`
+        : `background-image: url(${BlueTempleArch})`
+      : ''};
 `;

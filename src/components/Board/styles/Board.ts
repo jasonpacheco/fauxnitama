@@ -7,7 +7,7 @@ export const GridWrapper = styled.div`
 `;
 
 export const Grid = styled.div`
-  border: 1px solid #000;
+  outline: 1px solid #000;
   display: grid;
   margin: 0 auto;
   height: 30rem;
@@ -16,7 +16,11 @@ export const Grid = styled.div`
   grid-template-rows: repeat(${COLS}, 6rem);
 `;
 
-export const GridLegend = styled.div<{ invert?: boolean }>`
+interface GridLegendProps {
+  invert?: boolean;
+}
+
+export const GridLegend = styled.div<GridLegendProps>`
   display: grid;
   font-family: Helvetica, Arial, sans-serif;
   font-weight: 700;
