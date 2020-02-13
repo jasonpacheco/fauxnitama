@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { PieceWrapper } from './styles/Piece';
 import BlueMaster from '../../assets/_blue/master.svg';
 import BlueStudent from '../../assets/_blue/student.svg';
@@ -42,15 +42,14 @@ const Piece: React.FC<PieceProps> = ({ isActive, piece }) => {
     }),
   });
 
-  useEffect(() => {
-    if (collectedProps.isClickedForDrag) {
-      const draggedPiece = board[currentPositionID].piece;
-      if (draggedPiece && draggedPiece !== clickedPiece) {
-        console.log('Piece has been set!');
-        setClickedPiece(draggedPiece);
-      }
+  if (collectedProps.isClickedForDrag) {
+    const draggedPiece = board[currentPositionID].piece;
+    if (draggedPiece && draggedPiece !== clickedPiece) {
+      console.log('Piece has been set!');
+      setClickedPiece(draggedPiece);
     }
-  }, [collectedProps.isClickedForDrag]);
+    return <div ref={drag} />;
+  }
 
   const typeOfPiece = getPieceSVG(`${color}-${type}`);
   return (

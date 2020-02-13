@@ -1,6 +1,7 @@
 import React from 'react';
 import Piece from '../Piece/Piece';
 import { SquareWrapper } from './styles/Square';
+import { useDrop } from 'react-dnd';
 
 import { SquareData } from '../../interfaces/context.interface';
 
@@ -9,6 +10,7 @@ import {
   RED_TEMPLE_ID as redTempleID,
 } from '../../utils/constants';
 import useGameContext from '../../context/useGameContext';
+import ItemTypes from '../../types/ItemTypes';
 
 interface CellProps {
   onSquareClick: (clickedCellID: number) => void;
@@ -19,14 +21,25 @@ const Square: React.FC<CellProps> = ({ onSquareClick, renderedSquare }) => {
   const {
     clickedPiece,
     currentPlayer,
+    movePiece,
     pauseGame,
     validMoves,
   } = useGameContext();
 
-  const { id: renderedID, piece: renderedPiece } = renderedSquare;
   const squareIsValidMove =
     currentPlayer === clickedPiece?.color &&
     validMoves.includes(renderedSquare.id);
+  const { id: renderedID, piece: renderedPiece } = renderedSquare;
+
+  const [, drop] = useDrop({
+    accept: ItemTypes.PIECE,
+    drop: () => {
+      if (squareIsValidMove && clickedPiece) {
+        movePiece(clickedPiece, renderedSquare.id);
+      }
+    },
+  });
+
   return (
     <SquareWrapper
       highlightClickedPiece={
@@ -41,6 +54,7 @@ const Square: React.FC<CellProps> = ({ onSquareClick, renderedSquare }) => {
       }
       isActive={!pauseGame && squareIsValidMove}
       onClick={(): void => onSquareClick(renderedID)}
+      ref={drop}
     >
       {renderedPiece && (
         <Piece
