@@ -16,6 +16,7 @@ import {
   SET_WIN_METHOD,
   SET_WINNER,
   ADD_MOVE_HISTORY,
+  UPDATE_PIECES,
 } from '../types';
 
 import CardModel from '../interfaces/card.interface';
@@ -51,6 +52,10 @@ const initialState: State = {
   moveHistory: [],
   nextCard: cards[4],
   pauseGame: false,
+  piecePositions: {
+    Blue: [20, 21, 22, 23, 24],
+    Red: [0, 1, 2, 3, 4],
+  },
   validMoves: [],
   winMethod: undefined,
   winner: undefined,
@@ -152,6 +157,19 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
+  const updatePieces = (
+    colorToUpdate: PlayerColor,
+    idBeforeUpdate: number,
+    idAfterUpdate: number
+  ): void => {
+    dispatch({
+      type: UPDATE_PIECES,
+      colorToUpdate,
+      idBeforeUpdate,
+      idAfterUpdate,
+    });
+  };
+
   const movePiece = (fromPiece: Piece, toID: number): void => {
     const from = cloneDeep(fromPiece);
     const fromPlayer = from.color;
@@ -160,6 +178,7 @@ const GameState: React.FC = ({ children }) => {
     const isMoveTempleCapture = checkTemple(fromPlayer, fromPlayerType, toID);
     const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
     const toIDPiece = state.board[toID]?.piece;
+    updatePieces(fromPlayer, from.currentPositionID, toID);
     if (state.clickedCard) {
       const notation = moveNotation(
         fromPlayer,

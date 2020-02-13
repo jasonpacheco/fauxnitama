@@ -13,6 +13,7 @@ import {
   SET_VALID_MOVES,
   SET_WIN_METHOD,
   SET_WINNER,
+  UPDATE_PIECES,
 } from '../types';
 
 export type Coordinate = {
@@ -43,6 +44,10 @@ export interface PlayerHand {
   [key: string]: CardModel;
 }
 
+export interface PiecePosition {
+  [key: string]: number[];
+}
+
 export interface State {
   board: SquareData[];
   clickedCard: CardModel | undefined;
@@ -55,6 +60,7 @@ export interface State {
   moveHistory: string[][];
   nextCard: CardModel;
   pauseGame: boolean;
+  piecePositions: PiecePosition;
   validMoves: number[];
   winMethod: WinMethods | undefined;
   winner: PlayerColor | undefined;
@@ -147,6 +153,13 @@ interface SetWinner {
   winner: PlayerColor;
 }
 
+interface UpdatePieces {
+  type: typeof UPDATE_PIECES;
+  colorToUpdate: PlayerColor;
+  idBeforeUpdate: number;
+  idAfterUpdate: number;
+}
+
 export type Actions =
   | AddMoveHistory
   | ClearGameState
@@ -160,4 +173,5 @@ export type Actions =
   | SetPauseGame
   | SetValidMoves
   | SetWinMethod
-  | SetWinner;
+  | SetWinner
+  | UpdatePieces;

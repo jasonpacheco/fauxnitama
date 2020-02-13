@@ -12,3 +12,4 @@ export const SET_PAUSE = 'SET_PAUSE';
 export const SET_VALID_MOVES = 'SET_VALID_MOVES';
 export const SET_WIN_METHOD = 'SET_WIN_METHOD';
 export const SET_WINNER = 'SET_WINNER';
+export const UPDATE_PIECES = 'UPDATE_PIECES';

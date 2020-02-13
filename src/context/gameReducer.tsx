@@ -12,6 +12,7 @@ import {
   SET_WIN_METHOD,
   SET_WINNER,
   ADD_MOVE_HISTORY,
+  UPDATE_PIECES,
 } from '../types';
 import { State, Actions } from '../interfaces/context.interface';
 import { generateCardSet, generateEmptyCells } from '../utils';
@@ -44,6 +45,10 @@ export default (state: State, action: Actions): State => {
         moveHistory: [],
         nextCard: newCards[4],
         pauseGame: false,
+        piecePositions: {
+          Blue: [20, 21, 22, 23, 24],
+          Red: [0, 1, 2, 3, 4],
+        },
         validMoves: [],
         winMethod: undefined,
         winner: undefined,
@@ -151,6 +156,23 @@ export default (state: State, action: Actions): State => {
       return {
         ...state,
         winner: action.winner,
+      };
+
+    case UPDATE_PIECES:
+      const otherPlayerColor = action.colorToUpdate === 'Blue' ? 'Red' : 'Blue';
+      const updatePlayerArray = state.piecePositions[action.colorToUpdate];
+      const otherPlayerArray = state.piecePositions[otherPlayerColor];
+      const indexToUpdate = updatePlayerArray.indexOf(action.idBeforeUpdate);
+      if (state.board[action.idAfterUpdate].piece !== undefined) {
+        const indexToDelete = otherPlayerArray.indexOf(action.idAfterUpdate);
+        otherPlayerArray.splice(indexToDelete, 1);
+        otherPlayerArray.sort((a, b) => a - b);
+      }
+      updatePlayerArray.splice(indexToUpdate, 1, action.idAfterUpdate);
+      updatePlayerArray.sort((a, b) => a - b);
+
+      return {
+        ...state,
       };
 
     default:
