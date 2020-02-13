@@ -4,7 +4,11 @@ import { GridWrapper, Grid, LetterColumn, NumberRow } from './styles/Board';
 import { SquareData } from '../../interfaces/context.interface';
 import useGameContext from '../../context/useGameContext';
 
-const Board: React.FC = () => {
+interface BoardProps {
+  setPieceClicked: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Board: React.FC<BoardProps> = ({ setPieceClicked }) => {
   const {
     board,
     clickedPiece,
@@ -22,6 +26,7 @@ const Board: React.FC = () => {
       if (piece?.color === currentPlayer) {
         if (!clickedPiece || clickedCellID !== clickedPiece.currentPositionID) {
           setClickedPiece(piece);
+          setPieceClicked(true);
         }
       }
       if (clickedPiece && validMoves.includes(clickedCellID)) {
