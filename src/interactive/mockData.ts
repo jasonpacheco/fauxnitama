@@ -1,4 +1,7 @@
-import { SquareData } from '../interfaces/context.interface';
+import { SquareData, PlayerHand } from '../interfaces/context.interface';
+import CardModel from '../interfaces/card.interface';
+import Cards from '../types/cards';
+const { Boar, Cobra, Goose, Ox, Rooster } = Cards;
 
 export const MockBoard: SquareData[] = [
   {
@@ -309,24 +312,14 @@ export const MockBoard3: SquareData[] = [
   },
 ];
 
-export interface MockCard {
-  name: string;
-  mockData: boolean;
-}
-
-export interface MockHand {
-  first: MockCard;
-  second: MockCard;
-}
-
-export const mockHandBlue: MockHand = {
-  first: { name: 'Boar', mockData: true },
-  second: { name: 'Rooster', mockData: true },
+export const mockHandBlue: PlayerHand = {
+  first: Boar,
+  second: Rooster,
 };
 
-export const mockHandRed: MockHand = {
-  first: { name: 'Ox', mockData: true },
-  second: { name: 'Cobra', mockData: true },
+export const mockHandRed: PlayerHand = {
+  first: Ox,
+  second: Cobra,
 };
 
-export const mockNextCard: MockCard = { name: 'Goose', mockData: true };
+export const mockNextCard: CardModel = Goose;

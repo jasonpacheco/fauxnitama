@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { NotationToken } from './styles/MoveNotation';
 
 interface MoveNotationProps {
@@ -7,22 +7,22 @@ interface MoveNotationProps {
 
 const MoveNotation: React.FC<MoveNotationProps> = ({ tokens }) => {
   // Sample array for tokens:
-  // ['BMa3', ' ', 'b3', 'Ox'] => Ox Ma3 b3
-  // ['Rc2', 'xB', 'd3', 'Monkey'] => Monkey c2xd3
-  // ['BP', '', ' pt ', 'Rooster'] => Rooster P pt
+  // ['Ox', 'BMa3', ' ', 'b3'] => Ox Ma3 b3
+  // ['Monkey', 'Rc2', 'xB', 'd3'] => Monkey c2xd3
+  // ['Rooster', 'BP', '', ' pt '] => Rooster P pt
 
   if (!tokens) {
-    return <></>;
+    return <Fragment></Fragment>;
   }
 
-  const captChar = `${tokens[1].charAt(0)}`; // 'x' symbol for a capture
-  const captPiece = tokens[1].slice(1); // e.g. 'BM' | 'RM' or 'B' | 'R' for students
+  const captChar = `${tokens[2].charAt(0)}`; // 'x' symbol for a capture
+  const captPiece = tokens[2].slice(1); // e.g. 'BM' | 'RM' or 'B' | 'R' for students
 
   return (
-    <>
-      <NotationToken color={'green'}>{`${tokens[3]} `}</NotationToken>
-      <NotationToken color={tokens[0].startsWith('B') ? '#1976D2' : '#D32F2F'}>
-        {tokens[0]}
+    <Fragment>
+      <NotationToken color={'green'}>{`${tokens[0]} `}</NotationToken>
+      <NotationToken color={tokens[1].startsWith('B') ? '#1976D2' : '#D32F2F'}>
+        {tokens[1]}
       </NotationToken>
       <NotationToken bold>{captChar}</NotationToken>
       <NotationToken color={captPiece.startsWith('B') ? '#1976D2' : '#D32F2F'}>
@@ -35,11 +35,11 @@ const MoveNotation: React.FC<MoveNotationProps> = ({ tokens }) => {
           '#000'
         }
       >
-        {tokens[2]}
+        {tokens[3]}
       </NotationToken>
       <NotationToken bold>{tokens[4]}</NotationToken>
       <br />
-    </>
+    </Fragment>
   );
 };
 

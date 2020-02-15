@@ -74,10 +74,10 @@ const GameState: React.FC = ({ children }) => {
   const getCurrentFEN = (): string => {
     return getFEN(
       state.board,
-      state.handRed,
+      state.currentPlayer,
       state.handBlue,
-      state.nextCard,
-      state.currentPlayer
+      state.handRed,
+      state.nextCard
     );
   };
 
@@ -160,53 +160,59 @@ const GameState: React.FC = ({ children }) => {
   const updatePieces = (
     colorToUpdate: PlayerColor,
     idBeforeUpdate: number,
-    idAfterUpdate: number
+    idAfterUpdate: number,
+    moveIsCapture: boolean
   ): void => {
     dispatch({
       type: UPDATE_PIECES,
       colorToUpdate,
       idBeforeUpdate,
       idAfterUpdate,
+      moveIsCapture,
     });
   };
 
   const movePiece = (fromPiece: Piece, toID: number): void => {
-    const from = cloneDeep(fromPiece);
-    const fromPlayer = from.color;
-    const fromPlayerType = from.type;
-    const isMoveCheckmate = checkMaster(toID, state.board);
-    const isMoveTempleCapture = checkTemple(fromPlayer, fromPlayerType, toID);
+    // Define variables
+    const fromPlayer = fromPiece.color;
+    const isMoveCheckmate = checkMaster(state.board, toID);
+    const isMoveTempleCapture = checkTemple(fromPiece, toID);
     const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
     const toIDPiece = state.board[toID]?.piece;
-    updatePieces(fromPlayer, from.currentPositionID, toID);
+    const moveIsCapture = toIDPiece !== undefined;
+
+    updatePieces(fromPlayer, fromPiece.currentPositionID, toID, moveIsCapture);
+
     if (state.clickedCard) {
       const notation = moveNotation(
         fromPlayer,
         false,
         !!toIDPiece || isMoveTempleCapture,
         state.clickedCard.name,
-        from,
-        from.currentPositionID,
+        fromPiece.type,
+        fromPiece.currentPositionID,
         toID,
         toIDPiece,
         isMoveTempleCapture
       );
       addMoveHistory(notation);
     }
+
     if (fromPlayer && isMoveCheckmate) {
       console.log('Opponent master has been captured!');
       setWinner(fromPlayer);
-      setWinMethod('master-check');
+      setWinMethod('capture-master');
       setHasGameFinished();
     } else if (fromPlayer && isMoveTempleCapture) {
       console.log('Opponent temple has been captured!');
       setWinner(fromPlayer);
-      setWinMethod('temple-check');
+      setWinMethod('capture-temple');
       setHasGameFinished();
     }
+    // Move the piece
     dispatch({
       type: MOVE_PIECE,
-      fromPiece: from,
+      fromPiece,
       toID,
     });
 
@@ -215,6 +221,7 @@ const GameState: React.FC = ({ children }) => {
       const targetProperty = fromPlayer === 'Blue' ? 'handBlue' : 'handRed';
       setNextCard(state.clickedCard, targetProperty, poppedNextCard);
     }
+    // Reset cell highlighting for valid moves and set next player
     setValidMoves(undefined);
     setCurrentPlayer(nextPlayer);
   };
@@ -234,10 +241,11 @@ const GameState: React.FC = ({ children }) => {
 
     if (state.clickedCard) {
       setNextCard(state.clickedCard, targetProperty, replacementCard);
+      const [didPass, didCapture] = [true, false];
       const notation = moveNotation(
         state.currentPlayer,
-        true,
-        false,
+        didPass,
+        didCapture,
         state.clickedCard.name
       );
       addMoveHistory(notation);

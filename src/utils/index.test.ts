@@ -9,7 +9,7 @@ import {
   idToGridLocation,
 } from './index';
 import constants from './constants';
-import { SquareData } from '../interfaces/context.interface';
+import { SquareData, Piece } from '../interfaces/context.interface';
 
 describe('tests for assignGridID', () => {
   test('returns an array of length rows * cols', () => {
@@ -157,66 +157,98 @@ describe('test for checkMaster', () => {
   ];
 
   test('return false if cell id is null', () => {
-    expect(checkMaster(0, board)).toBeFalsy();
+    expect(checkMaster(board, 0)).toBeFalsy();
   });
 
   test('return false if cell id is a piece but not master', () => {
-    expect(checkMaster(1, board)).toBeFalsy();
+    expect(checkMaster(board, 1)).toBeFalsy();
   });
 
   test('return true if cell id is a master', () => {
-    expect(checkMaster(2, board)).toBeTruthy();
+    expect(checkMaster(board, 2)).toBeTruthy();
   });
 });
 
 describe('tests for checkTemple', () => {
+  const pieceBlueMaster: Piece = {
+    color: 'Blue',
+    type: 'Master',
+    currentPositionID: 0,
+  };
+  const pieceBlueStudent: Piece = {
+    color: 'Blue',
+    type: 'Student',
+    currentPositionID: 0,
+  };
+  const pieceRedMaster: Piece = {
+    color: 'Red',
+    type: 'Master',
+    currentPositionID: 0,
+  };
+  const pieceRedStudent: Piece = {
+    color: 'Red',
+    type: 'Student',
+    currentPositionID: 0,
+  };
   test('returns false when master is not on a temple id', () => {
-    expect(checkTemple('Blue', 'Master', 21)).toBeFalsy();
+    expect(checkTemple(pieceBlueMaster, 21)).toBeFalsy();
   });
 
-  test('returns false when student is not on a temple id', () => {
-    expect(checkTemple('Blue', 'Student', 21)).toBeFalsy();
+  test('returns false when blue student is not on a temple id', () => {
+    expect(checkTemple(pieceBlueStudent, 21)).toBeFalsy();
   });
 
-  test('returns false when student is on a temple id of 2', () => {
-    expect(checkTemple('Blue', 'Student', 2)).toBeFalsy();
+  test('returns false when red student is not on a temple id', () => {
+    expect(checkTemple(pieceRedStudent, 21)).toBeFalsy();
   });
 
-  test('returns false when student is on a temple id of 22', () => {
-    expect(checkTemple('Blue', 'Student', 22)).toBeFalsy();
+  test('returns false when blue student is on a temple id of 2', () => {
+    expect(checkTemple(pieceBlueStudent, 2)).toBeFalsy();
+  });
+
+  test('returns false when red student is on a temple id of 2', () => {
+    expect(checkTemple(pieceRedStudent, 2)).toBeFalsy();
+  });
+
+  test('returns false when blue student is on a temple id of 22', () => {
+    expect(checkTemple(pieceBlueStudent, 22)).toBeFalsy();
+  });
+
+  test('returns false when red student is on a temple id of 22', () => {
+    expect(checkTemple(pieceRedStudent, 22)).toBeFalsy();
   });
 
   test('returns true when Blue master is on a temple id of 2', () => {
-    expect(checkTemple('Blue', 'Master', 2)).toBeTruthy();
+    expect(checkTemple(pieceBlueMaster, 2)).toBeTruthy();
   });
 
   test('returns false when Blue master is on a temple id of 22', () => {
-    expect(checkTemple('Blue', 'Master', 22)).toBeFalsy();
+    expect(checkTemple(pieceBlueMaster, 22)).toBeFalsy();
   });
 
   test('returns false when Red master is on a temple id of 2', () => {
-    expect(checkTemple('Red', 'Master', 2)).toBeFalsy();
+    expect(checkTemple(pieceRedMaster, 2)).toBeFalsy();
   });
 
   test('returns true when Red master is on a temple id of 22', () => {
-    expect(checkTemple('Red', 'Master', 22)).toBeTruthy();
+    expect(checkTemple(pieceRedMaster, 22)).toBeTruthy();
   });
 });
 
 describe('tests for idToGridLocation', () => {
-  test('returns C5 for id=22', () => {
-    expect(idToGridLocation(22)).toEqual('C5');
+  test('returns e3 for id=22', () => {
+    expect(idToGridLocation(22)).toEqual('e3');
   });
 
-  test('returns C1 for id=2', () => {
-    expect(idToGridLocation(2)).toEqual('C1');
+  test('returns a3 for id=2', () => {
+    expect(idToGridLocation(2)).toEqual('a3');
   });
 
-  test('returns C3 for id=12', () => {
-    expect(idToGridLocation(12)).toEqual('C3');
+  test('returns c3 for id=12', () => {
+    expect(idToGridLocation(12)).toEqual('c3');
   });
 
-  test('returns A1 for id=0', () => {
-    expect(idToGridLocation(0)).toEqual('A1');
+  test('returns a1 for id=0', () => {
+    expect(idToGridLocation(0)).toEqual('a1');
   });
 });

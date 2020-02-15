@@ -23,7 +23,7 @@ export type Coordinate = {
 
 export type PlayerColor = 'Blue' | 'Red';
 export type PlayerType = 'Master' | 'Student';
-export type WinMethods = 'master-check' | 'temple-check';
+export type WinMethods = 'capture-master' | 'capture-temple';
 
 export interface Piece {
   color: PlayerColor;
@@ -158,6 +158,7 @@ interface UpdatePieces {
   colorToUpdate: PlayerColor;
   idBeforeUpdate: number;
   idAfterUpdate: number;
+  moveIsCapture: boolean;
 }
 
 export type Actions =

@@ -11,10 +11,10 @@ import {
   Character,
   Name,
 } from './styles/Card';
+import useGameContext from '../../context/useGameContext';
 
 interface CardProps {
   card: CardModel;
-  clickedCard?: CardModel | undefined;
   invert: boolean;
   isCurrentlyActive: boolean;
   onCardClick?: (
@@ -22,18 +22,17 @@ interface CardProps {
     isActiveCard: boolean,
     card: CardModel
   ) => void;
-  reset: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
   card,
-  clickedCard,
   invert,
   isCurrentlyActive,
   onCardClick = (): void => {
     return;
   },
 }) => {
+  const { clickedCard } = useGameContext();
   const { image, name, color, stamp, miniBoard } = card;
 
   return (

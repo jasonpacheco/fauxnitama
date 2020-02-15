@@ -5,9 +5,13 @@ import BlueStudent from '../../assets/_blue/student.svg';
 import RedMaster from '../../assets/_red/master.svg';
 import RedStudent from '../../assets/_red/student.svg';
 import { useDrag } from 'react-dnd';
-import ItemTypes from '../../types/ItemTypes';
+import dndTypes from '../../types/dndTypes';
 import useGameContext from '../../context/useGameContext';
 import { Piece as IPiece } from '../../interfaces/context.interface';
+import {
+  BLUE_TEMPLE_ID as blueTempleID,
+  RED_TEMPLE_ID as redTempleID,
+} from '../../utils/constants';
 
 interface PieceProps {
   isActive: boolean;
@@ -35,8 +39,8 @@ const Piece: React.FC<PieceProps> = ({ isActive, piece }) => {
   const { board, clickedPiece, setClickedPiece } = useGameContext();
 
   const [collectedProps, drag] = useDrag({
-    item: { id: currentPositionID, type: ItemTypes.PIECE },
-    begin: () => ({ id: currentPositionID, type: ItemTypes.PIECE }),
+    item: { id: currentPositionID, type: dndTypes.PIECE },
+    begin: () => ({ id: currentPositionID, type: dndTypes.PIECE }),
     canDrag: () => isActive,
     collect: monitor => ({
       isClickedForDrag: monitor.isDragging(),
@@ -52,8 +56,8 @@ const Piece: React.FC<PieceProps> = ({ isActive, piece }) => {
       <DragSource
         ref={drag}
         hasTempleBackground={
-          (currentPositionID === 22 && 'Blue') ||
-          (currentPositionID === 2 && 'Red')
+          (currentPositionID === blueTempleID && 'Blue') ||
+          (currentPositionID === redTempleID && 'Red')
         }
       />
     );

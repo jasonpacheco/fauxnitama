@@ -1,34 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { RoundModalWrapper, RoundModalButton } from './styles/RoundModal';
-import CardModel from '../../interfaces/card.interface';
 import useTimer from '../../interactive/useTimer';
-import { PlayerColor, WinMethods } from '../../interfaces/context.interface';
 import GameEndMessage from './GameEndMessage';
 import MoveHistoryModal from './MoveHistoryModal';
+import {
+  BUTTON_NO,
+  BUTTON_PASS,
+  BUTTON_PAUSE,
+  BUTTON_PROMPT,
+  BUTTON_YES,
+} from '../../types/buttonStates';
+import useGameContext from '../../context/useGameContext';
 
-interface RoundModalProps {
-  clearGameState: () => void;
-  clickedCard: CardModel | undefined;
-  hasGameFinished: boolean;
-  moveHistory: string[][];
-  pauseGame: boolean;
-  setPassTurn: () => void;
-  setPauseGame: (pause: boolean) => void;
-  winner: PlayerColor | undefined;
-  winMethod: WinMethods | undefined;
-}
-
-const RoundModal: React.FC<RoundModalProps> = ({
-  clearGameState,
-  clickedCard,
-  hasGameFinished,
-  moveHistory,
-  pauseGame,
-  setPassTurn,
-  setPauseGame,
-  winMethod,
-  winner,
-}) => {
+const RoundModal: React.FC = () => {
+  const {
+    clearGameState,
+    clickedCard,
+    hasGameFinished,
+    pauseGame,
+    setPassTurn,
+    setPauseGame,
+    winner,
+  } = useGameContext();
   const [showPrompt, setShowPrompt] = useState(false);
 
   const {
@@ -46,28 +39,28 @@ const RoundModal: React.FC<RoundModalProps> = ({
 
   const handleClick = (type: string): void => {
     switch (type) {
-      case 'prompt':
+      case BUTTON_PROMPT:
         stopTimer();
         setPauseGame(true);
         setShowPrompt(true);
         break;
-      case 'yes':
+      case BUTTON_YES:
         setShowPrompt(false);
         clearGameState();
         resetTimer();
         startTimer();
         break;
-      case 'no':
+      case BUTTON_NO:
         setShowPrompt(false);
         setPauseGame(false);
         startTimer();
         break;
-      case 'pass':
+      case BUTTON_PASS:
         if (clickedCard) {
           setPassTurn();
         }
         break;
-      case 'pause':
+      case BUTTON_PAUSE:
         if (!pauseGame) {
           stopTimer();
           setPauseGame(true);
@@ -89,49 +82,46 @@ const RoundModal: React.FC<RoundModalProps> = ({
           <p>
             Are you sure you want to end the current match and start a new one?
           </p>
-          <RoundModalButton onClick={(): void => handleClick('no')}>
+          <RoundModalButton onClick={(): void => handleClick(BUTTON_NO)}>
             No
           </RoundModalButton>
-          <RoundModalButton onClick={(): void => handleClick('yes')}>
+          <RoundModalButton onClick={(): void => handleClick(BUTTON_YES)}>
             Yes
           </RoundModalButton>
         </>
       ) : (
         <>
-          <RoundModalButton onClick={(): void => handleClick('prompt')}>
+          <RoundModalButton onClick={(): void => handleClick(BUTTON_PROMPT)}>
             End and Restart Match
           </RoundModalButton>
           <RoundModalButton
-            onClick={(): void => handleClick('pass')}
+            onClick={(): void => handleClick(BUTTON_PASS)}
             disabled={clickedCard === undefined}
           >
             Pass Turn
           </RoundModalButton>
-          <RoundModalButton onClick={(): void => handleClick('pause')}>
+          <RoundModalButton onClick={(): void => handleClick(BUTTON_PAUSE)}>
             {pauseGame ? 'Resume Match' : 'Pause'}
           </RoundModalButton>
         </>
       )}
 
-      <MoveHistoryModal moveHistory={moveHistory} />
+      <MoveHistoryModal />
     </RoundModalWrapper>
   ) : (
-    <>
-      {winner && winMethod && (
+    <Fragment>
+      {winner && (
         <GameEndMessage
-          winner={winner}
-          winMethod={winMethod}
-          clearGameState={clearGameState}
           formattedTime={formattedTime}
           elapsedTime={elapsedTime}
           stopTimer={stopTimer}
           resetTimer={resetTimer}
           startTimer={startTimer}
         >
-          <MoveHistoryModal moveHistory={moveHistory} />
+          <MoveHistoryModal />
         </GameEndMessage>
       )}
-    </>
+    </Fragment>
   );
 };
 

@@ -8,12 +8,9 @@ import {
   RestartGraphic,
 } from './styles/GameEndMessage';
 
-import { PlayerColor, WinMethods } from '../../interfaces/context.interface';
+import useGameContext from '../../context/useGameContext';
 
 interface GameEndMessageProps {
-  winner: PlayerColor;
-  winMethod: WinMethods;
-  clearGameState: () => void;
   formattedTime: (currentTime: number, alt?: boolean) => string;
   elapsedTime: number;
   stopTimer: () => void;
@@ -23,15 +20,14 @@ interface GameEndMessageProps {
 
 const GameEndMessage: React.FC<GameEndMessageProps> = ({
   children,
-  clearGameState,
   elapsedTime,
   formattedTime,
   resetTimer,
   startTimer,
   stopTimer,
-  winMethod,
-  winner,
 }) => {
+  const { clearGameState, winner, winMethod } = useGameContext();
+
   useEffect(() => {
     stopTimer();
     // eslint-disable-next-line
@@ -49,7 +45,7 @@ const GameEndMessage: React.FC<GameEndMessageProps> = ({
       <EndMessageContent winner={winner}>
         <span className='color--winner'>{winner}</span> wins by capturing{' '}
         <span className='color--loser'>
-          {winMethod === 'master-check' ? 'Master' : 'Temple'}
+          {winMethod === 'capture-master' ? 'Master' : 'Temple'}
         </span>
         <span> in {formattedTime(elapsedTime, true)}.</span>
         <EndMessageButton

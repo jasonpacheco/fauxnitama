@@ -10,7 +10,7 @@ import {
   RED_TEMPLE_ID as redTempleID,
 } from '../../utils/constants';
 import useGameContext from '../../context/useGameContext';
-import ItemTypes from '../../types/ItemTypes';
+import dndTypes from '../../types/dndTypes';
 
 interface CellProps {
   onSquareClick: (clickedCellID: number) => void;
@@ -32,7 +32,7 @@ const Square: React.FC<CellProps> = ({ onSquareClick, renderedSquare }) => {
   const { id: renderedID, piece: renderedPiece } = renderedSquare;
 
   const [{ isOver }, drop] = useDrop({
-    accept: ItemTypes.PIECE,
+    accept: dndTypes.PIECE,
     drop: () => {
       if (squareIsValidMove && clickedPiece) {
         movePiece(clickedPiece, renderedSquare.id);

@@ -14,7 +14,7 @@ export const EndMessageHeader = styled.div`
 `;
 
 interface EndMessageContentStyleProps {
-  winner: PlayerColor;
+  winner: PlayerColor | undefined;
 }
 
 export const EndMessageContent = styled.div<EndMessageContentStyleProps>`

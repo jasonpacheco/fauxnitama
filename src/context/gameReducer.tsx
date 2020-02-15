@@ -37,7 +37,7 @@ export default (state: State, action: Actions): State => {
         board: cloneDeep(newBoard),
         clickedCard: undefined,
         clickedPiece: undefined,
-        currentPlayer: newCards[4].stamp,
+        currentPlayer: newCards[4]?.stamp,
         handBlue: { first: newCards[2], second: newCards[3] },
         handRed: { first: newCards[0], second: newCards[1] },
         hasGameFinished: false,
@@ -160,16 +160,20 @@ export default (state: State, action: Actions): State => {
 
     case UPDATE_PIECES:
       const otherPlayerColor = action.colorToUpdate === 'Blue' ? 'Red' : 'Blue';
-      const updatePlayerArray = state.piecePositions[action.colorToUpdate];
-      const otherPlayerArray = state.piecePositions[otherPlayerColor];
-      const indexToUpdate = updatePlayerArray.indexOf(action.idBeforeUpdate);
-      if (state.board[action.idAfterUpdate].piece !== undefined) {
-        const indexToDelete = otherPlayerArray.indexOf(action.idAfterUpdate);
-        otherPlayerArray.splice(indexToDelete, 1);
-        otherPlayerArray.sort((a, b) => a - b);
+      const updatePlayerPositions = state.piecePositions[action.colorToUpdate];
+      const otherPlayerPositions = state.piecePositions[otherPlayerColor];
+      const indexToUpdate = updatePlayerPositions.indexOf(
+        action.idBeforeUpdate
+      );
+      if (action.moveIsCapture) {
+        const indexToDelete = otherPlayerPositions.indexOf(
+          action.idAfterUpdate
+        );
+        otherPlayerPositions.splice(indexToDelete, 1);
+        otherPlayerPositions.sort((a, b) => a - b);
       }
-      updatePlayerArray.splice(indexToUpdate, 1, action.idAfterUpdate);
-      updatePlayerArray.sort((a, b) => a - b);
+      updatePlayerPositions.splice(indexToUpdate, 1, action.idAfterUpdate);
+      updatePlayerPositions.sort((a, b) => a - b);
 
       return {
         ...state,

@@ -1,4 +1,4 @@
-import { Coordinate, SquareData } from '../interfaces/context.interface';
+import { Coordinate, SquareData, Piece } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
 import cards from '../types/cards';
 import constants from './constants';
@@ -50,9 +50,7 @@ export const getIDs = (): Array<SpaceID> => assignGridID();
 export const coordinateToID = (
   coordinate: Coordinate,
   rows = constants.BOARD_ROWS
-): number => {
-  return rows * coordinate.x + coordinate.y;
-};
+): number => rows * coordinate.x + coordinate.y;
 
 /**
  *
@@ -84,7 +82,7 @@ export const idToGridLocation = (id?: number): string => {
  * the y-axis. The result is an array containing a numeric ID for the valid move
  * or undefined if the move is not valid on the grid.
  * @param validMoves Array<[x: number, y: number]>
- * @param refID optional
+ * @param refID optional, default is 12 (id for centerpoint)
  */
 export const movesToID = (
   validMoves: number[][],
@@ -133,21 +131,17 @@ export const generateCardSet = (numCards = 5): CardModel[] => {
   return cardSet;
 };
 
-export const checkMaster = (toID: number, board: SquareData[]): boolean => {
+export const checkMaster = (board: SquareData[], toID: number): boolean => {
   const getCellByID = board[toID];
   const cellPiece = getCellByID.piece;
   return cellPiece?.type === 'Master';
 };
 
-export const checkTemple = (
-  playerColor: 'Blue' | 'Red' | undefined,
-  playerType: 'Student' | 'Master' | undefined,
-  toID: number
-): boolean => {
+export const checkTemple = (piece: Piece, toID: number): boolean => {
   return (
-    playerType === 'Master' &&
-    ((playerColor === 'Blue' && toID === constants.RED_TEMPLE_ID) ||
-      (playerColor === 'Red' && toID === constants.BLUE_TEMPLE_ID))
+    piece.type === 'Master' &&
+    ((piece.color === 'Blue' && toID === constants.RED_TEMPLE_ID) ||
+      (piece.color === 'Red' && toID === constants.BLUE_TEMPLE_ID))
   );
 };
 

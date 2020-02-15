@@ -1,4 +1,8 @@
-import { PlayerColor, Piece } from '../interfaces/context.interface';
+import {
+  PlayerColor,
+  Piece,
+  PlayerType,
+} from '../interfaces/context.interface';
 import { idToGridLocation } from '../utils';
 /**
  *
@@ -17,14 +21,14 @@ export const moveNotation = (
   didPass: boolean,
   didCapture: boolean,
   cardName: string,
-  piece?: Piece,
+  pieceType?: PlayerType,
   fromID?: number,
   toID?: number,
   capturedPiece?: Piece,
   didCaptureTemple?: boolean
 ): string[] => {
   if (didPass) {
-    return [`${player === 'Blue' ? 'BP' : 'RP'}`, '', ' pt ', `${cardName}`];
+    return [`${cardName}`, `${player === 'Blue' ? 'BP' : 'RP'}`, '', ' pt '];
   }
 
   const currentPlayerColor = player.charAt(0);
@@ -34,12 +38,12 @@ export const moveNotation = (
     : capturedPiece?.type.charAt(0) === 'M'
     ? 'M'
     : '';
-  const token0 = `${currentPlayerColor}${
-    piece?.type.charAt(0) === 'M' ? 'M' : ''
+  const token0 = `${cardName}`;
+  const token1 = `${currentPlayerColor}${
+    pieceType?.charAt(0) === 'M' ? 'M' : ''
   }${idToGridLocation(fromID)}`;
-  const token1 = `${didCapture ? `x${otherPlayerColor}${captured}` : ' '}`;
-  const token2 = `${idToGridLocation(toID)}`;
-  const token3 = `${cardName}`;
-  const token4 = captured === 'T' || captured === 'M' ? '++' : '';
+  const token2 = `${didCapture ? `x${otherPlayerColor}${captured}` : ' '}`;
+  const token3 = `${idToGridLocation(toID)}`;
+  const token4 = captured === 'M' || captured === 'T' ? '++' : '';
   return [token0, token1, token2, token3, token4];
 };
