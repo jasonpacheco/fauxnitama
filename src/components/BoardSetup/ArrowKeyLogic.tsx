@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import useGameContext from '../../context/useGameContext';
 import useKeyPress from '../../interactive/useKeyPress';
 
@@ -77,7 +77,7 @@ const ArrowKeyLogic: React.FC<ArrowKeyLogicProps> = ({
   useKeyPress('ArrowRight', onPressUpRight);
   useKeyPress('ArrowLeft', onPressUpLeft);
 
-  return <></>;
+  return <Fragment></Fragment>;
 };
 
 export default ArrowKeyLogic;

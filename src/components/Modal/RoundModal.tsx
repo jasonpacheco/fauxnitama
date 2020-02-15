@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { RoundModalWrapper, RoundModalButton } from './styles/RoundModal';
 import useTimer from '../../interactive/useTimer';
+import useKeyPress from '../../interactive/useKeyPress';
 import GameEndMessage from './GameEndMessage';
 import MoveHistoryModal from './MoveHistoryModal';
 import {
@@ -23,7 +24,6 @@ const RoundModal: React.FC = () => {
     winMethod,
   } = useGameContext();
   const [showPrompt, setShowPrompt] = useState(false);
-
   const {
     elapsedTime,
     resetTimer,
@@ -31,6 +31,13 @@ const RoundModal: React.FC = () => {
     stopTimer,
     formattedTime,
   } = useTimer();
+
+  const onPressDown = (): void => {
+    setPauseGame(!pauseGame);
+    !pauseGame ? stopTimer() : startTimer();
+  };
+
+  useKeyPress(' ', onPressDown);
 
   useEffect(() => {
     startTimer();
@@ -78,7 +85,7 @@ const RoundModal: React.FC = () => {
     <RoundModalWrapper>
       {formattedTime(elapsedTime)}
       {showPrompt ? (
-        <>
+        <Fragment>
           <p>
             Are you sure you want to end the current match and start a new one?
           </p>
@@ -88,9 +95,9 @@ const RoundModal: React.FC = () => {
           <RoundModalButton onClick={(): void => handleClick(BUTTON_YES)}>
             Yes
           </RoundModalButton>
-        </>
+        </Fragment>
       ) : (
-        <>
+        <Fragment>
           <RoundModalButton onClick={(): void => handleClick(BUTTON_PROMPT)}>
             End and Restart Match
           </RoundModalButton>
@@ -103,7 +110,7 @@ const RoundModal: React.FC = () => {
           <RoundModalButton onClick={(): void => handleClick(BUTTON_PAUSE)}>
             {pauseGame ? 'Resume Match' : 'Pause'}
           </RoundModalButton>
-        </>
+        </Fragment>
       )}
 
       <MoveHistoryModal />
