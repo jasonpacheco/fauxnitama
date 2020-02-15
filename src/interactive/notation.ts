@@ -28,7 +28,7 @@ export const moveNotation = (
   didCaptureTemple?: boolean
 ): string[] => {
   if (didPass) {
-    return [`${cardName}`, `${player === 'Blue' ? 'BP' : 'RP'}`, '', ' pt '];
+    return [cardName, `${player === 'Blue' ? 'BP' : 'RP'}`, '', ' pt ', ''];
   }
 
   const currentPlayerColor = player.charAt(0);
@@ -38,7 +38,7 @@ export const moveNotation = (
     : capturedPiece?.type.charAt(0) === 'M'
     ? 'M'
     : '';
-  const token0 = `${cardName}`;
+  const token0 = cardName;
   const token1 = `${currentPlayerColor}${
     pieceType?.charAt(0) === 'M' ? 'M' : ''
   }${idToGridLocation(fromID)}`;

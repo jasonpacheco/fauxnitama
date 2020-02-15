@@ -2,6 +2,7 @@ import { Coordinate, SquareData, Piece } from '../interfaces/context.interface';
 import CardModel from '../interfaces/card.interface';
 import cards from '../types/cards';
 import constants from './constants';
+const { BOARD_ROWS, BOARD_COLS, TEMPLE_ID_BLUE, TEMPLE_ID_RED } = constants;
 
 const {
   Boar,
@@ -29,7 +30,6 @@ interface SpaceID {
 }
 
 export const assignGridID = (): Array<SpaceID> => {
-  const { BOARD_ROWS, BOARD_COLS } = constants;
   const idList: SpaceID[] = [];
   for (let row = 0; row < BOARD_ROWS; row++) {
     for (let col = 0; col < BOARD_COLS; col++) {
@@ -49,7 +49,7 @@ export const getIDs = (): Array<SpaceID> => assignGridID();
  */
 export const coordinateToID = (
   coordinate: Coordinate,
-  rows = constants.BOARD_ROWS
+  rows = BOARD_ROWS
 ): number => rows * coordinate.x + coordinate.y;
 
 /**
@@ -57,10 +57,7 @@ export const coordinateToID = (
  * @param id
  * @param rows
  */
-export const idToCoordinate = (
-  id: number,
-  rows = constants.BOARD_ROWS
-): Coordinate => {
+export const idToCoordinate = (id: number, rows = BOARD_ROWS): Coordinate => {
   const x = Math.floor(id / rows);
   const y = id % rows;
   return { x, y };
@@ -91,9 +88,9 @@ export const movesToID = (
   const refCoordinate = idToCoordinate(refID);
   const { x: refX, y: refY } = refCoordinate;
   return validMoves.map(([x, y]) =>
-    x + refX >= constants.BOARD_ROWS ||
+    x + refX >= BOARD_ROWS ||
     x + refX < 0 ||
-    y + refY >= constants.BOARD_COLS ||
+    y + refY >= BOARD_COLS ||
     y + refY < 0
       ? undefined
       : coordinateToID({ x: x + refX, y: y + refY })
@@ -140,8 +137,8 @@ export const checkMaster = (board: SquareData[], toID: number): boolean => {
 export const checkTemple = (piece: Piece, toID: number): boolean => {
   return (
     piece.type === 'Master' &&
-    ((piece.color === 'Blue' && toID === constants.RED_TEMPLE_ID) ||
-      (piece.color === 'Red' && toID === constants.BLUE_TEMPLE_ID))
+    ((piece.color === 'Blue' && toID === TEMPLE_ID_RED) ||
+      (piece.color === 'Red' && toID === TEMPLE_ID_BLUE))
   );
 };
 

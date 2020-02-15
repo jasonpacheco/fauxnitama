@@ -6,6 +6,7 @@ import {
   SET_CLICKED_CARD,
   SET_CLICKED_PIECE,
   SET_CURRENT_PLAYER,
+  SET_HALFMOVES,
   SET_HAS_GAME_FINISHED,
   SET_IS_CLEARED,
   SET_NEXT_CARD,
@@ -23,7 +24,7 @@ export type Coordinate = {
 
 export type PlayerColor = 'Blue' | 'Red';
 export type PlayerType = 'Master' | 'Student';
-export type WinMethods = 'capture-master' | 'capture-temple';
+export type WinMethods = 'capture-master' | 'capture-temple' | 'draw';
 
 export interface Piece {
   color: PlayerColor;
@@ -54,6 +55,7 @@ export interface State {
   clickedPiece: Piece | undefined;
   currentPlayer: PlayerColor;
   isCleared: boolean;
+  halfmoves: number;
   handBlue: PlayerHand;
   handRed: PlayerHand;
   hasGameFinished: boolean;
@@ -74,6 +76,7 @@ export interface GameContextProperties extends State {
   setClickedCard: (clickedCard: CardModel) => void;
   setClickedPiece: (clickedPiece: Piece) => void;
   setCurrentPlayer: (player: PlayerColor) => void;
+  setHalfmoves: (count: number) => void;
   setHasGameFinished: () => void;
   setIsCleared: () => void;
   setNextCard: (
@@ -85,7 +88,7 @@ export interface GameContextProperties extends State {
   setPauseGame: (pause: boolean) => void;
   setValidMoves: (piece: Piece | undefined) => void;
   setWinMethod: (winMethod: WinMethods) => void;
-  setWinner: (winner: PlayerColor) => void;
+  setWinner: (winner: PlayerColor | undefined) => void;
 }
 
 interface AddMoveHistory {
@@ -116,6 +119,11 @@ interface SetClickedPiece {
 interface SetCurrentPlayer {
   type: typeof SET_CURRENT_PLAYER;
   player: PlayerColor;
+}
+
+interface SetHalfmoves {
+  type: typeof SET_HALFMOVES;
+  count: number;
 }
 
 interface SetHasGameFinished {
@@ -150,7 +158,7 @@ interface SetWinMethod {
 
 interface SetWinner {
   type: typeof SET_WINNER;
-  winner: PlayerColor;
+  winner: PlayerColor | undefined;
 }
 
 interface UpdatePieces {
@@ -168,6 +176,7 @@ export type Actions =
   | SetClickedCard
   | SetClickedPiece
   | SetCurrentPlayer
+  | SetHalfmoves
   | SetHasGameFinished
   | SetIsCleared
   | SetNextCard

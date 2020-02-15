@@ -5,10 +5,7 @@ import { useDrop } from 'react-dnd';
 
 import { SquareData } from '../../interfaces/context.interface';
 
-import {
-  BLUE_TEMPLE_ID as blueTempleID,
-  RED_TEMPLE_ID as redTempleID,
-} from '../../utils/constants';
+import { TEMPLE_ID_BLUE, TEMPLE_ID_RED } from '../../utils/constants';
 import useGameContext from '../../context/useGameContext';
 import dndTypes from '../../types/dndTypes';
 
@@ -63,8 +60,8 @@ const Square: React.FC<CellProps> = ({ onSquareClick, renderedSquare }) => {
       highlightValidSquare={squareIsValidMove}
       hasTempleBackground={
         renderedPiece === undefined &&
-        ((renderedID === blueTempleID && 'Blue') ||
-          (renderedID === redTempleID && 'Red'))
+        ((renderedID === TEMPLE_ID_BLUE && 'Blue') ||
+          (renderedID === TEMPLE_ID_RED && 'Red'))
       }
       isActive={!pauseGame && squareIsValidMove}
       onClick={(): void => onSquareClick(renderedID)}

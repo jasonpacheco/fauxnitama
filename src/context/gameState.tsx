@@ -8,6 +8,7 @@ import {
   SET_CLICKED_CARD,
   SET_CLICKED_PIECE,
   SET_CURRENT_PLAYER,
+  SET_HALFMOVES,
   SET_HAS_GAME_FINISHED,
   SET_IS_CLEARED,
   SET_NEXT_CARD,
@@ -37,6 +38,7 @@ import {
 import { moveNotation } from '../interactive/notation';
 import cloneDeep from 'lodash.clonedeep';
 import { getFEN } from '../interactive/getFEN';
+import constants from '../utils/constants';
 
 const cards: CardModel[] = generateCardSet();
 
@@ -45,6 +47,7 @@ const initialState: State = {
   clickedCard: undefined,
   clickedPiece: undefined,
   currentPlayer: cards[4].stamp,
+  halfmoves: 0,
   handBlue: { first: cards[2], second: cards[3] },
   handRed: { first: cards[0], second: cards[1] },
   hasGameFinished: false,
@@ -143,7 +146,7 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
-  const setWinner = (winner: PlayerColor): void => {
+  const setWinner = (winner: PlayerColor | undefined): void => {
     dispatch({
       type: SET_WINNER,
       winner,
@@ -172,6 +175,13 @@ const GameState: React.FC = ({ children }) => {
     });
   };
 
+  const setHalfmoves = (count: number): void => {
+    dispatch({
+      type: SET_HALFMOVES,
+      count,
+    });
+  };
+
   const movePiece = (fromPiece: Piece, toID: number): void => {
     // Define variables
     const fromPlayer = fromPiece.color;
@@ -180,7 +190,6 @@ const GameState: React.FC = ({ children }) => {
     const nextPlayer = fromPlayer === 'Blue' ? 'Red' : 'Blue';
     const toIDPiece = state.board[toID]?.piece;
     const moveIsCapture = toIDPiece !== undefined;
-
     updatePieces(fromPlayer, fromPiece.currentPositionID, toID, moveIsCapture);
 
     if (state.clickedCard) {
@@ -198,17 +207,6 @@ const GameState: React.FC = ({ children }) => {
       addMoveHistory(notation);
     }
 
-    if (fromPlayer && isMoveCheckmate) {
-      console.log('Opponent master has been captured!');
-      setWinner(fromPlayer);
-      setWinMethod('capture-master');
-      setHasGameFinished();
-    } else if (fromPlayer && isMoveTempleCapture) {
-      console.log('Opponent temple has been captured!');
-      setWinner(fromPlayer);
-      setWinMethod('capture-temple');
-      setHasGameFinished();
-    }
     // Move the piece
     dispatch({
       type: MOVE_PIECE,
@@ -224,6 +222,34 @@ const GameState: React.FC = ({ children }) => {
     // Reset cell highlighting for valid moves and set next player
     setValidMoves(undefined);
     setCurrentPlayer(nextPlayer);
+
+    if (fromPlayer && isMoveCheckmate) {
+      setWinner(fromPlayer);
+      setWinMethod('capture-master');
+      setValidMoves(undefined);
+      setHasGameFinished();
+    } else if (fromPlayer && isMoveTempleCapture) {
+      setWinner(fromPlayer);
+      setWinMethod('capture-temple');
+      setValidMoves(undefined);
+      setHasGameFinished();
+    } else if (
+      state.halfmoves + 1 === constants.HALFMOVE_LIMIT &&
+      !moveIsCapture
+    ) {
+      setHalfmoves(state.halfmoves + 1);
+      setWinner(undefined);
+      setWinMethod('draw');
+      setValidMoves(undefined);
+      setHasGameFinished();
+      return;
+    }
+
+    if (moveIsCapture) {
+      setHalfmoves(0);
+    } else {
+      setHalfmoves(state.halfmoves + 1);
+    }
   };
 
   const clearGameState = (): void => {
@@ -252,6 +278,14 @@ const GameState: React.FC = ({ children }) => {
     }
     setValidMoves(undefined);
     setCurrentPlayer(state.currentPlayer === 'Blue' ? 'Red' : 'Blue');
+    if (state.halfmoves + 1 === constants.HALFMOVE_LIMIT) {
+      setHalfmoves(state.halfmoves + 1);
+      setWinner(undefined);
+      setWinMethod('draw');
+      setHasGameFinished();
+      return;
+    }
+    setHalfmoves(state.halfmoves + 1);
   };
 
   const setPauseGame = (pause: boolean): void => {
@@ -272,6 +306,7 @@ const GameState: React.FC = ({ children }) => {
         setClickedCard,
         setClickedPiece,
         setCurrentPlayer,
+        setHalfmoves,
         setHasGameFinished,
         setIsCleared,
         setNextCard,

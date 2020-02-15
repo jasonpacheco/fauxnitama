@@ -4,6 +4,7 @@ import {
   SET_CLICKED_CARD,
   SET_CLICKED_PIECE,
   SET_CURRENT_PLAYER,
+  SET_HALFMOVES,
   SET_HAS_GAME_FINISHED,
   SET_IS_CLEARED,
   SET_NEXT_CARD,
@@ -38,6 +39,7 @@ export default (state: State, action: Actions): State => {
         clickedCard: undefined,
         clickedPiece: undefined,
         currentPlayer: newCards[4]?.stamp,
+        halfmoves: 0,
         handBlue: { first: newCards[2], second: newCards[3] },
         handRed: { first: newCards[0], second: newCards[1] },
         hasGameFinished: false,
@@ -92,9 +94,16 @@ export default (state: State, action: Actions): State => {
         currentPlayer: action.player,
       };
 
+    case SET_HALFMOVES:
+      return {
+        ...state,
+        halfmoves: action.count,
+      };
+
     case SET_HAS_GAME_FINISHED:
       return {
         ...state,
+        clickedCard: undefined,
         hasGameFinished: true,
       };
 

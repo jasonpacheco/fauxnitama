@@ -20,7 +20,7 @@ const RoundModal: React.FC = () => {
     pauseGame,
     setPassTurn,
     setPauseGame,
-    winner,
+    winMethod,
   } = useGameContext();
   const [showPrompt, setShowPrompt] = useState(false);
 
@@ -96,7 +96,7 @@ const RoundModal: React.FC = () => {
           </RoundModalButton>
           <RoundModalButton
             onClick={(): void => handleClick(BUTTON_PASS)}
-            disabled={clickedCard === undefined}
+            disabled={clickedCard === undefined || pauseGame}
           >
             Pass Turn
           </RoundModalButton>
@@ -110,7 +110,7 @@ const RoundModal: React.FC = () => {
     </RoundModalWrapper>
   ) : (
     <Fragment>
-      {winner && (
+      {winMethod && (
         <GameEndMessage
           formattedTime={formattedTime}
           elapsedTime={elapsedTime}

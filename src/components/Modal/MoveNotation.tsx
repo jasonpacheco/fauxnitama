@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { NotationToken } from './styles/MoveNotation';
 
 interface MoveNotationProps {
-  tokens: string[];
+  tokens: string[] | undefined;
 }
 
 const MoveNotation: React.FC<MoveNotationProps> = ({ tokens }) => {
@@ -14,30 +14,38 @@ const MoveNotation: React.FC<MoveNotationProps> = ({ tokens }) => {
   if (!tokens) {
     return <Fragment></Fragment>;
   }
+  const [card, fromSquare, capturedEntity, toSquare, checkMove] = tokens;
 
-  const captChar = `${tokens[2].charAt(0)}`; // 'x' symbol for a capture
-  const captPiece = tokens[2].slice(1); // e.g. 'BM' | 'RM' or 'B' | 'R' for students
+  const captureSymbol = capturedEntity.charAt(0); // 'x' symbol for a capture
+  const capturedPiece = capturedEntity.slice(1); // e.g. 'BM' | 'RM' or 'B' | 'R' for students
 
   return (
     <Fragment>
-      <NotationToken color={'green'}>{`${tokens[0]} `}</NotationToken>
-      <NotationToken color={tokens[1].startsWith('B') ? '#1976D2' : '#D32F2F'}>
-        {tokens[1]}
+      <NotationToken color={'green'}>{`${card} `}</NotationToken>
+
+      <NotationToken color={fromSquare.startsWith('B') ? '#1976D2' : '#D32F2F'}>
+        {fromSquare}
       </NotationToken>
-      <NotationToken bold>{captChar}</NotationToken>
-      <NotationToken color={captPiece.startsWith('B') ? '#1976D2' : '#D32F2F'}>
-        {captPiece}
+
+      <NotationToken bold>{captureSymbol}</NotationToken>
+
+      <NotationToken
+        color={capturedPiece.startsWith('B') ? '#1976D2' : '#D32F2F'}
+      >
+        {capturedPiece}
       </NotationToken>
+
       <NotationToken
         color={
-          (captPiece.startsWith('B') && '#1976D2') ||
-          (captPiece.startsWith('R') && '#D32F2F') ||
+          (capturedPiece.startsWith('B') && '#1976D2') ||
+          (capturedPiece.startsWith('R') && '#D32F2F') ||
           '#000'
         }
       >
-        {tokens[3]}
+        {toSquare}
       </NotationToken>
-      <NotationToken bold>{tokens[4]}</NotationToken>
+
+      <NotationToken bold>{checkMove}</NotationToken>
       <br />
     </Fragment>
   );

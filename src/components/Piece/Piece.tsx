@@ -8,10 +8,7 @@ import { useDrag } from 'react-dnd';
 import dndTypes from '../../types/dndTypes';
 import useGameContext from '../../context/useGameContext';
 import { Piece as IPiece } from '../../interfaces/context.interface';
-import {
-  BLUE_TEMPLE_ID as blueTempleID,
-  RED_TEMPLE_ID as redTempleID,
-} from '../../utils/constants';
+import { TEMPLE_ID_BLUE, TEMPLE_ID_RED } from '../../utils/constants';
 
 interface PieceProps {
   isActive: boolean;
@@ -56,8 +53,8 @@ const Piece: React.FC<PieceProps> = ({ isActive, piece }) => {
       <DragSource
         ref={drag}
         hasTempleBackground={
-          (currentPositionID === blueTempleID && 'Blue') ||
-          (currentPositionID === redTempleID && 'Red')
+          (currentPositionID === TEMPLE_ID_BLUE && 'Blue') ||
+          (currentPositionID === TEMPLE_ID_RED && 'Red')
         }
       />
     );

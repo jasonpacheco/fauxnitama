@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 
 import {
   EndMessageWrapper,
@@ -42,20 +42,34 @@ const GameEndMessage: React.FC<GameEndMessageProps> = ({
   return (
     <EndMessageWrapper>
       <EndMessageHeader>Game Over</EndMessageHeader>
-      <EndMessageContent winner={winner}>
-        <span className='color--winner'>{winner}</span> wins by capturing{' '}
-        <span className='color--loser'>
-          {winMethod === 'capture-master' ? 'Master' : 'Temple'}
-        </span>
-        <span> in {formattedTime(elapsedTime, true)}.</span>
-        <EndMessageButton
-          onClick={(e: React.SyntheticEvent): void => handleButtonClick(e)}
-        >
-          Restart Game
-          <RestartGraphic />
-        </EndMessageButton>
-        {children}
-      </EndMessageContent>
+      {winMethod === 'draw' ? (
+        <Fragment>
+          <span>Draw... players reached halfmove limit.</span>
+          <span> Game lasted {formattedTime(elapsedTime, true)}.</span>
+          <EndMessageButton
+            onClick={(e: React.SyntheticEvent): void => handleButtonClick(e)}
+          >
+            Restart Game
+            <RestartGraphic />
+          </EndMessageButton>
+          {children}
+        </Fragment>
+      ) : (
+        <EndMessageContent winner={winner}>
+          <span className='color--winner'>{winner}</span> wins by capturing{' '}
+          <span className='color--loser'>
+            {winMethod === 'capture-master' ? 'Master' : 'Temple'}
+          </span>
+          <span> in {formattedTime(elapsedTime, true)}.</span>
+          <EndMessageButton
+            onClick={(e: React.SyntheticEvent): void => handleButtonClick(e)}
+          >
+            Restart Game
+            <RestartGraphic />
+          </EndMessageButton>
+          {children}
+        </EndMessageContent>
+      )}
     </EndMessageWrapper>
   );
 };

@@ -5,7 +5,7 @@ import { Button } from './styles';
 import useGameContext from '../../context/useGameContext';
 
 const MoveHistoryModal: React.FC = () => {
-  const { getCurrentFEN, moveHistory } = useGameContext();
+  const { getCurrentFEN, halfmoves, moveHistory } = useGameContext();
   const [FEN, setFEN] = useState('');
 
   const createHistoryList = (): JSX.Element[] => {
@@ -36,6 +36,9 @@ const MoveHistoryModal: React.FC = () => {
       <Button onClick={(): void => handleFENClick()}>Get current FEN</Button>
       <br />
       <DisplayFEN>FEN: {FEN}</DisplayFEN>
+      <br />
+      <span>Halfmove count: {halfmoves}</span>
+      <h4>Move History</h4>
       <HistoryList>{createHistoryList()}</HistoryList>
     </div>
   );
