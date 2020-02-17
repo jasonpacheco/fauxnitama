@@ -76,12 +76,15 @@ export default (state: State, action: Actions): State => {
       };
 
     case SET_CLICKED_CARD:
+      console.log('set clicked card reducer', action.clickedCard);
       return {
         ...state,
         clickedCard: action.clickedCard,
       };
 
     case SET_CLICKED_PIECE:
+      console.log('set clicked piece reducer', action.clickedPiece);
+
       return {
         ...state,
         clickedPiece: action.clickedPiece,

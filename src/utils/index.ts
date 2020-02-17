@@ -1,5 +1,5 @@
 import { Coordinate, SquareData, Piece } from '../interfaces/context.interface';
-import CardModel from '../interfaces/card.interface';
+import CardModel, { CardName } from '../interfaces/card.interface';
 import cards from '../types/cards';
 import constants from './constants';
 const { BOARD_ROWS, BOARD_COLS, TEMPLE_ID_BLUE, TEMPLE_ID_RED } = constants;
@@ -97,6 +97,32 @@ export const movesToID = (
   );
 };
 
+interface NameToCard {
+  [key: string]: CardModel;
+}
+export const cardNameToCard = (name: CardName): CardModel => {
+  const cards: NameToCard = {
+    Boar,
+    Cobra,
+    Crab,
+    Crane,
+    Dragon,
+    Eel,
+    Elephant,
+    Frog,
+    Goose,
+    Horse,
+    Mantis,
+    Monkey,
+    Ox,
+    Rabbit,
+    Rooster,
+    Tiger,
+  };
+
+  return cards[name];
+};
+
 export const generateCardSet = (numCards = 5): CardModel[] => {
   const cards = [
     Boar,
@@ -130,7 +156,7 @@ export const generateCardSet = (numCards = 5): CardModel[] => {
 
 export const checkMaster = (board: SquareData[], toID: number): boolean => {
   const getCellByID = board[toID];
-  const cellPiece = getCellByID.piece;
+  const cellPiece = getCellByID?.piece;
   return cellPiece?.type === 'Master';
 };
 

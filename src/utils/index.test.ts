@@ -7,9 +7,11 @@ import {
   checkMaster,
   checkTemple,
   idToGridLocation,
+  cardNameToCard,
 } from './index';
 import constants from './constants';
 import { SquareData, Piece } from '../interfaces/context.interface';
+import CardTypes from '../types/cards';
 
 describe('tests for assignGridID', () => {
   test('returns an array of length rows * cols', () => {
@@ -30,6 +32,27 @@ describe('tests for assignGridID', () => {
       y: 4,
       id: 24,
     });
+  });
+});
+
+describe('tests for cardNameToCard', () => {
+  test('it returns appropriate card for name', () => {
+    expect(cardNameToCard('Boar')).toEqual(CardTypes.Boar);
+    expect(cardNameToCard('Cobra')).toEqual(CardTypes.Cobra);
+    expect(cardNameToCard('Crab')).toEqual(CardTypes.Crab);
+    expect(cardNameToCard('Crane')).toEqual(CardTypes.Crane);
+    expect(cardNameToCard('Dragon')).toEqual(CardTypes.Dragon);
+    expect(cardNameToCard('Eel')).toEqual(CardTypes.Eel);
+    expect(cardNameToCard('Elephant')).toEqual(CardTypes.Elephant);
+    expect(cardNameToCard('Frog')).toEqual(CardTypes.Frog);
+    expect(cardNameToCard('Goose')).toEqual(CardTypes.Goose);
+    expect(cardNameToCard('Horse')).toEqual(CardTypes.Horse);
+    expect(cardNameToCard('Mantis')).toEqual(CardTypes.Mantis);
+    expect(cardNameToCard('Monkey')).toEqual(CardTypes.Monkey);
+    expect(cardNameToCard('Ox')).toEqual(CardTypes.Ox);
+    expect(cardNameToCard('Rabbit')).toEqual(CardTypes.Rabbit);
+    expect(cardNameToCard('Rooster')).toEqual(CardTypes.Rooster);
+    expect(cardNameToCard('Tiger')).toEqual(CardTypes.Tiger);
   });
 });
 

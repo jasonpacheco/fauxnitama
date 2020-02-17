@@ -1,11 +1,12 @@
-import React from 'react';
-import BoardSetup from './components/BoardSetup/BoardSetup';
+import React, { Fragment } from 'react';
+// import BoardSetup from './components/BoardSetup/BoardSetup';
+import BoardSetupContainer from './containers/BoardSetupContainer';
 
 const App: React.FC = () => {
   return (
-    <>
-      <BoardSetup />
-    </>
+    <Fragment>
+      <BoardSetupContainer />
+    </Fragment>
   );
 };
 

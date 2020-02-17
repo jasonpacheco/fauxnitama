@@ -98,6 +98,7 @@ const GameState: React.FC = ({ children }) => {
     });
     /** Implements move checking when cell is clicked */
     if (state.clickedCard) {
+      console.log(state.clickedCard + 'in set clicked piece');
       setValidMoves(clickedPiece);
     }
   };
@@ -109,11 +110,11 @@ const GameState: React.FC = ({ children }) => {
   };
 
   const setClickedCard = (clickedCard: CardModel): void => {
+    console.log(clickedCard.name + 'is in setClickedCard');
     dispatch({
       type: SET_CLICKED_CARD,
       clickedCard,
     });
-
     /** Implements automatic move checking when the user selects another card */
     if (state.clickedPiece) {
       setValidMoves(state.clickedPiece);
