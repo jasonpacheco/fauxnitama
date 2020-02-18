@@ -1,0 +1,97 @@
+export const SINGLE_PLAYER = 'SINGLE_PLAYER';
+export const LOCAL_MULTIPLAYER = 'LOCAL_MULTIPLAYER';
+export const ONLINE_MULTIPLAYER = 'ONLINE_MULTIPLAYER';
+export const SET_GAME_TYPE = 'SET_GAME_TYPE';
+export const SET_PLAYERS = 'SET_PLAYERS';
+export const PLAYER_BLUE = 'PLAYER_BLUE';
+export const PLAYER_RED = 'PLAYER_RED';
+export const PLAYER_AI = 'PLAYER_AI';
+export const CAPTURE_MASTER = 'CAPTURE_MASTER';
+export const CAPTURE_TEMPLE = 'CAPTURE_TEMPLE';
+export const DRAW = 'DRAW';
+export const INCREMENT_HALFMOVE = 'INCREMENT_HALFMOVE';
+export const RESET_HALFMOVE = 'RESET_HALFMOVE';
+export const SET_PAUSE_GAME = 'SET_PAUSE_GAME';
+export const ADD_TO_HISTORY = 'ADD_TO_HISTORY';
+export const SET_IS_GAME_COMPLETE = 'SET_IS_GAME_COMPLETE';
+export const SET_WINNER_BY_END_METHOD = 'SET_WINNER_BY_END_METHOD';
+export const SET_CURRENT_PLAYER = 'SET_CURRENT_PLAYER';
+
+export type PlayerType =
+  | typeof PLAYER_AI
+  | typeof PLAYER_BLUE
+  | typeof PLAYER_RED;
+export type EndMethod =
+  | typeof CAPTURE_MASTER
+  | typeof CAPTURE_TEMPLE
+  | typeof DRAW;
+
+export type GameType =
+  | typeof SINGLE_PLAYER
+  | typeof LOCAL_MULTIPLAYER
+  | typeof ONLINE_MULTIPLAYER;
+
+export interface GameState {
+  currentPlayer: PlayerType | undefined;
+  endMethod: EndMethod | undefined;
+  gameType: GameType | undefined;
+  halfmoves: number;
+  history: string[][];
+  isGameComplete: boolean;
+  pauseGame: boolean;
+  players: PlayerType[];
+  winner: PlayerType | undefined;
+}
+
+interface SetPlayers {
+  type: typeof SET_PLAYERS;
+  player?: PlayerType;
+}
+
+interface SetCurrentPlayer {
+  type: typeof SET_CURRENT_PLAYER;
+  firstPlayer?: typeof PLAYER_BLUE | typeof PLAYER_RED;
+}
+
+interface SetGameType {
+  type: typeof SET_GAME_TYPE;
+  gameType: GameType;
+}
+
+interface IncrementHalfmove {
+  type: typeof INCREMENT_HALFMOVE;
+}
+
+interface ResetHalfmove {
+  type: typeof RESET_HALFMOVE;
+}
+
+interface SetPauseGame {
+  type: typeof SET_PAUSE_GAME;
+}
+
+interface AddToHistory {
+  type: typeof ADD_TO_HISTORY;
+  move: string[];
+}
+
+interface SetIsGameComplete {
+  type: typeof SET_IS_GAME_COMPLETE;
+}
+
+interface SetWinnerByEndMethod {
+  type: typeof SET_WINNER_BY_END_METHOD;
+  winner: PlayerType | undefined;
+  endMethod: EndMethod;
+}
+
+export type GameActions =
+  | AddToHistory
+  | IncrementHalfmove
+  | ResetHalfmove
+  | SetGameType
+  | SetCurrentPlayer
+  | SetPlayers
+  | SetPauseGame
+  | SetIsGameComplete
+  | SetWinnerByEndMethod;
