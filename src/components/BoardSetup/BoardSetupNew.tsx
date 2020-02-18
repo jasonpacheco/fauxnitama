@@ -13,15 +13,19 @@ import { CardName } from '../../store/engine/card/types';
 interface BoardSetupProps {
   hands: CardName[][];
   nextCard: CardName;
+  selectCard: (selectedCardName: CardName) => void;
 }
 
-const BoardSetup: React.FC<BoardSetupProps> = ({ hands, nextCard }) => {
+const BoardSetup: React.FC<BoardSetupProps> = ({
+  hands,
+  nextCard,
+  selectCard,
+}) => {
   const {
     clickedCard,
     currentPlayer,
     hasGameFinished,
     pauseGame,
-    setClickedCard,
   } = useGameContext();
 
   const [hasPieceBeenClicked, setHasBeenPieceBeenClicked] = useState(false);
@@ -34,7 +38,8 @@ const BoardSetup: React.FC<BoardSetupProps> = ({ hands, nextCard }) => {
   ): void => {
     if (isActiveCard && !hasGameFinished && !pauseGame) {
       if (!isEqual(card, clickedCard)) {
-        setClickedCard(card);
+        // selectCard(card.name);
+        selectCard(card.name);
       }
     }
   };

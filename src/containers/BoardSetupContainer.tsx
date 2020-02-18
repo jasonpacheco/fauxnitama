@@ -1,29 +1,33 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import BoardSetup from '../components/BoardSetup/BoardSetupNew';
 
 import { getCards } from '../store/engine/card/reducers';
 import { NEXT_CARD, HAND_RED, HAND_BLUE } from '../store/engine/card/types';
 import { AppState } from '../store/engine';
 import { CardName } from '../store/engine/card/types';
-
-interface BoardSetupContainerProps {
-  handBlue: CardName[];
-  handRed: CardName[];
-  nextCard: CardName[];
-}
-
-const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
-  handBlue,
-  handRed,
-  nextCard,
-}) => <BoardSetup hands={[handBlue, handRed]} nextCard={nextCard[0]} />;
+import { selectCard } from '../store/engine/card/actions';
 
 interface StateProps {
   handBlue: CardName[];
   handRed: CardName[];
   nextCard: CardName[];
 }
+
+type BoardSetupContainerProps = PropsFromRedux;
+
+const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
+  handBlue,
+  handRed,
+  nextCard,
+  selectCard,
+}) => (
+  <BoardSetup
+    hands={[handBlue, handRed]}
+    nextCard={nextCard[0]}
+    selectCard={selectCard}
+  />
+);
 
 const mapStateToProps = (state: AppState): StateProps => {
   const { cards } = state.card;
@@ -34,4 +38,10 @@ const mapStateToProps = (state: AppState): StateProps => {
   };
 };
 
-export default connect(mapStateToProps)(BoardSetupContainer);
+const connector = connect(mapStateToProps, {
+  selectCard,
+});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(BoardSetupContainer);
