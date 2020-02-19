@@ -40,9 +40,15 @@ export interface PropertiesState {
   winner: PlayerType | undefined;
 }
 
+export interface PlayerState {
+  currentPlayer: PlayerType | undefined;
+  players: PlayerType[];
+  gameType: GameType | undefined;
+}
+
 interface SetPlayers {
   type: typeof SET_PLAYERS;
-  player?: PlayerType;
+  player?: typeof PLAYER_BLUE | typeof PLAYER_RED;
 }
 
 interface SetCurrentPlayer {
@@ -93,9 +99,3 @@ export type PropertiesActions =
 export type PlayerActions = SetPlayers | SetCurrentPlayer | SetGameType;
 
 export type GameActions = PropertiesActions | PlayerActions;
-
-export interface PlayerState {
-  currentPlayer: PlayerType | undefined;
-  players: PlayerType[];
-  gameType: GameType | undefined;
-}

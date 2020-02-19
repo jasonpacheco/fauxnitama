@@ -1,3 +1,9 @@
+export const HAND_BLUE = 'HAND_BLUE';
+export const HAND_RED = 'HAND_RED';
+export const NEXT_CARD = 'NEXT_CARD';
+export const SELECT_CARD = 'SELECT_CARD';
+export const SWAP_CARDS = 'SWAP_CARDS';
+
 export type CardName =
   | 'Boar'
   | 'Cobra'
@@ -29,12 +35,6 @@ export interface CardState {
   cards: CardName[];
   selectedCard: CardName | undefined;
 }
-
-export const HAND_BLUE = 'HAND_BLUE';
-export const HAND_RED = 'HAND_RED';
-export const NEXT_CARD = 'NEXT_CARD';
-export const SELECT_CARD = 'SELECT_CARD';
-export const SWAP_CARDS = 'SWAP_CARDS';
 
 export type CardsRequestTypes =
   | typeof HAND_BLUE

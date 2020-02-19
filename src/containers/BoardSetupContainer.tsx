@@ -2,11 +2,11 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import BoardSetup from '../components/BoardSetup/BoardSetupNew';
 
-import { getCards } from '../store/engine/card/reducers';
 import { NEXT_CARD, HAND_RED, HAND_BLUE } from '../store/engine/card/types';
 import { AppState } from '../store/engine';
 import { CardName } from '../store/engine/card/types';
 import { selectCard } from '../store/engine/card/actions';
+import { getCards } from '../store/utils';
 
 interface StateProps {
   handBlue: CardName[];

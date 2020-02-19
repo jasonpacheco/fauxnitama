@@ -1,6 +1,5 @@
 import { createStore, combineReducers, applyMiddleware, Store } from 'redux';
-import thunk from 'redux-thunk';
-import { ThunkAction } from 'redux-thunk';
+import thunk, { ThunkAction } from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { cardReducer } from './card/reducers';
@@ -16,6 +15,7 @@ export const rootReducer = combineReducers({
 export type AppState = ReturnType<typeof rootReducer>;
 export type AppActions = CardActions | GameActions;
 export type ThunkResult<R> = ThunkAction<R, AppState, null, AppActions>;
+
 const configureStore = (): Store<AppState, AppActions> & {
   dispatch: unknown;
 } => {

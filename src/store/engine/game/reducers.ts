@@ -1,29 +1,6 @@
 import * as Types from './types';
 import { combineReducers } from 'redux';
-
-export const setPlayersByGameType = (
-  gameType: Types.GameType,
-  selectedPlayer?: Types.PlayerType
-): Types.PlayerType[] => {
-  switch (gameType) {
-    case Types.SINGLE_PLAYER:
-      return selectedPlayer ? [Types.PLAYER_AI, selectedPlayer] : [];
-    case Types.LOCAL_MULTIPLAYER:
-    case Types.ONLINE_MULTIPLAYER:
-      return [Types.PLAYER_BLUE, Types.PLAYER_RED];
-    default:
-      return [];
-  }
-};
-
-export const initialState: Types.PropertiesState = {
-  endMethod: undefined,
-  halfmoves: 0,
-  history: [],
-  isGameComplete: false,
-  pauseGame: false,
-  winner: undefined,
-};
+import { setPlayersByGameType } from '../../utils';
 
 const initialPlayerState: Types.PlayerState = {
   currentPlayer: undefined,
@@ -80,6 +57,15 @@ export const playerReducer = (
     default:
       return state;
   }
+};
+
+export const initialState: Types.PropertiesState = {
+  endMethod: undefined,
+  halfmoves: 0,
+  history: [],
+  isGameComplete: false,
+  pauseGame: false,
+  winner: undefined,
 };
 
 export const propertiesReducer = (
