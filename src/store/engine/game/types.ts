@@ -31,15 +31,12 @@ export type GameType =
   | typeof LOCAL_MULTIPLAYER
   | typeof ONLINE_MULTIPLAYER;
 
-export interface GameState {
-  currentPlayer: PlayerType | undefined;
+export interface PropertiesState {
   endMethod: EndMethod | undefined;
-  gameType: GameType | undefined;
   halfmoves: number;
   history: string[][];
   isGameComplete: boolean;
   pauseGame: boolean;
-  players: PlayerType[];
   winner: PlayerType | undefined;
 }
 
@@ -85,13 +82,20 @@ interface SetWinnerByEndMethod {
   endMethod: EndMethod;
 }
 
-export type GameActions =
+export type PropertiesActions =
   | AddToHistory
   | IncrementHalfmove
   | ResetHalfmove
-  | SetGameType
-  | SetCurrentPlayer
-  | SetPlayers
   | SetPauseGame
   | SetIsGameComplete
   | SetWinnerByEndMethod;
+
+export type PlayerActions = SetPlayers | SetCurrentPlayer | SetGameType;
+
+export type GameActions = PropertiesActions | PlayerActions;
+
+export interface PlayerState {
+  currentPlayer: PlayerType | undefined;
+  players: PlayerType[];
+  gameType: GameType | undefined;
+}
