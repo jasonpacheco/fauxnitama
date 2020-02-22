@@ -9,8 +9,6 @@ export const PLAYER_AI = 'PLAYER_AI';
 export const CAPTURE_MASTER = 'CAPTURE_MASTER';
 export const CAPTURE_TEMPLE = 'CAPTURE_TEMPLE';
 export const DRAW = 'DRAW';
-export const INCREMENT_HALFMOVE = 'INCREMENT_HALFMOVE';
-export const RESET_HALFMOVE = 'RESET_HALFMOVE';
 export const SET_PAUSE_GAME = 'SET_PAUSE_GAME';
 export const ADD_TO_HISTORY = 'ADD_TO_HISTORY';
 export const SET_IS_GAME_COMPLETE = 'SET_IS_GAME_COMPLETE';
@@ -21,6 +19,7 @@ export type PlayerType =
   | typeof PLAYER_AI
   | typeof PLAYER_BLUE
   | typeof PLAYER_RED;
+
 export type EndMethod =
   | typeof CAPTURE_MASTER
   | typeof CAPTURE_TEMPLE
@@ -33,7 +32,6 @@ export type GameType =
 
 export interface PropertiesState {
   endMethod: EndMethod | undefined;
-  halfmoves: number;
   history: string[][];
   isGameComplete: boolean;
   pauseGame: boolean;
@@ -61,14 +59,6 @@ interface SetGameType {
   gameType: GameType;
 }
 
-interface IncrementHalfmove {
-  type: typeof INCREMENT_HALFMOVE;
-}
-
-interface ResetHalfmove {
-  type: typeof RESET_HALFMOVE;
-}
-
 interface SetPauseGame {
   type: typeof SET_PAUSE_GAME;
 }
@@ -90,8 +80,6 @@ interface SetWinnerByEndMethod {
 
 export type PropertiesActions =
   | AddToHistory
-  | IncrementHalfmove
-  | ResetHalfmove
   | SetPauseGame
   | SetIsGameComplete
   | SetWinnerByEndMethod;

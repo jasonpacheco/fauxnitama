@@ -1,50 +1,14 @@
-import * as Types from '../../types';
-import { propertiesReducer } from '../../reducers';
+import * as Types from '../../../types/gameTypes';
+import { propertiesReducer } from '../../../reducers/gameReducers';
 
 describe('tests for gameReducer', () => {
   const initialState: Types.PropertiesState = {
     endMethod: undefined,
-    halfmoves: 0,
     history: [],
     isGameComplete: false,
     pauseGame: false,
     winner: undefined,
   };
-
-  describe('tests for halfmoves', () => {
-    test('it increments by 1', () => {
-      expect(
-        propertiesReducer(initialState, { type: Types.INCREMENT_HALFMOVE })
-      ).toEqual({
-        ...initialState,
-        halfmoves: 1,
-      });
-    });
-
-    test('it increments to 3 and then resets to 0', () => {
-      const state1 = propertiesReducer(initialState, {
-        type: Types.INCREMENT_HALFMOVE,
-      });
-      const state2 = propertiesReducer(state1, {
-        type: Types.INCREMENT_HALFMOVE,
-      });
-      const state3 = propertiesReducer(state2, {
-        type: Types.INCREMENT_HALFMOVE,
-      });
-
-      expect(state3).toEqual({
-        ...state3,
-        halfmoves: 3,
-      });
-
-      expect(propertiesReducer(state3, { type: Types.RESET_HALFMOVE })).toEqual(
-        {
-          ...state3,
-          halfmoves: 0,
-        }
-      );
-    });
-  });
 
   describe('tests for pause game', () => {
     test('it pauses the game', () => {

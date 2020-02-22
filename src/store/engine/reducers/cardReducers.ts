@@ -1,4 +1,4 @@
-import * as CardTypes from './types';
+import * as CardTypes from '../types/cardTypes';
 import { generateRandomCards, cardSwapper } from '../../utils';
 
 const initialState: CardTypes.CardState = {

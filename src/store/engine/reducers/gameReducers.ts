@@ -1,4 +1,4 @@
-import * as Types from './types';
+import * as Types from '../types/gameTypes';
 import { combineReducers } from 'redux';
 import { setPlayersByGameType } from '../../utils';
 
@@ -61,7 +61,6 @@ export const playerReducer = (
 
 export const initialState: Types.PropertiesState = {
   endMethod: undefined,
-  halfmoves: 0,
   history: [],
   isGameComplete: false,
   pauseGame: false,
@@ -73,16 +72,6 @@ export const propertiesReducer = (
   action: Types.PropertiesActions
 ): Types.PropertiesState => {
   switch (action.type) {
-    case Types.INCREMENT_HALFMOVE:
-      return {
-        ...state,
-        halfmoves: state.halfmoves + 1,
-      };
-    case Types.RESET_HALFMOVE:
-      return {
-        ...state,
-        halfmoves: 0,
-      };
     case Types.SET_PAUSE_GAME:
       return {
         ...state,

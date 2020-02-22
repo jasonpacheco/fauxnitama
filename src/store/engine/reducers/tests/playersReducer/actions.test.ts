@@ -2,11 +2,15 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 // @ts-nocheck
 
-import * as Types from '../../types';
-import { setGameType, setCurrentPlayer, setPlayers } from '../../actions';
-import { playerReducer } from '../../reducers';
+import * as Types from '../../../types/gameTypes';
+import {
+  setGameType,
+  setCurrentPlayer,
+  setPlayers,
+} from '../../../actions/gameActions';
+import { playerReducer } from '../../../reducers/gameReducers';
 import mockStore from '../../../mockStore';
-import { rootReducer } from '../../../';
+import { rootReducer } from '../../../index';
 
 describe('tests for playersReducer actions', () => {
   const initialState: Types.PlayerState = {

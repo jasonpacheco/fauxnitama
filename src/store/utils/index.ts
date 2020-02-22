@@ -1,5 +1,5 @@
-import * as GameTypes from '../engine/game/types';
-import * as CardTypes from '../engine/card/types';
+import * as GameTypes from '../engine/types/gameTypes';
+import * as CardTypes from '../engine/types/cardTypes';
 import sampleSize from 'lodash.samplesize';
 
 export const setPlayersByGameType = (

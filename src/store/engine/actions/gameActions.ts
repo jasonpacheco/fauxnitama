@@ -1,4 +1,4 @@
-import * as Types from './types';
+import * as Types from '../types/gameTypes';
 import { ThunkResult } from '../';
 
 /**
@@ -8,22 +8,6 @@ import { ThunkResult } from '../';
 export const setGameType = (gameType: Types.GameType): Types.PlayerActions => ({
   type: Types.SET_GAME_TYPE,
   gameType,
-});
-
-/**
- * Action to increment halfmove counter. A halfmove in this implementation is defined
- * as a one-ply move that does not produce a capture. A pass automatically increases
- * the counter.
- */
-export const incrementHalfmove = (): Types.PropertiesActions => ({
-  type: Types.INCREMENT_HALFMOVE,
-});
-
-/**
- * Action that resets halfmove counter. Counter is reset when a move makes a capture.
- */
-export const resetHalfmove = (): Types.PropertiesActions => ({
-  type: Types.RESET_HALFMOVE,
 });
 
 /**

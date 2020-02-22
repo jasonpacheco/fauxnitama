@@ -1,5 +1,5 @@
-import * as Types from '../../types';
-import { playerReducer } from '../../reducers';
+import * as Types from '../../../types/gameTypes';
+import { playerReducer } from '../../../reducers/gameReducers';
 
 describe('tests for SET_PLAYERS', () => {
   const initialState: Types.PlayerState = {
