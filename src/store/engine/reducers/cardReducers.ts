@@ -1,27 +1,43 @@
-import * as CardTypes from '../types/cardTypes';
 import { generateRandomCards, cardSwapper } from '../../utils';
+import {
+  CardActions,
+  CardState,
+  SELECT_CARD,
+  SWAP_CARDS,
+} from '../types/cardTypes';
+import { ON_CLICK_CARD, OnClickCardAction } from '../types/eventTypes';
 
-const initialState: CardTypes.CardState = {
+const initialState: CardState = {
   cards: generateRandomCards(),
-  selectedCard: undefined,
+  selectedCardName: '',
 };
 
 export const cardReducer = (
   state = initialState,
-  action: CardTypes.CardActions
-): CardTypes.CardState => {
+  action: CardActions | OnClickCardAction
+): CardState => {
   switch (action.type) {
-    case CardTypes.SELECT_CARD:
+    case SELECT_CARD:
       return {
         ...state,
-        selectedCard: action.selectedCardName,
+        selectedCardName: action.selectedCardName,
       };
-    case CardTypes.SWAP_CARDS:
-      const cards = cardSwapper(state.cards, state.selectedCard);
+    case SWAP_CARDS:
+      if (state.selectedCardName) {
+        const cards = cardSwapper(state.cards, state.selectedCardName);
+        return {
+          ...state,
+          cards,
+          selectedCardName: '',
+        };
+      }
       return {
         ...state,
-        cards,
-        selectedCard: undefined,
+      };
+    case ON_CLICK_CARD:
+      return {
+        ...state,
+        selectedCardName: action.selectedCardName,
       };
     default:
       return state;

@@ -1,26 +1,35 @@
 import { pieceReducer } from '../pieceReducers';
-import * as Types from '../../types/pieceTypes';
-import * as GameTypes from '../../types/gameTypes';
+import { PLAYER_AI, PLAYER_BLUE } from '../../types/gameTypes';
+import {
+  PieceState,
+  STUDENT,
+  MASTER,
+  UPDATE_POSITION,
+  REMOVE_PIECE,
+  INCREMENT_HALFMOVE,
+  RESET_HALFMOVE,
+  INITIALIZE_PIECE_POSITIONS,
+} from '../../types/pieceTypes';
 
 describe('tests for pieceReducer', () => {
-  const initialState: Types.PieceState = {
+  const initialState: PieceState = {
     piecePositions: {
       PLAYER_AI: [
-        [0, Types.STUDENT],
-        [1, Types.STUDENT],
-        [2, Types.MASTER],
-        [3, Types.STUDENT],
-        [4, Types.STUDENT],
+        [0, STUDENT],
+        [1, STUDENT],
+        [2, MASTER],
+        [3, STUDENT],
+        [4, STUDENT],
       ],
       PLAYER_BLUE: [
-        [20, Types.STUDENT],
-        [21, Types.STUDENT],
-        [22, Types.MASTER],
-        [23, Types.STUDENT],
-        [24, Types.STUDENT],
+        [20, STUDENT],
+        [21, STUDENT],
+        [22, MASTER],
+        [23, STUDENT],
+        [24, STUDENT],
       ],
     },
-    selectedPiece: undefined,
+    selectedPiece: [],
     halfmoves: 0,
     validMoves: [],
   };
@@ -30,17 +39,17 @@ describe('tests for pieceReducer', () => {
       const stateCopy = { ...initialState };
       const expected = {
         PLAYER_AI: [
-          [1, Types.STUDENT],
-          [2, Types.MASTER],
-          [3, Types.STUDENT],
-          [4, Types.STUDENT],
-          [5, Types.STUDENT],
+          [1, STUDENT],
+          [2, MASTER],
+          [3, STUDENT],
+          [4, STUDENT],
+          [5, STUDENT],
         ],
       };
       expect(
         pieceReducer(stateCopy, {
-          type: Types.UPDATE_POSITION,
-          playerToUpdate: GameTypes.PLAYER_AI,
+          type: UPDATE_POSITION,
+          playerToUpdate: PLAYER_AI,
           pieceToUpdateID: 0,
           newLocationID: 5,
         })
@@ -57,17 +66,17 @@ describe('tests for pieceReducer', () => {
       const stateCopy = { ...initialState };
       const expected = {
         PLAYER_BLUE: [
-          [18, Types.MASTER],
-          [20, Types.STUDENT],
-          [21, Types.STUDENT],
-          [23, Types.STUDENT],
-          [24, Types.STUDENT],
+          [18, MASTER],
+          [20, STUDENT],
+          [21, STUDENT],
+          [23, STUDENT],
+          [24, STUDENT],
         ],
       };
       expect(
         pieceReducer(stateCopy, {
-          type: Types.UPDATE_POSITION,
-          playerToUpdate: GameTypes.PLAYER_BLUE,
+          type: UPDATE_POSITION,
+          playerToUpdate: PLAYER_BLUE,
           pieceToUpdateID: 22,
           newLocationID: 18,
         })
@@ -84,16 +93,16 @@ describe('tests for pieceReducer', () => {
       const stateCopy = { ...initialState };
       const expected = {
         PLAYER_AI: [
-          [0, Types.STUDENT],
-          [1, Types.STUDENT],
-          [3, Types.STUDENT],
-          [4, Types.STUDENT],
+          [0, STUDENT],
+          [1, STUDENT],
+          [3, STUDENT],
+          [4, STUDENT],
         ],
       };
       expect(
         pieceReducer(stateCopy, {
-          type: Types.REMOVE_PIECE,
-          playerToUpdate: GameTypes.PLAYER_AI,
+          type: REMOVE_PIECE,
+          playerToUpdate: PLAYER_AI,
           pieceToRemoveID: 2,
         })
       ).toEqual({
@@ -109,16 +118,16 @@ describe('tests for pieceReducer', () => {
       const stateCopy = { ...initialState };
       const expected = {
         PLAYER_BLUE: [
-          [21, Types.STUDENT],
-          [22, Types.MASTER],
-          [23, Types.STUDENT],
-          [24, Types.STUDENT],
+          [21, STUDENT],
+          [22, MASTER],
+          [23, STUDENT],
+          [24, STUDENT],
         ],
       };
       expect(
         pieceReducer(stateCopy, {
-          type: Types.REMOVE_PIECE,
-          playerToUpdate: GameTypes.PLAYER_BLUE,
+          type: REMOVE_PIECE,
+          playerToUpdate: PLAYER_BLUE,
           pieceToRemoveID: 20,
         })
       ).toEqual({
@@ -133,9 +142,7 @@ describe('tests for pieceReducer', () => {
 
   describe('tests for halfmoves', () => {
     test('it increments by 1', () => {
-      expect(
-        pieceReducer(initialState, { type: Types.INCREMENT_HALFMOVE })
-      ).toEqual({
+      expect(pieceReducer(initialState, { type: INCREMENT_HALFMOVE })).toEqual({
         ...initialState,
         halfmoves: 1,
       });
@@ -143,13 +150,13 @@ describe('tests for pieceReducer', () => {
 
     test('it increments to 3 and then resets to 0', () => {
       const state1 = pieceReducer(initialState, {
-        type: Types.INCREMENT_HALFMOVE,
+        type: INCREMENT_HALFMOVE,
       });
       const state2 = pieceReducer(state1, {
-        type: Types.INCREMENT_HALFMOVE,
+        type: INCREMENT_HALFMOVE,
       });
       const state3 = pieceReducer(state2, {
-        type: Types.INCREMENT_HALFMOVE,
+        type: INCREMENT_HALFMOVE,
       });
 
       expect(state3).toEqual({
@@ -157,7 +164,7 @@ describe('tests for pieceReducer', () => {
         halfmoves: 3,
       });
 
-      expect(pieceReducer(state3, { type: Types.RESET_HALFMOVE })).toEqual({
+      expect(pieceReducer(state3, { type: RESET_HALFMOVE })).toEqual({
         ...state3,
         halfmoves: 0,
       });
@@ -166,34 +173,34 @@ describe('tests for pieceReducer', () => {
 
   describe('test for initialization', () => {
     test('it initializes', () => {
-      const initialState: Types.PieceState = {
+      const initialState: PieceState = {
         piecePositions: {},
-        selectedPiece: undefined,
+        selectedPiece: [],
         halfmoves: 0,
         validMoves: [],
       };
 
       const expected = {
         PLAYER_AI: [
-          [0, Types.STUDENT],
-          [1, Types.STUDENT],
-          [2, Types.MASTER],
-          [3, Types.STUDENT],
-          [4, Types.STUDENT],
+          [0, STUDENT],
+          [1, STUDENT],
+          [2, MASTER],
+          [3, STUDENT],
+          [4, STUDENT],
         ],
         PLAYER_BLUE: [
-          [20, Types.STUDENT],
-          [21, Types.STUDENT],
-          [22, Types.MASTER],
-          [23, Types.STUDENT],
-          [24, Types.STUDENT],
+          [20, STUDENT],
+          [21, STUDENT],
+          [22, MASTER],
+          [23, STUDENT],
+          [24, STUDENT],
         ],
       };
 
       expect(
         pieceReducer(initialState, {
-          type: Types.INITIALIZE_PIECE_POSITIONS,
-          players: [GameTypes.PLAYER_AI, GameTypes.PLAYER_BLUE],
+          type: INITIALIZE_PIECE_POSITIONS,
+          players: [PLAYER_AI, PLAYER_BLUE],
         })
       ).toEqual({
         ...initialState,

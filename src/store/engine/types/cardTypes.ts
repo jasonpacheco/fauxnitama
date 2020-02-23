@@ -33,7 +33,7 @@ export interface CardProperties {
 
 export interface CardState {
   cards: CardName[];
-  selectedCard: CardName | undefined;
+  selectedCardName: CardName | '';
 }
 
 export type CardsRequestTypes =

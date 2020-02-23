@@ -1,25 +1,39 @@
-import * as Types from '../types/gameTypes';
 import { combineReducers } from 'redux';
 import { setPlayersByGameType } from '../../utils';
+import {
+  PlayerState,
+  PlayerActions,
+  SET_GAME_TYPE,
+  SET_PLAYERS,
+  PlayerType,
+  SET_CURRENT_PLAYER,
+  PLAYER_AI,
+  PropertiesState,
+  PropertiesActions,
+  SET_PAUSE_GAME,
+  ADD_TO_HISTORY,
+  SET_IS_GAME_COMPLETE,
+  SET_WINNER_BY_END_METHOD,
+} from '../types/gameTypes';
 
-const initialPlayerState: Types.PlayerState = {
-  currentPlayer: undefined,
+const initialPlayerState: PlayerState = {
+  currentPlayer: '',
   players: [],
-  gameType: undefined,
+  gameType: '',
 };
 
 export const playerReducer = (
   state = initialPlayerState,
-  action: Types.PlayerActions
-): Types.PlayerState => {
+  action: PlayerActions
+): PlayerState => {
   switch (action.type) {
-    case Types.SET_GAME_TYPE:
+    case SET_GAME_TYPE:
       return {
         ...state,
         gameType: action.gameType,
       };
-    case Types.SET_PLAYERS:
-      let players: Types.PlayerType[] = [];
+    case SET_PLAYERS:
+      let players: PlayerType[] = [];
       if (state.gameType) {
         players = setPlayersByGameType(state.gameType, action.player);
       }
@@ -27,10 +41,12 @@ export const playerReducer = (
         ...state,
         players: players,
       };
-    case Types.SET_CURRENT_PLAYER:
-      if (state.currentPlayer === undefined) {
-        if (state.players[0] === Types.PLAYER_AI) {
-          if (state.players[1] === action.firstPlayer) {
+    case SET_CURRENT_PLAYER:
+      const { firstPlayer } = action;
+      const { currentPlayer } = state;
+      if (!currentPlayer) {
+        if (state.players[0] === PLAYER_AI) {
+          if (state.players[1] === firstPlayer) {
             return {
               ...state,
               currentPlayer: state.players[1],
@@ -44,12 +60,12 @@ export const playerReducer = (
         } else {
           return {
             ...state,
-            currentPlayer: action.firstPlayer,
+            currentPlayer: firstPlayer ?? '',
           };
         }
       }
 
-      const indexOfLastPlayer = state.players.indexOf(state.currentPlayer);
+      const indexOfLastPlayer = state.players.indexOf(currentPlayer);
       return {
         ...state,
         currentPlayer: state.players[1 - indexOfLastPlayer],
@@ -59,35 +75,35 @@ export const playerReducer = (
   }
 };
 
-export const initialState: Types.PropertiesState = {
-  endMethod: undefined,
+export const initialState: PropertiesState = {
+  endMethod: '',
   history: [],
   isGameComplete: false,
   pauseGame: false,
-  winner: undefined,
+  winner: '',
 };
 
 export const propertiesReducer = (
   state = initialState,
-  action: Types.PropertiesActions
-): Types.PropertiesState => {
+  action: PropertiesActions
+): PropertiesState => {
   switch (action.type) {
-    case Types.SET_PAUSE_GAME:
+    case SET_PAUSE_GAME:
       return {
         ...state,
         pauseGame: !state.pauseGame,
       };
-    case Types.ADD_TO_HISTORY:
+    case ADD_TO_HISTORY:
       return {
         ...state,
         history: [...state.history, action.move],
       };
-    case Types.SET_IS_GAME_COMPLETE:
+    case SET_IS_GAME_COMPLETE:
       return {
         ...state,
         isGameComplete: true,
       };
-    case Types.SET_WINNER_BY_END_METHOD:
+    case SET_WINNER_BY_END_METHOD:
       return {
         ...state,
         winner: action.winner,

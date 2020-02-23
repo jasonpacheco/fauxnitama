@@ -31,17 +31,17 @@ export type GameType =
   | typeof ONLINE_MULTIPLAYER;
 
 export interface PropertiesState {
-  endMethod: EndMethod | undefined;
+  endMethod: EndMethod | '';
   history: string[][];
   isGameComplete: boolean;
   pauseGame: boolean;
-  winner: PlayerType | undefined;
+  winner: PlayerType | '';
 }
 
 export interface PlayerState {
-  currentPlayer: PlayerType | undefined;
+  currentPlayer: PlayerType | '';
   players: PlayerType[];
-  gameType: GameType | undefined;
+  gameType: GameType | '';
 }
 
 interface SetPlayers {
@@ -74,7 +74,7 @@ interface SetIsGameComplete {
 
 interface SetWinnerByEndMethod {
   type: typeof SET_WINNER_BY_END_METHOD;
-  winner: PlayerType | undefined;
+  winner: PlayerType | '';
   endMethod: EndMethod;
 }
 

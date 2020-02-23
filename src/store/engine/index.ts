@@ -8,15 +8,20 @@ import { pieceReducer } from './reducers/pieceReducers';
 import { CardActions } from './types/cardTypes';
 import { GameActions } from './types/gameTypes';
 import { PieceActions } from './types/pieceTypes';
+import { EventActions } from './types/eventTypes';
 
 export const rootReducer = combineReducers({
-  card: cardReducer,
-  game: gameReducer,
-  piece: pieceReducer,
+  cardReducer,
+  gameReducer,
+  pieceReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
-export type AppActions = CardActions | GameActions | PieceActions;
+export type AppActions =
+  | CardActions
+  | GameActions
+  | PieceActions
+  | EventActions;
 export type ThunkResult<R> = ThunkAction<R, AppState, null, AppActions>;
 
 const configureStore = (): Store<AppState, AppActions> & {

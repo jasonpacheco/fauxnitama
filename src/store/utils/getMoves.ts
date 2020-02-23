@@ -1,7 +1,6 @@
 import { coordinateToID, idToCoordinate } from '../../utils';
 import { BOARD_ROWS as ROWS, BOARD_COLS as COLS } from '../../utils/constants';
-import * as GameType from '../engine/game/types';
-import * as PieceType from '../engine/piece/types';
+import * as PieceType from '../engine/types/pieceTypes';
 
 const transposeCardMovement = (
   validMoves: number[][] | undefined

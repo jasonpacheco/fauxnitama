@@ -8,7 +8,7 @@ import useGameContext from '../../context/useGameContext';
 import isEqual from 'lodash.isequal';
 import CardModel from '../../interfaces/card.interface';
 import ArrowKeyLogic from './ArrowKeyLogic';
-import { CardName } from '../../store/engine/card/types';
+import { CardName } from '../../store/engine/types/cardTypes';
 
 interface BoardSetupProps {
   hands: CardName[][];

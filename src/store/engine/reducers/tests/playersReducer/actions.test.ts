@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 // @ts-nocheck
 
-import * as Types from '../../../types/gameTypes';
 import {
   setGameType,
   setCurrentPlayer,
@@ -11,22 +10,26 @@ import {
 import { playerReducer } from '../../../reducers/gameReducers';
 import mockStore from '../../../mockStore';
 import { rootReducer } from '../../../index';
+import {
+  PlayerState,
+  SINGLE_PLAYER,
+  PLAYER_BLUE,
+  PLAYER_RED,
+  PLAYER_AI,
+} from '../../../types/gameTypes';
 
 describe('tests for playersReducer actions', () => {
-  const initialState: Types.PlayerState = {
-    gameType: undefined,
-    currentPlayer: undefined,
+  const initialState: PlayerState = {
+    gameType: '',
+    currentPlayer: '',
     players: [],
   };
 
   test('it sets the game type', () => {
-    const state1 = playerReducer(
-      initialState,
-      setGameType(Types.SINGLE_PLAYER)
-    );
+    const state1 = playerReducer(initialState, setGameType(SINGLE_PLAYER));
     expect(state1).toEqual({
       ...state1,
-      gameType: Types.SINGLE_PLAYER,
+      gameType: SINGLE_PLAYER,
     });
   });
 
@@ -34,10 +37,10 @@ describe('tests for playersReducer actions', () => {
     const createState = initialState => actions =>
       actions.reduce(rootReducer, initialState);
     const initialState = createState({
-      game: {
+      gameReducer: {
         player: {
-          gameType: undefined,
-          currentPlayer: undefined,
+          gameType: '',
+          currentPlayer: '',
           players: [],
         },
       },
@@ -45,22 +48,22 @@ describe('tests for playersReducer actions', () => {
 
     test('it sets the current player', async () => {
       const store = mockStore(initialState);
-      await store.dispatch(setGameType(Types.SINGLE_PLAYER));
-      expect(store.getState().game.player.gameType).toEqual(
-        Types.SINGLE_PLAYER
+      await store.dispatch(setGameType(SINGLE_PLAYER));
+      expect(store.getState().gameReducer.player.gameType).toEqual(
+        SINGLE_PLAYER
       );
       await store.dispatch(setPlayers());
-      expect(store.getState().game.player.players).toEqual([]);
-      await store.dispatch(setCurrentPlayer(Types.PLAYER_BLUE));
-      expect(store.getState().game.player.currentPlayer).toEqual(undefined);
-      await store.dispatch(setPlayers(Types.PLAYER_RED));
-      expect(store.getState().game.player.players).toEqual([
-        Types.PLAYER_AI,
-        Types.PLAYER_RED,
+      expect(store.getState().gameReducer.player.players).toEqual([]);
+      await store.dispatch(setCurrentPlayer(PLAYER_BLUE));
+      expect(store.getState().gameReducer.player.currentPlayer).toEqual('');
+      await store.dispatch(setPlayers(PLAYER_RED));
+      expect(store.getState().gameReducer.player.players).toEqual([
+        PLAYER_AI,
+        PLAYER_RED,
       ]);
-      await store.dispatch(setCurrentPlayer(Types.PLAYER_BLUE));
-      expect(store.getState().game.player.currentPlayer).toEqual(
-        Types.PLAYER_AI
+      await store.dispatch(setCurrentPlayer(PLAYER_BLUE));
+      expect(store.getState().gameReducer.player.currentPlayer).toEqual(
+        PLAYER_AI
       );
     });
   });

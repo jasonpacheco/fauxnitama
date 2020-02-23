@@ -14,12 +14,12 @@ export type PieceType = typeof MASTER | typeof STUDENT;
 
 export type PieceTuple = [number, PieceType];
 export type PiecePosition = {
-  [key in PlayerType]?: PieceTuple[];
+  [key: string]: PieceTuple[];
 };
 
 export interface PieceState {
   piecePositions: PiecePosition;
-  selectedPiece: PieceTuple | undefined;
+  selectedPiece: PieceTuple | [];
   halfmoves: number;
   validMoves: number[];
 }

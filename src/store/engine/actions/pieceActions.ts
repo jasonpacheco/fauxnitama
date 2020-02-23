@@ -1,57 +1,63 @@
-import * as Types from '../types/pieceTypes';
-import * as GameTypes from '../types/gameTypes';
 import { ThunkResult } from '../';
 import { cardNameToCard } from '../../../utils';
 import getMoves from '../../utils/getMoves';
+import { PlayerType } from '../types/gameTypes';
+import {
+  PieceActions,
+  INCREMENT_HALFMOVE,
+  RESET_HALFMOVE,
+  INITIALIZE_PIECE_POSITIONS,
+  ADD_VALID_MOVES,
+  UPDATE_POSITION,
+  REMOVE_PIECE,
+} from '../types/pieceTypes';
 
 /**
  * Action to increment halfmove counter. A halfmove in this implementation is defined
  * as a one-ply move that does not produce a capture. A pass automatically increases
  * the counter.
  */
-export const incrementHalfmove = (): Types.PieceActions => ({
-  type: Types.INCREMENT_HALFMOVE,
+export const incrementHalfmove = (): PieceActions => ({
+  type: INCREMENT_HALFMOVE,
 });
 
 /**
  * Action that resets halfmove counter. Counter is reset when a move makes a capture.
  */
-export const resetHalfmove = (): Types.PieceActions => ({
-  type: Types.RESET_HALFMOVE,
+export const resetHalfmove = (): PieceActions => ({
+  type: RESET_HALFMOVE,
 });
 
 /** Actions called inside Thunks */
 
 export const initializePiecePositionsAction = (
-  players: GameTypes.PlayerType[]
-): Types.PieceActions => ({
-  type: Types.INITIALIZE_PIECE_POSITIONS,
+  players: PlayerType[]
+): PieceActions => ({
+  type: INITIALIZE_PIECE_POSITIONS,
   players,
 });
 
-export const addValidMovesAction = (
-  validMoves: number[]
-): Types.PieceActions => ({
-  type: Types.ADD_VALID_MOVES,
+export const addValidMovesAction = (validMoves: number[]): PieceActions => ({
+  type: ADD_VALID_MOVES,
   validMoves,
 });
 
 export const updatePositionAction = (
-  playerToUpdate: GameTypes.PlayerType,
+  playerToUpdate: PlayerType,
   pieceToUpdateID: number,
   newLocationID: number
-): Types.PieceActions => ({
-  type: Types.UPDATE_POSITION,
+): PieceActions => ({
+  type: UPDATE_POSITION,
   playerToUpdate,
   pieceToUpdateID,
   newLocationID,
 });
 
 export const removePieceAction = (
-  playerToUpdate: GameTypes.PlayerType,
+  playerToUpdate: PlayerType,
   pieceToRemoveID: number
-): Types.PieceActions => ({
-  type: Types.REMOVE_PIECE,
+): PieceActions => ({
+  type: REMOVE_PIECE,
   playerToUpdate,
   pieceToRemoveID,
 });
@@ -64,7 +70,7 @@ export const initializePiecePositions = (): ThunkResult<void> => (
   dispatch,
   getState
 ): void => {
-  const { players } = getState().game.player;
+  const { players } = getState().gameReducer.player;
   dispatch(initializePiecePositionsAction(players));
 };
 
@@ -76,11 +82,11 @@ export const addValidMoves = (): ThunkResult<void> => (
   getState
 ): void => {
   const {
-    card: { selectedCard },
-    game: {
+    cardReducer: { selectedCardName },
+    gameReducer: {
       player: { currentPlayer, players },
     },
-    piece: { piecePositions, selectedPiece },
+    pieceReducer: { piecePositions, selectedPiece },
   } = getState();
 
   if (!currentPlayer) {
@@ -90,7 +96,11 @@ export const addValidMoves = (): ThunkResult<void> => (
 
   const currentPlayerPositions = piecePositions[currentPlayer];
 
-  if (!selectedCard || !selectedPiece || !currentPlayerPositions) {
+  if (
+    !selectedCardName ||
+    selectedPiece.length === 0 ||
+    !currentPlayerPositions
+  ) {
     console.log(
       'No card to provide a move set and/or no piece selected or pieces found.'
     );
@@ -100,7 +110,7 @@ export const addValidMoves = (): ThunkResult<void> => (
   const validMoves = getMoves(
     selectedPiece[0],
     currentPlayer === players[0],
-    cardNameToCard(selectedCard).moves,
+    cardNameToCard(selectedCardName).moves,
     currentPlayerPositions
   );
 

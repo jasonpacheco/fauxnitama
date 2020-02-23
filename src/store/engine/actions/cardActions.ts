@@ -1,5 +1,6 @@
-import * as Types from '../types/cardTypes';
 import { ThunkResult } from '../';
+import { CardName } from '../../../interfaces/card.interface';
+import { SELECT_CARD, CardActions, SWAP_CARDS } from '../types/cardTypes';
 
 /**
  * Action creator called when the user selects a card for move-making.
@@ -7,12 +8,13 @@ import { ThunkResult } from '../';
  *  | 'Eel' | 'Elephant' | 'Frog' | 'Goose' | 'Horse' | 'Mantis' |
  * 'Monkey' | 'Ox' | 'Rabbit' | 'Rooster' | 'Tiger'
  */
-export const selectCard = (
-  selectedCardName: Types.CardName
-): ThunkResult<void> => (dispatch, getState): void => {
-  if (getState().card.selectedCard !== selectedCardName) {
+export const selectCard = (selectedCardName: CardName): ThunkResult<void> => (
+  dispatch,
+  getState
+): void => {
+  if (getState().cardReducer.selectedCardName !== selectedCardName) {
     dispatch({
-      type: Types.SELECT_CARD,
+      type: SELECT_CARD,
       selectedCardName,
     });
   }
@@ -21,6 +23,6 @@ export const selectCard = (
 /**
  * Action creator called to swap the cards after the user makes a move.
  */
-export const swapCards = (): Types.CardActions => ({
-  type: Types.SWAP_CARDS,
+export const swapCards = (): CardActions => ({
+  type: SWAP_CARDS,
 });

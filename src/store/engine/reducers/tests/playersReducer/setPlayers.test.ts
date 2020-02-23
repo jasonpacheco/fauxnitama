@@ -1,76 +1,86 @@
-import * as Types from '../../../types/gameTypes';
 import { playerReducer } from '../../../reducers/gameReducers';
+import {
+  PlayerState,
+  SET_GAME_TYPE,
+  SINGLE_PLAYER,
+  SET_PLAYERS,
+  PLAYER_BLUE,
+  PLAYER_AI,
+  PLAYER_RED,
+  LOCAL_MULTIPLAYER,
+  ONLINE_MULTIPLAYER,
+} from '../../../types/gameTypes';
 
 describe('tests for SET_PLAYERS', () => {
-  const initialState: Types.PlayerState = {
-    currentPlayer: undefined,
-    gameType: undefined,
+  const initialState: PlayerState = {
+    currentPlayer: '',
+    gameType: '',
     players: [],
   };
 
   test('it returns [PLAYER_AI, PLAYER_BLUE] for single player', () => {
     const stateAfterSinglePlayer = playerReducer(initialState, {
-      type: Types.SET_GAME_TYPE,
-      gameType: Types.SINGLE_PLAYER,
+      type: SET_GAME_TYPE,
+      gameType: SINGLE_PLAYER,
     });
 
     expect(
       playerReducer(stateAfterSinglePlayer, {
-        type: Types.SET_PLAYERS,
-        player: Types.PLAYER_BLUE,
+        type: SET_PLAYERS,
+        player: PLAYER_BLUE,
       })
     ).toEqual({
       ...stateAfterSinglePlayer,
-      players: [Types.PLAYER_AI, Types.PLAYER_BLUE],
+      players: [PLAYER_AI, PLAYER_BLUE],
     });
   });
 
   test('it returns [PLAYER_AI, PLAYER_RED] for single player', () => {
     const stateAfterSinglePlayer = playerReducer(initialState, {
-      type: Types.SET_GAME_TYPE,
-      gameType: Types.SINGLE_PLAYER,
+      type: SET_GAME_TYPE,
+      gameType: SINGLE_PLAYER,
     });
 
     expect(
       playerReducer(stateAfterSinglePlayer, {
-        type: Types.SET_PLAYERS,
-        player: Types.PLAYER_RED,
+        type: SET_PLAYERS,
+        player: PLAYER_RED,
       })
     ).toEqual({
       ...stateAfterSinglePlayer,
-      players: [Types.PLAYER_AI, Types.PLAYER_RED],
+      players: [PLAYER_AI, PLAYER_RED],
     });
   });
 
   test('it returns [PLAYER_BLUE, PLAYER_RED] for local multiplayer', () => {
     const stateAfterLocalMultiplayer = playerReducer(initialState, {
-      type: Types.SET_GAME_TYPE,
-      gameType: Types.LOCAL_MULTIPLAYER,
+      type: SET_GAME_TYPE,
+      gameType: LOCAL_MULTIPLAYER,
     });
 
     expect(
       playerReducer(stateAfterLocalMultiplayer, {
-        type: Types.SET_PLAYERS,
+        type: SET_PLAYERS,
       })
     ).toEqual({
       ...stateAfterLocalMultiplayer,
-      players: [Types.PLAYER_BLUE, Types.PLAYER_RED],
+      players: [PLAYER_BLUE, PLAYER_RED],
     });
   });
 
   test('it returns [PLAYER_BLUE, PLAYER_RED] for online multiplayer', () => {
     const stateAfterOnlineMultiplayer = playerReducer(initialState, {
-      type: Types.SET_GAME_TYPE,
-      gameType: Types.ONLINE_MULTIPLAYER,
+      type: SET_GAME_TYPE,
+      gameType: ONLINE_MULTIPLAYER,
     });
 
     expect(
       playerReducer(stateAfterOnlineMultiplayer, {
-        type: Types.SET_PLAYERS,
+        type: SET_PLAYERS,
       })
     ).toEqual({
       ...stateAfterOnlineMultiplayer,
-      players: [Types.PLAYER_BLUE, Types.PLAYER_RED],
+      players: [PLAYER_BLUE, PLAYER_RED],
     });
   });
 });
