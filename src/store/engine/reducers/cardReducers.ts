@@ -5,7 +5,12 @@ import {
   SELECT_CARD,
   SWAP_CARDS,
 } from '../types/cardTypes';
-import { ON_CLICK_CARD, OnClickCardAction } from '../types/eventTypes';
+import {
+  ON_CLICK_CARD,
+  OnClickCardAction,
+  OnClickSquareAction,
+  ON_CLICK_SQUARE,
+} from '../types/eventTypes';
 
 const initialState: CardState = {
   cards: generateRandomCards(),
@@ -14,7 +19,7 @@ const initialState: CardState = {
 
 export const cardReducer = (
   state = initialState,
-  action: CardActions | OnClickCardAction
+  action: CardActions | OnClickCardAction | OnClickSquareAction
 ): CardState => {
   switch (action.type) {
     case SELECT_CARD:
@@ -34,10 +39,17 @@ export const cardReducer = (
       return {
         ...state,
       };
+
     case ON_CLICK_CARD:
       return {
         ...state,
         selectedCardName: action.selectedCardName,
+      };
+    case ON_CLICK_SQUARE:
+      return {
+        ...state,
+        cards: action.cards,
+        selectedCardName: '',
       };
     default:
       return state;

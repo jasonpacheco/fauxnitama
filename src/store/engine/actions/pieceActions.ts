@@ -116,11 +116,3 @@ export const addValidMoves = (): ThunkResult<void> => (
 
   dispatch(addValidMovesAction(validMoves));
 };
-
-export const movePiece = (clickedCellID: number): ThunkResult<void> => (
-  dispatch,
-  getState
-): void => {
-  // if the requested piece id is in the set of valid moves, update
-  // if the requested piece id also in the
-};

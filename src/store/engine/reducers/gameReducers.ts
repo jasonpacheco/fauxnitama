@@ -15,6 +15,7 @@ import {
   SET_IS_GAME_COMPLETE,
   SET_WINNER_BY_END_METHOD,
 } from '../types/gameTypes';
+import { OnClickSquareAction, ON_CLICK_SQUARE } from '../types/eventTypes';
 
 const initialPlayerState: PlayerState = {
   currentPlayer: '',
@@ -24,7 +25,7 @@ const initialPlayerState: PlayerState = {
 
 export const playerReducer = (
   state = initialPlayerState,
-  action: PlayerActions
+  action: PlayerActions | OnClickSquareAction
 ): PlayerState => {
   switch (action.type) {
     case SET_GAME_TYPE:
@@ -70,6 +71,11 @@ export const playerReducer = (
         ...state,
         currentPlayer: state.players[1 - indexOfLastPlayer],
       };
+    case ON_CLICK_SQUARE:
+      return {
+        ...state,
+        currentPlayer: action.opponent,
+      };
     default:
       return state;
   }
@@ -85,7 +91,7 @@ export const initialState: PropertiesState = {
 
 export const propertiesReducer = (
   state = initialState,
-  action: PropertiesActions
+  action: PropertiesActions | OnClickSquareAction
 ): PropertiesState => {
   switch (action.type) {
     case SET_PAUSE_GAME:
@@ -108,6 +114,13 @@ export const propertiesReducer = (
         ...state,
         winner: action.winner,
         endMethod: action.endMethod,
+      };
+    case ON_CLICK_SQUARE:
+      return {
+        ...state,
+        winner: action.winner,
+        endMethod: action.endMethod,
+        isGameComplete: action.isGameComplete,
       };
     default:
       return state;

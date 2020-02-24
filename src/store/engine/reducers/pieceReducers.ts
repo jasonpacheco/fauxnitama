@@ -13,6 +13,12 @@ import {
   REMOVE_PIECE,
   ADD_VALID_MOVES,
 } from '../types/pieceTypes';
+import {
+  OnClickPieceAction,
+  ON_CLICK_PIECE,
+  OnClickSquareAction,
+  ON_CLICK_SQUARE,
+} from '../types/eventTypes';
 
 const initialState: PieceState = {
   piecePositions: {},
@@ -29,7 +35,7 @@ export const isMoveCapture = (
 
 export const pieceReducer = (
   state = initialState,
-  action: PieceActions
+  action: PieceActions | OnClickPieceAction | OnClickSquareAction
 ): PieceState => {
   switch (action.type) {
     case INITIALIZE_PIECE_POSITIONS:
@@ -100,6 +106,34 @@ export const pieceReducer = (
       return {
         ...state,
         validMoves: action.validMoves,
+      };
+    case ON_CLICK_PIECE:
+      return {
+        ...state,
+        selectedPiece: action.selectedPiece,
+        validMoves: action.validMoves,
+      };
+    case ON_CLICK_SQUARE:
+      return {
+        ...state,
+        validMoves: [],
+        halfmoves: action.halfmoves,
+        piecePositions: {
+          ...state.piecePositions,
+          [action.currentPlayer]: state.piecePositions[action.currentPlayer]
+            .map<PieceTuple>(([id, pieceType]) => {
+              if (id === action.idToUpdate) {
+                return [action.targetID, pieceType];
+              }
+              return [id, pieceType];
+            })
+            .sort(
+              (tupleA: PieceTuple, tupleB: PieceTuple) => tupleA[0] - tupleB[0]
+            ),
+          [action.opponent]: state.piecePositions[action.opponent].filter(
+            ([id]) => id !== action.targetID
+          ),
+        },
       };
     default:
       return state;

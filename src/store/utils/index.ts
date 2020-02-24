@@ -1,26 +1,40 @@
-import * as GameTypes from '../engine/types/gameTypes';
-import * as CardTypes from '../engine/types/cardTypes';
 import sampleSize from 'lodash.samplesize';
+import {
+  GameType,
+  SINGLE_PLAYER,
+  PLAYER_AI,
+  LOCAL_MULTIPLAYER,
+  ONLINE_MULTIPLAYER,
+  PLAYER_BLUE,
+  PLAYER_RED,
+  PlayerType,
+} from '../engine/types/gameTypes';
+import { CardName } from '../../interfaces/card.interface';
+import {
+  CardsRequestTypes,
+  HAND_BLUE,
+  HAND_RED,
+  NEXT_CARD,
+} from '../engine/types/cardTypes';
+import { PiecePosition, PieceTuple } from '../engine/types/pieceTypes';
 
 export const setPlayersByGameType = (
-  gameType: GameTypes.GameType,
-  selectedPlayer?: GameTypes.PlayerType
-): GameTypes.PlayerType[] => {
+  gameType: GameType,
+  selectedPlayer?: PlayerType
+): PlayerType[] => {
   switch (gameType) {
-    case GameTypes.SINGLE_PLAYER:
-      return selectedPlayer ? [GameTypes.PLAYER_AI, selectedPlayer] : [];
-    case GameTypes.LOCAL_MULTIPLAYER:
-    case GameTypes.ONLINE_MULTIPLAYER:
-      return [GameTypes.PLAYER_BLUE, GameTypes.PLAYER_RED];
+    case SINGLE_PLAYER:
+      return selectedPlayer ? [PLAYER_AI, selectedPlayer] : [];
+    case LOCAL_MULTIPLAYER:
+    case ONLINE_MULTIPLAYER:
+      return [PLAYER_BLUE, PLAYER_RED];
     default:
       return [];
   }
 };
 
-export const generateRandomCards = (
-  numberOfCards = 5
-): CardTypes.CardName[] => {
-  const cards: CardTypes.CardName[] = [
+export const generateRandomCards = (numberOfCards = 5): CardName[] => {
+  const cards: CardName[] = [
     'Boar',
     'Cobra',
     'Crab',
@@ -43,25 +57,57 @@ export const generateRandomCards = (
 };
 
 export const getCards = (
-  cards: CardTypes.CardName[],
-  cardFor: CardTypes.CardsRequestTypes
-): CardTypes.CardName[] => {
+  cards: CardName[],
+  cardFor: CardsRequestTypes
+): CardName[] => {
   switch (cardFor) {
-    case CardTypes.HAND_BLUE:
+    case HAND_BLUE:
       return [cards[0], cards[1]];
-    case CardTypes.HAND_RED:
+    case HAND_RED:
       return [cards[2], cards[3]];
-    case CardTypes.NEXT_CARD:
+    case NEXT_CARD:
       return [cards[4]];
     default:
       return cards;
   }
 };
 
+export const getCardFor = (
+  currentPlayer: PlayerType,
+  otherPlayer: PlayerType
+): CardsRequestTypes => {
+  switch (currentPlayer) {
+    case PLAYER_BLUE:
+      return HAND_BLUE;
+    case PLAYER_RED:
+      return HAND_RED;
+    case PLAYER_AI:
+      return otherPlayer === PLAYER_BLUE ? HAND_RED : HAND_BLUE;
+    default:
+      return NEXT_CARD;
+  }
+};
+
+export const getPlayerCards = (
+  cards: CardName[],
+  players: PlayerType[],
+  currentPlayer: PlayerType
+): CardName[] => {
+  const currentPlayerIndex = players.indexOf(currentPlayer);
+  const otherPlayerIndex = 1 - currentPlayerIndex;
+
+  const cardFor = getCardFor(
+    players[currentPlayerIndex],
+    players[otherPlayerIndex]
+  );
+
+  return getCards(cards, cardFor);
+};
+
 export const cardSwapper = (
-  cardNames: CardTypes.CardName[],
-  selectedCard: CardTypes.CardName | undefined
-): CardTypes.CardName[] => {
+  cardNames: CardName[],
+  selectedCard: CardName | undefined
+): CardName[] => {
   if (selectedCard) {
     const cards = cardNames.slice();
     const indexOfSelectedCard = cards.indexOf(selectedCard);
@@ -74,3 +120,8 @@ export const cardSwapper = (
 
   return cardNames;
 };
+
+export const pieceBelongsToPlayer = (
+  playerPiecePositions: PieceTuple[],
+  pieceID: number
+): boolean => playerPiecePositions.some(([id]) => id === pieceID);
