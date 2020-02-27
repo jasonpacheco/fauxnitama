@@ -1,45 +1,131 @@
-import React from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import BoardSetup from '../components/BoardSetup/BoardSetupNew';
 
-import { NEXT_CARD, HAND_RED, HAND_BLUE } from '../store/engine/card/types';
+import {
+  NEXT_CARD,
+  HAND_RED,
+  HAND_BLUE,
+} from '../store/engine/types/cardTypes';
 import { AppState } from '../store/engine';
-import { CardName } from '../store/engine/card/types';
-import { selectCard } from '../store/engine/card/actions';
+import { CardName } from '../store/engine/types/cardTypes';
+
+import {
+  onGameInitialization,
+  onClickCard,
+  onClickSquare,
+} from '../store/engine/actions/eventActions';
 import { getCards } from '../store/utils';
+import {
+  FullWrapper,
+  BoardHandWrapper,
+  Spacer,
+} from '../components/BoardSetup/styles/BoardSetup';
+import Card from '../components/Card/CardNew';
+import Hand from '../components/BoardSetup/HandNew';
+import Board from '../components/Board/BoardNew';
+import RoundModal from '../components/Modal/RoundModal';
+import { PlayerType, Colors, BLUE } from '../store/engine/types/gameTypes';
 
 interface StateProps {
-  handBlue: CardName[];
-  handRed: CardName[];
-  nextCard: CardName[];
+  handP1: CardName[];
+  handP2: CardName[];
+  nextCard: CardName;
+  currentPlayer: PlayerType;
+  players: PlayerType[];
+  pauseGame: boolean;
+  colors: Colors[];
+  selectedCardName: CardName | '';
 }
 
 type BoardSetupContainerProps = PropsFromRedux;
 
 const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
-  handBlue,
-  handRed,
+  handP1,
+  handP2,
   nextCard,
-  selectCard,
-}) => (
-  <BoardSetup
-    hands={[handBlue, handRed]}
-    nextCard={nextCard[0]}
-    selectCard={selectCard}
-  />
-);
+  currentPlayer,
+  players,
+  onGameInitialization,
+  onClickCard,
+  pauseGame,
+  onClickSquare,
+  colors,
+  selectedCardName,
+}) => {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    onGameInitialization();
+    setIsLoading(false);
+  }, []);
+
+  const handleClickCard = (cardName: CardName): void => {
+    onClickCard(cardName);
+  };
+
+  if (isLoading) {
+    return <div></div>;
+  }
+
+  return (
+    <Fragment>
+      <FullWrapper playerColorToRight={currentPlayer} colors={colors}>
+        <Card
+          name={nextCard}
+          isCurrentlyActive={false}
+          invert={currentPlayer === players[0]}
+        />
+        <BoardHandWrapper>
+          <Hand
+            hand={handP1}
+            invert
+            isCurrentlyActive={!pauseGame && currentPlayer === players[0]}
+            handleClickCard={handleClickCard}
+            selectedCardName={selectedCardName}
+          />
+          <Board onClickSquare={onClickSquare} />
+          <Hand
+            hand={handP2}
+            isCurrentlyActive={!pauseGame && currentPlayer === players[1]}
+            handleClickCard={handleClickCard}
+            selectedCardName={selectedCardName}
+          />
+        </BoardHandWrapper>
+
+        <Spacer>
+          <RoundModal />
+        </Spacer>
+      </FullWrapper>
+    </Fragment>
+  );
+};
 
 const mapStateToProps = (state: AppState): StateProps => {
-  const { cards } = state.card;
+  const { cards, selectedCardName } = state.cardReducer;
+  const { currentPlayer, players, colors } = state.gameReducer.player;
+  const { pauseGame } = state.gameReducer.properties;
+  const handP1 = (colors[0] === BLUE
+    ? getCards(cards, HAND_BLUE)
+    : getCards(cards, HAND_RED)) as CardName[];
+
+  const handP2 = (colors[0] === BLUE
+    ? getCards(cards, HAND_RED)
+    : getCards(cards, HAND_BLUE)) as CardName[];
   return {
-    handBlue: getCards(cards, HAND_BLUE),
-    handRed: getCards(cards, HAND_RED),
-    nextCard: getCards(cards, NEXT_CARD),
+    handP1,
+    handP2,
+    nextCard: getCards(cards, NEXT_CARD) as CardName,
+    currentPlayer: currentPlayer as PlayerType,
+    players,
+    pauseGame,
+    colors,
+    selectedCardName,
   };
 };
 
 const connector = connect(mapStateToProps, {
-  selectCard,
+  onGameInitialization,
+  onClickCard,
+  onClickSquare,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

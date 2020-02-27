@@ -15,19 +15,34 @@ import {
   SET_IS_GAME_COMPLETE,
   SET_WINNER_BY_END_METHOD,
 } from '../types/gameTypes';
-import { OnClickSquareAction, ON_CLICK_SQUARE } from '../types/eventTypes';
+import {
+  OnClickSquareAction,
+  ON_CLICK_SQUARE,
+  OnGameInitializationAction,
+  ON_GAME_INITIALIZATION,
+} from '../types/eventTypes';
 
 const initialPlayerState: PlayerState = {
   currentPlayer: '',
   players: [],
   gameType: '',
+  colors: [],
 };
 
 export const playerReducer = (
   state = initialPlayerState,
-  action: PlayerActions | OnClickSquareAction
+  action: PlayerActions | OnClickSquareAction | OnGameInitializationAction
 ): PlayerState => {
   switch (action.type) {
+    case ON_GAME_INITIALIZATION:
+      const index = action.players.indexOf(action.firstPlayer);
+      return {
+        ...state,
+        gameType: action.gameType,
+        players: action.players,
+        currentPlayer: index === -1 ? PLAYER_AI : action.firstPlayer,
+        colors: action.colors,
+      };
     case SET_GAME_TYPE:
       return {
         ...state,

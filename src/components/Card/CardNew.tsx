@@ -1,5 +1,4 @@
 import React from 'react';
-import CardModel from '../../interfaces/card.interface';
 import MiniBoard from './MiniBoard';
 import Gutter from './Gutter';
 
@@ -11,30 +10,26 @@ import {
   Character,
   Name,
 } from './styles/Card';
-import useGameContext from '../../context/useGameContext';
-import { CardName } from '../../store/engine/card/types';
+import { CardName } from '../../store/engine/types/cardTypes';
 import { cardNameToCard } from '../../utils/';
 
 interface CardProps {
   name: CardName;
   invert: boolean;
   isCurrentlyActive: boolean;
-  onCardClick?: (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    isActiveCard: boolean,
-    card: CardModel
-  ) => void;
+  handleClickCard?: (cardName: CardName) => void;
+  selectedCardName?: CardName | '';
 }
 
 const Card: React.FC<CardProps> = ({
   name,
   invert,
   isCurrentlyActive,
-  onCardClick = (): void => {
+  selectedCardName,
+  handleClickCard = (): void => {
     return;
   },
 }) => {
-  const { clickedCard } = useGameContext();
   const card = cardNameToCard(name);
   const { image, color, stamp, miniBoard } = card;
 
@@ -42,8 +37,8 @@ const Card: React.FC<CardProps> = ({
     <CardWrapper
       invert={invert}
       isActive={isCurrentlyActive}
-      onClick={(e): void => onCardClick(e, isCurrentlyActive, card)}
-      isCurrentCard={card.name === clickedCard?.name}
+      onClick={(): void => handleClickCard(name)}
+      isCurrentCard={card.name === selectedCardName}
     >
       <Main>
         <LeftHalf>

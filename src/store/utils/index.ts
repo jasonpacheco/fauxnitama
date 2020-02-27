@@ -16,7 +16,49 @@ import {
   HAND_RED,
   NEXT_CARD,
 } from '../engine/types/cardTypes';
-import { PiecePosition, PieceTuple } from '../engine/types/pieceTypes';
+import {
+  PieceTuple,
+  PiecePosition,
+  MASTER,
+  STUDENT,
+} from '../engine/types/pieceTypes';
+
+export interface PieceProperties {
+  id: number;
+  type: typeof MASTER | typeof STUDENT;
+  color: typeof PLAYER_BLUE | typeof PLAYER_RED;
+}
+
+export const idToPiece = (
+  id: number,
+  piecePositions: PiecePosition,
+  players: PlayerType[]
+): PieceProperties | undefined => {
+  const player1 = piecePositions[players[0]].find(
+    pieceTuple => pieceTuple[0] === id
+  );
+
+  if (player1) {
+    const color =
+      players[0] === PLAYER_AI
+        ? players[1] === PLAYER_BLUE
+          ? PLAYER_RED
+          : PLAYER_BLUE
+        : (players[0] as typeof PLAYER_BLUE | typeof PLAYER_RED);
+    return { id, type: player1[1], color };
+  }
+
+  const player2 = piecePositions[players[1]].find(
+    pieceTuple => pieceTuple[0] === id
+  );
+
+  if (player2) {
+    const color = players[1] as typeof PLAYER_BLUE | typeof PLAYER_RED;
+    return { id, type: player2[1], color };
+  }
+
+  return undefined;
+};
 
 export const setPlayersByGameType = (
   gameType: GameType,
@@ -59,14 +101,14 @@ export const generateRandomCards = (numberOfCards = 5): CardName[] => {
 export const getCards = (
   cards: CardName[],
   cardFor: CardsRequestTypes
-): CardName[] => {
+): CardName[] | CardName => {
   switch (cardFor) {
     case HAND_BLUE:
       return [cards[0], cards[1]];
     case HAND_RED:
       return [cards[2], cards[3]];
     case NEXT_CARD:
-      return [cards[4]];
+      return cards[4];
     default:
       return cards;
   }
@@ -101,7 +143,7 @@ export const getPlayerCards = (
     players[otherPlayerIndex]
   );
 
-  return getCards(cards, cardFor);
+  return getCards(cards, cardFor) as CardName[];
 };
 
 export const cardSwapper = (

@@ -1,12 +1,14 @@
 import styled from 'styled-components/macro';
 import BlueTempleArch from '../../../assets/_blue/temple_arch.svg';
 import RedTempleArch from '../../../assets/_red/temple_arch.svg';
+import { BLUE, RED, Colors } from '../../../store/engine/types/gameTypes';
 
 interface SquareWrapperStyleProps {
-  hasTempleBackground: string | boolean;
+  hasTempleBackground: typeof BLUE | typeof RED | boolean;
   highlightClickedPiece: boolean;
   highlightValidSquare: boolean;
   isActive: boolean;
+  colors: Colors[];
 }
 
 export const SquareWrapper = styled.div<SquareWrapperStyleProps>`
@@ -30,11 +32,15 @@ export const SquareWrapper = styled.div<SquareWrapperStyleProps>`
   }`
       : ''};
 
-  ${({ hasTempleBackground }): string =>
+  ${({ hasTempleBackground, colors }): string =>
     hasTempleBackground
-      ? hasTempleBackground === 'Red'
-        ? `background-image: url(${RedTempleArch})`
-        : `background-image: url(${BlueTempleArch})`
+      ? hasTempleBackground === colors[0]
+        ? `background-image: url(${
+            colors[0] === BLUE ? BlueTempleArch : RedTempleArch
+          }); transform: rotate(180deg);`
+        : `background-image: url(${
+            colors[1] === RED ? RedTempleArch : BlueTempleArch
+          })`
       : ''};
 `;
 

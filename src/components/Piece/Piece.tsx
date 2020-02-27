@@ -6,13 +6,17 @@ import RedMaster from '../../assets/_red/master.svg';
 import RedStudent from '../../assets/_red/student.svg';
 import { useDrag } from 'react-dnd';
 import dndTypes from '../../types/dndTypes';
-import useGameContext from '../../context/useGameContext';
-import { Piece as IPiece } from '../../interfaces/context.interface';
-import { TEMPLE_ID_BLUE, TEMPLE_ID_RED } from '../../utils/constants';
+import { TEMPLE_ID_P1, TEMPLE_ID_P2 } from '../../utils/constants';
+import { PieceProperties } from '../../store/utils';
+import { PLAYER_BLUE } from '../../store/engine/types/gameTypes';
+import { PieceTuple, MASTER } from '../../store/engine/types/pieceTypes';
 
 interface PieceProps {
   isActive: boolean;
-  piece: IPiece;
+  isRotated: boolean;
+  piece: PieceProperties;
+  selectedPiece: PieceTuple | [];
+  handleClickSquare: (selectedSquareID: number) => void;
 }
 
 const getPieceSVG = (type: string | undefined): string | null => {
@@ -30,14 +34,17 @@ const getPieceSVG = (type: string | undefined): string | null => {
   }
 };
 
-const Piece: React.FC<PieceProps> = ({ isActive, piece }) => {
-  const { color, type, currentPositionID } = piece;
-
-  const { board, clickedPiece, setClickedPiece } = useGameContext();
-
+const Piece: React.FC<PieceProps> = ({
+  isActive,
+  isRotated,
+  piece,
+  selectedPiece,
+  handleClickSquare,
+}) => {
+  const { color, type, id } = piece;
   const [collectedProps, drag] = useDrag({
-    item: { id: currentPositionID, type: dndTypes.PIECE },
-    begin: () => ({ id: currentPositionID, type: dndTypes.PIECE }),
+    item: { id, type: dndTypes.PIECE },
+    begin: () => ({ id, type: dndTypes.PIECE }),
     canDrag: () => isActive,
     collect: monitor => ({
       isClickedForDrag: monitor.isDragging(),
@@ -45,24 +52,27 @@ const Piece: React.FC<PieceProps> = ({ isActive, piece }) => {
   });
 
   if (collectedProps.isClickedForDrag) {
-    const draggedPiece = board[currentPositionID].piece;
-    if (draggedPiece && draggedPiece !== clickedPiece) {
-      setClickedPiece(draggedPiece);
+    const draggedPiece = piece;
+    if (draggedPiece && selectedPiece && draggedPiece.id !== selectedPiece[0]) {
+      handleClickSquare(draggedPiece.id);
     }
     return (
       <DragSource
         ref={drag}
         hasTempleBackground={
-          (currentPositionID === TEMPLE_ID_BLUE && 'Blue') ||
-          (currentPositionID === TEMPLE_ID_RED && 'Red')
+          (id === TEMPLE_ID_P1 && 'Blue') || (id === TEMPLE_ID_P2 && 'Red')
         }
       />
     );
   }
 
-  const typeOfPiece = getPieceSVG(`${color}-${type}`);
+  const typeOfPiece = getPieceSVG(
+    `${color === PLAYER_BLUE ? 'Blue' : 'Red'}-${
+      type === MASTER ? 'Master' : 'Student'
+    }`
+  );
   return (
-    <PieceWrapper isActive={isActive} isRotated={color === 'Red'} ref={drag}>
+    <PieceWrapper isActive={isActive} isRotated={isRotated} ref={drag}>
       {typeOfPiece && <img src={typeOfPiece} alt={type} />}
     </PieceWrapper>
   );

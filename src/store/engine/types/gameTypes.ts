@@ -5,6 +5,8 @@ export const SET_GAME_TYPE = 'SET_GAME_TYPE';
 export const SET_PLAYERS = 'SET_PLAYERS';
 export const PLAYER_BLUE = 'PLAYER_BLUE';
 export const PLAYER_RED = 'PLAYER_RED';
+export const BLUE = 'BLUE';
+export const RED = 'RED';
 export const PLAYER_AI = 'PLAYER_AI';
 export const CAPTURE_MASTER = 'CAPTURE_MASTER';
 export const CAPTURE_TEMPLE = 'CAPTURE_TEMPLE';
@@ -14,6 +16,8 @@ export const ADD_TO_HISTORY = 'ADD_TO_HISTORY';
 export const SET_IS_GAME_COMPLETE = 'SET_IS_GAME_COMPLETE';
 export const SET_WINNER_BY_END_METHOD = 'SET_WINNER_BY_END_METHOD';
 export const SET_CURRENT_PLAYER = 'SET_CURRENT_PLAYER';
+
+export type Colors = typeof BLUE | typeof RED;
 
 export type PlayerType =
   | typeof PLAYER_AI
@@ -42,6 +46,7 @@ export interface PlayerState {
   currentPlayer: PlayerType | '';
   players: PlayerType[];
   gameType: GameType | '';
+  colors: Colors[];
 }
 
 interface SetPlayers {

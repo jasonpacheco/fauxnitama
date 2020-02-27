@@ -1,5 +1,4 @@
 import {
-  INITIALIZE_PIECE_POSITIONS,
   PieceState,
   PieceType,
   PieceActions,
@@ -18,6 +17,10 @@ import {
   ON_CLICK_PIECE,
   OnClickSquareAction,
   ON_CLICK_SQUARE,
+  OnGameInitializationAction,
+  ON_GAME_INITIALIZATION,
+  OnClickCardAction,
+  ON_CLICK_CARD,
 } from '../types/eventTypes';
 
 const initialState: PieceState = {
@@ -35,10 +38,20 @@ export const isMoveCapture = (
 
 export const pieceReducer = (
   state = initialState,
-  action: PieceActions | OnClickPieceAction | OnClickSquareAction
+  action:
+    | PieceActions
+    | OnClickPieceAction
+    | OnClickSquareAction
+    | OnClickCardAction
+    | OnGameInitializationAction
 ): PieceState => {
   switch (action.type) {
-    case INITIALIZE_PIECE_POSITIONS:
+    case ON_CLICK_CARD:
+      return {
+        ...state,
+        validMoves: action.validMoves,
+      };
+    case ON_GAME_INITIALIZATION:
       const [player1, player2] = action.players;
       return {
         ...state,
@@ -116,6 +129,7 @@ export const pieceReducer = (
     case ON_CLICK_SQUARE:
       return {
         ...state,
+        selectedPiece: [],
         validMoves: [],
         halfmoves: action.halfmoves,
         piecePositions: {

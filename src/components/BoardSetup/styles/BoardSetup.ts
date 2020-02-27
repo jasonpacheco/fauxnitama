@@ -1,16 +1,17 @@
 import styled from 'styled-components/macro';
-import { PlayerColor } from '../../../interfaces/context.interface';
+import { PlayerType, Colors } from '../../../store/engine/types/gameTypes';
 
 interface FullWrapperStyleProps {
-  playerColorToRight: PlayerColor;
+  playerColorToRight: PlayerType;
+  colors: Colors[];
 }
 
 export const FullWrapper = styled.div<FullWrapperStyleProps>`
   margin: 0 auto;
   width: 80rem;
   display: flex;
-  flex-direction: ${({ playerColorToRight }): string =>
-    playerColorToRight === 'Blue' ? 'row-reverse' : 'row'};
+  flex-direction: ${({ playerColorToRight, colors }): string =>
+    playerColorToRight.includes(colors[0]) ? 'row' : 'row-reverse'};
   align-items: center;
   justify-content: center;
 `;

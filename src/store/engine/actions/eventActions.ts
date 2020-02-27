@@ -1,5 +1,5 @@
 import { CardName } from '../types/cardTypes';
-import { ThunkResult, AppState } from '..';
+import { ThunkResult } from '..';
 import {
   ON_CLICK_CARD,
   OnClickCardAction,
@@ -7,6 +7,8 @@ import {
   OnClickPieceAction,
   ON_CLICK_SQUARE,
   OnClickSquareAction,
+  ON_GAME_INITIALIZATION,
+  OnGameInitializationAction,
 } from '../types/eventTypes';
 import getMoves from '../../utils/getMoves';
 import { cardNameToCard } from '../../../utils';
@@ -14,13 +16,52 @@ import {
   PlayerType,
   CAPTURE_TEMPLE,
   CAPTURE_MASTER,
-  EndMethod,
+  GameType,
+  PLAYER_BLUE,
+  PLAYER_RED,
+  LOCAL_MULTIPLAYER,
+  Colors,
+  PLAYER_AI,
+  RED,
+  BLUE,
 } from '../types/gameTypes';
 import { PiecePosition, PieceTuple, MASTER } from '../types/pieceTypes';
-import { pieceBelongsToPlayer, getPlayerCards, cardSwapper } from '../../utils';
-import { cardReducer } from '../reducers/cardReducers';
+import { getPlayerCards, cardSwapper, setPlayersByGameType } from '../../utils';
 
-// export const onGameInitialization = () => {};
+export const onGameInitializationAction = (
+  gameType: GameType,
+  players: PlayerType[],
+  firstPlayer: PlayerType,
+  colors: Colors[]
+): OnGameInitializationAction => ({
+  type: ON_GAME_INITIALIZATION,
+  gameType,
+  players,
+  firstPlayer,
+  colors,
+});
+
+export const onGameInitialization = (
+  gameType = LOCAL_MULTIPLAYER as GameType,
+  selectedPlayer = PLAYER_BLUE as PlayerType
+): ThunkResult<void> => (dispatch, getState): void => {
+  const {
+    cardReducer: { cards },
+  } = getState();
+  const firstPlayerColor = cardNameToCard(cards[4]).stamp;
+
+  const firstPlayer = firstPlayerColor === 'Blue' ? PLAYER_BLUE : PLAYER_RED;
+
+  const players = setPlayersByGameType(gameType, selectedPlayer);
+  const colors: Colors[] =
+    players[0] === PLAYER_AI
+      ? players[1] === PLAYER_BLUE
+        ? [RED, BLUE]
+        : [BLUE, RED]
+      : ([players[0].slice(7), players[1].slice(7)] as Colors[]);
+  dispatch(onGameInitializationAction(gameType, players, firstPlayer, colors));
+  return;
+};
 
 export const onClickCardAction = (
   selectedCardName: CardName,
@@ -187,8 +228,8 @@ export const onClickSquare = (selectedSquareID: number): ThunkResult<void> => (
 
     if (clickPieceAction) {
       dispatch(clickPieceAction);
-      return;
     }
+    return;
   }
 
   // Fire if empty square is a valid move
@@ -206,7 +247,6 @@ export const onClickSquare = (selectedSquareID: number): ThunkResult<void> => (
 
   if (clickSquareAction) {
     dispatch(clickSquareAction);
-    return;
   }
 
   return;
