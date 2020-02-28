@@ -30,6 +30,7 @@ export interface OnClickSquareAction {
   winner: PlayerType | '';
   isGameComplete: boolean;
   cards: CardName[];
+  move: string[];
 }
 
 export interface OnGameInitializationAction {

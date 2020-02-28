@@ -1,15 +1,13 @@
-import {
-  PlayerColor,
-  Piece,
-  PlayerType,
-} from '../interfaces/context.interface';
 import { idToGridLocation } from '../utils';
+import { Colors, BLUE } from '../store/engine/types/gameTypes';
+import { CardName } from '../store/engine/types/cardTypes';
+import { PieceType } from '../store/engine/types/pieceTypes';
 /**
  *
- * @param player 'Blue' | 'Red', current player color.
+ * @param player BLUE | RED, current player color.
  * @param didPass true if player passed their turn.
  * @param didCapture true if player's move captured opponent's piece.
- * @param cardName string name of the card used.
+ * @param cardName name of the card used.
  * @param piece (opt) player's Piece that committed move.
  * @param fromID (opt) numeric ID for piece's original position ID.
  * @param toID (opt) numeric ID for piece's final position ID.
@@ -17,25 +15,25 @@ import { idToGridLocation } from '../utils';
  * @param didCaptureTemple (opt) true if opposing temple was captured.
  */
 export const moveNotation = (
-  player: PlayerColor,
+  player: Colors,
   didPass: boolean,
   didCapture: boolean,
-  cardName: string,
-  pieceType?: PlayerType,
+  cardName: CardName,
+  pieceType?: PieceType,
   fromID?: number,
   toID?: number,
-  capturedPiece?: Piece,
+  capturedPieceType?: PieceType | undefined,
   didCaptureTemple?: boolean
 ): string[] => {
   if (didPass) {
-    return [cardName, `${player === 'Blue' ? 'BP' : 'RP'}`, '', ' pt ', ''];
+    return [cardName, `${player === BLUE ? 'BP' : 'RP'}`, '', ' pt ', ''];
   }
 
   const currentPlayerColor = player.charAt(0);
   const otherPlayerColor = currentPlayerColor === 'B' ? 'R' : 'B';
   const captured = didCaptureTemple
     ? 'T'
-    : capturedPiece?.type.charAt(0) === 'M'
+    : capturedPieceType?.charAt(0) === 'M'
     ? 'M'
     : '';
   const token0 = cardName;

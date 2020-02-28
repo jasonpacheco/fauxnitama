@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 import RestartIcon from '../../../assets/restart_icon.svg';
 import { Button, Wrapper } from '../styles';
-import { PlayerColor } from '../../../interfaces/context.interface';
+import { PlayerType, PLAYER_BLUE } from '../../../store/engine/types/gameTypes';
 
 export const EndMessageWrapper = styled(Wrapper)``;
 
@@ -14,19 +14,19 @@ export const EndMessageHeader = styled.div`
 `;
 
 interface EndMessageContentStyleProps {
-  winner: PlayerColor | undefined;
+  winner: PlayerType | '';
 }
 
 export const EndMessageContent = styled.div<EndMessageContentStyleProps>`
   & {
     .color--winner {
       color: ${(props): string =>
-        props.winner === 'Blue' ? '#1976D2' : '#D32F2F'};
+        props.winner === PLAYER_BLUE ? '#1976D2' : '#D32F2F'};
     }
 
     .color--loser {
       color: ${(props): string =>
-        props.winner === 'Blue' ? '#D32F2F' : '#1976D2'};
+        props.winner === PLAYER_BLUE ? '#D32F2F' : '#1976D2'};
     }
   }
 `;

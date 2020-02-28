@@ -27,6 +27,7 @@ import {
 } from '../types/gameTypes';
 import { PiecePosition, PieceTuple, MASTER } from '../types/pieceTypes';
 import { getPlayerCards, cardSwapper, setPlayersByGameType } from '../../utils';
+import { moveNotation } from '../../../interactive/notation';
 
 export const onGameInitializationAction = (
   gameType: GameType,
@@ -80,9 +81,14 @@ export const onClickCard = (selectedCardName: CardName): ThunkResult<void> => (
     cardReducer: { selectedCardName: stateSelectedCardName, cards },
     gameReducer: {
       player: { currentPlayer, players },
+      properties: { isGameComplete },
     },
     pieceReducer: { piecePositions, selectedPiece },
   } = getState();
+
+  if (isGameComplete) {
+    return;
+  }
 
   if (
     currentPlayer &&
@@ -156,7 +162,8 @@ export const onClickSquareAction = (
   halfmoves: number,
   players: PlayerType[],
   cards: CardName[],
-  selectedCardName: CardName
+  selectedCardName: CardName,
+  colors: Colors[]
 ): OnClickSquareAction | undefined => {
   const newCards = cardSwapper(cards, selectedCardName);
   if (
@@ -173,15 +180,34 @@ export const onClickSquareAction = (
     const updatedHalfmoves = opponentPiece ? 0 : halfmoves + 1;
     const isCaptureMaster =
       opponentPiece && opponentPiece[1] === MASTER ? CAPTURE_MASTER : '';
-
     const isCaptureTemple =
-      (currentPlayer === players[1] && selectedSquareID === 2) ||
-      (currentPlayer === players[0] && selectedSquareID === 22)
+      (currentPlayer === players[1] &&
+        selectedSquareID === 2 &&
+        selectedPiece[1] === MASTER) ||
+      (currentPlayer === players[0] &&
+        selectedSquareID === 22 &&
+        selectedPiece[1] === MASTER)
         ? CAPTURE_TEMPLE
         : '';
     const endMethod = isCaptureMaster || isCaptureTemple;
     const winner = endMethod ? currentPlayer : '';
     const isGameComplete = winner ? true : false;
+
+    const playerColor = currentPlayer.includes(colors[0])
+      ? colors[0]
+      : colors[1];
+    const capturedPieceType = opponentPiece && opponentPiece[1];
+    const notation = moveNotation(
+      playerColor,
+      false,
+      opponentPiece !== undefined,
+      selectedCardName,
+      selectedPiece[1],
+      selectedPiece[0],
+      selectedSquareID,
+      capturedPieceType,
+      isCaptureTemple === CAPTURE_TEMPLE
+    );
 
     return {
       type: ON_CLICK_SQUARE,
@@ -194,6 +220,7 @@ export const onClickSquareAction = (
       winner,
       isGameComplete,
       cards: newCards,
+      move: notation,
     };
   }
   return undefined;
@@ -206,10 +233,15 @@ export const onClickSquare = (selectedSquareID: number): ThunkResult<void> => (
   const {
     cardReducer: { selectedCardName, cards },
     gameReducer: {
-      player: { currentPlayer, players },
+      player: { currentPlayer, players, colors },
+      properties: { isGameComplete },
     },
     pieceReducer: { piecePositions, selectedPiece, validMoves, halfmoves },
   } = getState();
+
+  if (isGameComplete) {
+    return;
+  }
 
   const pieceFromSquare = getPieceFromSquare(
     selectedSquareID,
@@ -242,7 +274,8 @@ export const onClickSquare = (selectedSquareID: number): ThunkResult<void> => (
     halfmoves,
     players,
     cards,
-    selectedCardName as CardName
+    selectedCardName as CardName,
+    colors
   );
 
   if (clickSquareAction) {

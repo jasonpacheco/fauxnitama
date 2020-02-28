@@ -21,6 +21,14 @@ import {
   OnGameInitializationAction,
   ON_GAME_INITIALIZATION,
 } from '../types/eventTypes';
+import {
+  OnClickButtonPause,
+  ON_CLICK_BUTTON_PASS,
+  ON_CLICK_BUTTON_PAUSE,
+  OnClickButtonYesRestart,
+  ON_CLICK_BUTTON_YES_RESTART,
+  OnClickButtonPass,
+} from '../types/buttonTypes';
 
 const initialPlayerState: PlayerState = {
   currentPlayer: '',
@@ -31,9 +39,24 @@ const initialPlayerState: PlayerState = {
 
 export const playerReducer = (
   state = initialPlayerState,
-  action: PlayerActions | OnClickSquareAction | OnGameInitializationAction
+  action:
+    | PlayerActions
+    | OnClickSquareAction
+    | OnGameInitializationAction
+    | OnClickButtonYesRestart
+    | OnClickButtonPass
 ): PlayerState => {
   switch (action.type) {
+    case ON_CLICK_BUTTON_PASS:
+      return {
+        ...state,
+        currentPlayer: action.currentPlayer,
+      };
+    case ON_CLICK_BUTTON_YES_RESTART:
+      return {
+        ...state,
+        currentPlayer: action.currentPlayer,
+      };
     case ON_GAME_INITIALIZATION:
       const index = action.players.indexOf(action.firstPlayer);
       return {
@@ -106,9 +129,26 @@ export const initialState: PropertiesState = {
 
 export const propertiesReducer = (
   state = initialState,
-  action: PropertiesActions | OnClickSquareAction
+  action:
+    | PropertiesActions
+    | OnClickSquareAction
+    | OnClickButtonPause
+    | OnClickButtonYesRestart
+    | OnClickButtonPass
 ): PropertiesState => {
   switch (action.type) {
+    case ON_CLICK_BUTTON_PASS:
+      return {
+        ...state,
+        history: [...state.history, action.move],
+      };
+    case ON_CLICK_BUTTON_PAUSE:
+      return {
+        ...state,
+        pauseGame: !state.pauseGame,
+      };
+    case ON_CLICK_BUTTON_YES_RESTART:
+      return initialState;
     case SET_PAUSE_GAME:
       return {
         ...state,
@@ -136,6 +176,7 @@ export const propertiesReducer = (
         winner: action.winner,
         endMethod: action.endMethod,
         isGameComplete: action.isGameComplete,
+        history: [...state.history, action.move],
       };
     default:
       return state;

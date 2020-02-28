@@ -1,37 +1,31 @@
 import {
-  assignGridID,
+  getIDs,
   idToCoordinate,
   coordinateToID,
   movesToID,
   generateCardSet,
-  checkMaster,
-  checkTemple,
   idToGridLocation,
   cardNameToCard,
 } from './index';
 import constants from './constants';
-import { SquareData, Piece } from '../interfaces/context.interface';
+
 import CardTypes from '../types/cards';
 
-describe('tests for assignGridID', () => {
+describe('tests for getIDs', () => {
   test('returns an array of length rows * cols', () => {
-    expect(assignGridID()).toHaveLength(constants.BOARD_SQUARES);
+    expect(getIDs()).toHaveLength(constants.BOARD_SQUARES);
   });
 
-  test('returns {x: 0, y: 0, id: 0} as first element', () => {
-    expect(assignGridID()[0]).toMatchObject({ x: 0, y: 0, id: 0 });
+  test('returns 0 as first element', () => {
+    expect(getIDs()[0]).toEqual(0);
   });
 
-  test('returns {x: 1, y: 0, id: 5} as fifth element', () => {
-    expect(assignGridID()[5]).toMatchObject({ x: 1, y: 0, id: 5 });
+  test('returns 5 as fifth element', () => {
+    expect(getIDs()[5]).toEqual(5);
   });
 
-  test('returns {x: 4, y: 4, id: 24} as last element', () => {
-    expect(assignGridID()[constants.BOARD_SQUARES - 1]).toMatchObject({
-      x: 4,
-      y: 4,
-      id: 24,
-    });
+  test('returns 24 as last element', () => {
+    expect(getIDs()[constants.BOARD_SQUARES - 1]).toEqual(24);
   });
 });
 
@@ -152,109 +146,6 @@ describe('tests for moveToID', () => {
 describe('test for generateCardSet', () => {
   test('CardSet returns 5 elements', () => {
     expect(generateCardSet()).toHaveLength(5);
-  });
-});
-
-describe('test for checkMaster', () => {
-  const board: SquareData[] = [
-    {
-      id: 0,
-      piece: undefined,
-    },
-    {
-      id: 1,
-      piece: {
-        color: 'Blue',
-        type: 'Student',
-        currentPositionID: 1,
-      },
-    },
-    {
-      id: 2,
-      piece: {
-        color: 'Blue',
-        type: 'Master',
-        currentPositionID: 2,
-      },
-    },
-  ];
-
-  test('return false if cell id is null', () => {
-    expect(checkMaster(board, 0)).toBeFalsy();
-  });
-
-  test('return false if cell id is a piece but not master', () => {
-    expect(checkMaster(board, 1)).toBeFalsy();
-  });
-
-  test('return true if cell id is a master', () => {
-    expect(checkMaster(board, 2)).toBeTruthy();
-  });
-});
-
-describe('tests for checkTemple', () => {
-  const pieceBlueMaster: Piece = {
-    color: 'Blue',
-    type: 'Master',
-    currentPositionID: 0,
-  };
-  const pieceBlueStudent: Piece = {
-    color: 'Blue',
-    type: 'Student',
-    currentPositionID: 0,
-  };
-  const pieceRedMaster: Piece = {
-    color: 'Red',
-    type: 'Master',
-    currentPositionID: 0,
-  };
-  const pieceRedStudent: Piece = {
-    color: 'Red',
-    type: 'Student',
-    currentPositionID: 0,
-  };
-  test('returns false when master is not on a temple id', () => {
-    expect(checkTemple(pieceBlueMaster, 21)).toBeFalsy();
-  });
-
-  test('returns false when blue student is not on a temple id', () => {
-    expect(checkTemple(pieceBlueStudent, 21)).toBeFalsy();
-  });
-
-  test('returns false when red student is not on a temple id', () => {
-    expect(checkTemple(pieceRedStudent, 21)).toBeFalsy();
-  });
-
-  test('returns false when blue student is on a temple id of 2', () => {
-    expect(checkTemple(pieceBlueStudent, 2)).toBeFalsy();
-  });
-
-  test('returns false when red student is on a temple id of 2', () => {
-    expect(checkTemple(pieceRedStudent, 2)).toBeFalsy();
-  });
-
-  test('returns false when blue student is on a temple id of 22', () => {
-    expect(checkTemple(pieceBlueStudent, 22)).toBeFalsy();
-  });
-
-  test('returns false when red student is on a temple id of 22', () => {
-    expect(checkTemple(pieceRedStudent, 22)).toBeFalsy();
-  });
-
-  test('returns true when Blue master is on a temple id of 2', () => {
-    expect(checkTemple(pieceBlueMaster, 2)).toBeTruthy();
-  });
-
-  test('returns false when Blue master is on a temple id of 22', () => {
-    expect(checkTemple(pieceBlueMaster, 22)).toBeFalsy();
-  });
-
-  test('returns false when Red master is on a temple id of 2', () => {
-    expect(checkTemple(pieceRedMaster, 2)).toBeFalsy();
-  });
-
-  test('returns true when Red master is on a temple id of 22', () => {
-    expect(checkTemple(pieceRedMaster, 22)).toBeTruthy();
   });
 });
 

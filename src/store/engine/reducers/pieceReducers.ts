@@ -1,6 +1,5 @@
 import {
   PieceState,
-  PieceType,
   PieceActions,
   STUDENT,
   MASTER,
@@ -22,6 +21,12 @@ import {
   OnClickCardAction,
   ON_CLICK_CARD,
 } from '../types/eventTypes';
+import {
+  OnClickButtonYesRestart,
+  ON_CLICK_BUTTON_YES_RESTART,
+  ON_CLICK_BUTTON_PASS,
+  OnClickButtonPass,
+} from '../types/buttonTypes';
 
 const initialState: PieceState = {
   piecePositions: {},
@@ -29,12 +34,6 @@ const initialState: PieceState = {
   halfmoves: 0,
   validMoves: [],
 };
-
-export const isMoveCapture = (
-  otherPlayerArray: [number, PieceType][],
-  newLocationID: number
-): boolean =>
-  !!otherPlayerArray.find(pieceTuple => pieceTuple[0] === newLocationID);
 
 export const pieceReducer = (
   state = initialState,
@@ -44,8 +43,41 @@ export const pieceReducer = (
     | OnClickSquareAction
     | OnClickCardAction
     | OnGameInitializationAction
+    | OnClickButtonYesRestart
+    | OnClickButtonPass
 ): PieceState => {
   switch (action.type) {
+    case ON_CLICK_BUTTON_PASS:
+      return {
+        ...state,
+        selectedPiece: [],
+        validMoves: [],
+        halfmoves: state.halfmoves + 1,
+      };
+    case ON_CLICK_BUTTON_YES_RESTART:
+      return {
+        ...state,
+        selectedPiece: [],
+        halfmoves: 0,
+        validMoves: [],
+        piecePositions: {
+          ...state.piecePositions,
+          [action.players[0]]: [
+            [0, STUDENT],
+            [1, STUDENT],
+            [2, MASTER],
+            [3, STUDENT],
+            [4, STUDENT],
+          ],
+          [action.players[1]]: [
+            [20, STUDENT],
+            [21, STUDENT],
+            [22, MASTER],
+            [23, STUDENT],
+            [24, STUDENT],
+          ],
+        },
+      };
     case ON_CLICK_CARD:
       return {
         ...state,

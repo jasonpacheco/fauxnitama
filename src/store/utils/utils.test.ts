@@ -72,7 +72,7 @@ describe('tests for card utils', () => {
     });
 
     test('gets appropriate card for NEXT_CARD', () => {
-      expect(getCards(mockCards, NEXT_CARD)).toEqual(['Dragon']);
+      expect(getCards(mockCards, NEXT_CARD)).toEqual('Dragon');
     });
   });
 

@@ -1,17 +1,19 @@
 import { moveNotation } from './notation';
+import { BLUE, RED } from '../store/engine/types/gameTypes';
+import { STUDENT, MASTER } from '../store/engine/types/pieceTypes';
 
 describe('tests for moveNotation', () => {
   test('it will return BoarBe5xRd5', () => {
     expect(
       moveNotation(
-        'Blue',
+        BLUE,
         false,
         true,
         'Boar',
-        'Student',
+        STUDENT,
         24,
         19,
-        { currentPositionID: 19, type: 'Student', color: 'Red' },
+        STUDENT,
         false
       ).join('')
     ).toEqual('BoarBe5xRd5');
@@ -19,26 +21,18 @@ describe('tests for moveNotation', () => {
 
   test('it will return OxRMa3xBMc3++', () => {
     expect(
-      moveNotation(
-        'Red',
-        false,
-        true,
-        'Ox',
-        'Master',
-        2,
-        12,
-        { currentPositionID: 12, type: 'Master', color: 'Blue' },
-        false
-      ).join('')
+      moveNotation(RED, false, true, 'Ox', MASTER, 2, 12, MASTER, false).join(
+        ''
+      )
     ).toEqual('OxRMa3xBMc3++');
   });
   test('it will return HorseBe1 d1', () => {
     expect(
-      moveNotation('Blue', false, false, 'Horse', 'Student', 20, 15).join('')
+      moveNotation(BLUE, false, false, 'Horse', STUDENT, 20, 15).join('')
     ).toEqual('HorseBe1 d1');
   });
   test('it will return Cobra RP pt', () => {
-    expect(moveNotation('Red', true, false, 'Cobra').join('')).toEqual(
+    expect(moveNotation(RED, true, false, 'Cobra').join('')).toEqual(
       'CobraRP pt '
     );
   });

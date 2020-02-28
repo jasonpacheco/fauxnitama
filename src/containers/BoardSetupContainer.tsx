@@ -23,7 +23,7 @@ import {
 import Card from '../components/Card/CardNew';
 import Hand from '../components/BoardSetup/HandNew';
 import Board from '../components/Board/BoardNew';
-import RoundModal from '../components/Modal/RoundModal';
+import RoundModal from '../containers/RoundModalContainer';
 import { PlayerType, Colors, BLUE } from '../store/engine/types/gameTypes';
 
 interface StateProps {

@@ -9,6 +9,7 @@ import { CardActions } from './types/cardTypes';
 import { GameActions } from './types/gameTypes';
 import { PieceActions } from './types/pieceTypes';
 import { EventActions } from './types/eventTypes';
+import { ButtonActions } from './types/buttonTypes';
 
 export const rootReducer = combineReducers({
   cardReducer,
@@ -21,7 +22,8 @@ export type AppActions =
   | CardActions
   | GameActions
   | PieceActions
-  | EventActions;
+  | EventActions
+  | ButtonActions;
 export type ThunkResult<R> = ThunkAction<R, AppState, null, AppActions>;
 
 const configureStore = (): Store<AppState, AppActions> & {

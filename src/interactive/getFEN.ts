@@ -1,19 +1,21 @@
-import {
-  SquareData,
-  Piece,
-  PlayerColor,
-  PlayerHand,
-} from '../interfaces/context.interface';
-import CardModel from '../interfaces/card.interface';
 import constants from '../utils/constants';
+import { PiecePosition } from '../store/engine/types/pieceTypes';
+import { PlayerType, BLUE, Colors } from '../store/engine/types/gameTypes';
+import { idToPiece, PieceProperties, getCards } from '../store/utils';
+import {
+  CardName,
+  HAND_RED,
+  HAND_BLUE,
+  NEXT_CARD,
+} from '../store/engine/types/cardTypes';
 
-const pieceToCharacter = (piece: Piece): string => {
-  return piece.color === 'Blue'
+const pieceToCharacter = (piece: PieceProperties): string => {
+  return piece.color.includes(BLUE)
     ? piece.type.charAt(0).toUpperCase()
     : piece.type.charAt(0).toLowerCase();
 };
 
-const cardToFEN = (name: string, isBlue = false): string => {
+const cardToFEN = (name: CardName, isBlue = false): string => {
   interface Abbreviation {
     [key: string]: string;
   }
@@ -41,26 +43,38 @@ const cardToFEN = (name: string, isBlue = false): string => {
   return isBlue ? cardAbbreviation.toUpperCase() : cardAbbreviation;
 };
 
+const piecesList = (piecePositions: PiecePosition): number[] => {
+  const list: number[] = [];
+  Object.keys(piecePositions).map(key => {
+    piecePositions[key].map(([id]) => list.push(id));
+  });
+  return list;
+};
+
 export const getFEN = (
-  board: SquareData[],
-  currentPlayer: PlayerColor,
-  handBlue: PlayerHand,
-  handRed: PlayerHand,
-  nextCard: CardModel
+  piecePositions: PiecePosition,
+  players: PlayerType[],
+  cards: CardName[],
+  currentPlayer: PlayerType,
+  colors: Colors[]
 ): string => {
   let fen = '';
+  const list = piecesList(piecePositions);
   for (let row = 0; row < constants.BOARD_ROWS; row++) {
     let emptyCount = 0,
       fileString = '';
     for (let col = 0; col < constants.BOARD_COLS; col++) {
-      const pieceData = board[constants.BOARD_ROWS * row + col].piece;
-      if (!pieceData) ++emptyCount;
+      const id = constants.BOARD_ROWS * row + col;
+      const idHasPiece = list.includes(id);
+      if (!idHasPiece) ++emptyCount;
       else {
         if (emptyCount > 0) {
           fileString += `${emptyCount}`;
           emptyCount = 0;
         }
-        fileString += pieceToCharacter(pieceData);
+        fileString += pieceToCharacter(
+          idToPiece(id, piecePositions, players) as PieceProperties
+        );
       }
     }
 
@@ -70,14 +84,26 @@ export const getFEN = (
 
     fen += `${fileString}/`;
   }
-  const redCardFEN = `${cardToFEN(handRed.first.name)}-${cardToFEN(
-    handRed.second.name
+  const handRedNames = getCards(cards, HAND_RED) as CardName[];
+  const handBlueNames = getCards(cards, HAND_BLUE) as CardName[];
+  const nextCardName = getCards(cards, NEXT_CARD) as CardName;
+
+  const redCardFEN = `${cardToFEN(handRedNames[0])}-${cardToFEN(
+    handRedNames[1]
   )}`;
-  const blueCardFEN = `${cardToFEN(handBlue.first.name, true)}-${cardToFEN(
-    handBlue.second.name,
+  const blueCardFEN = `${cardToFEN(handBlueNames[0], true)}-${cardToFEN(
+    handBlueNames[1],
     true
   )}`;
-  const nextCardFEN = `${cardToFEN(nextCard.name, currentPlayer === 'Blue')}`;
 
-  return `${fen}${redCardFEN}/${blueCardFEN}/${nextCardFEN}`;
+  const currentPlayerIndex = players.indexOf(currentPlayer);
+
+  const nextCardFEN = `${cardToFEN(
+    nextCardName,
+    colors[currentPlayerIndex] === BLUE
+  )}`;
+
+  return colors[0] === BLUE
+    ? `${fen}${blueCardFEN}/${redCardFEN}/${nextCardFEN}`
+    : `${fen}${redCardFEN}/${blueCardFEN}/${nextCardFEN}`;
 };

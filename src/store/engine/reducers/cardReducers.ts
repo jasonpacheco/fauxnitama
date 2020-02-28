@@ -11,6 +11,12 @@ import {
   OnClickSquareAction,
   ON_CLICK_SQUARE,
 } from '../types/eventTypes';
+import {
+  OnClickButtonYesRestart,
+  ON_CLICK_BUTTON_YES_RESTART,
+  OnClickButtonPass,
+  ON_CLICK_BUTTON_PASS,
+} from '../types/buttonTypes';
 
 const initialState: CardState = {
   cards: generateRandomCards(),
@@ -19,9 +25,25 @@ const initialState: CardState = {
 
 export const cardReducer = (
   state = initialState,
-  action: CardActions | OnClickCardAction | OnClickSquareAction
+  action:
+    | CardActions
+    | OnClickCardAction
+    | OnClickSquareAction
+    | OnClickButtonYesRestart
+    | OnClickButtonPass
 ): CardState => {
   switch (action.type) {
+    case ON_CLICK_BUTTON_PASS:
+      return {
+        ...state,
+        selectedCardName: '',
+      };
+    case ON_CLICK_BUTTON_YES_RESTART:
+      return {
+        ...state,
+        cards: action.cards,
+        selectedCardName: '',
+      };
     case SELECT_CARD:
       return {
         ...state,

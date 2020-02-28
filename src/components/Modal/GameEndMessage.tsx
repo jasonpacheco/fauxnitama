@@ -8,7 +8,12 @@ import {
   RestartGraphic,
 } from './styles/GameEndMessage';
 
-import useGameContext from '../../context/useGameContext';
+import {
+  PlayerType,
+  EndMethod,
+  CAPTURE_MASTER,
+  DRAW,
+} from '../../store/engine/types/gameTypes';
 
 interface GameEndMessageProps {
   formattedTime: (currentTime: number, alt?: boolean) => string;
@@ -16,6 +21,9 @@ interface GameEndMessageProps {
   stopTimer: () => void;
   resetTimer: () => void;
   startTimer: () => void;
+  endMethod: EndMethod | '';
+  winner: PlayerType | '';
+  resetGame: () => void;
 }
 
 const GameEndMessage: React.FC<GameEndMessageProps> = ({
@@ -25,30 +33,28 @@ const GameEndMessage: React.FC<GameEndMessageProps> = ({
   resetTimer,
   startTimer,
   stopTimer,
+  endMethod,
+  winner,
+  resetGame,
 }) => {
-  const { clearGameState, winner, winMethod } = useGameContext();
-
   useEffect(() => {
     stopTimer();
     // eslint-disable-next-line
   }, [])
 
-  const handleButtonClick = (e: React.SyntheticEvent): void => {
-    e.preventDefault();
-    clearGameState();
+  const handleButtonClick = (): void => {
+    resetGame();
     resetTimer();
     startTimer();
   };
   return (
     <EndMessageWrapper>
       <EndMessageHeader>Game Over</EndMessageHeader>
-      {winMethod === 'draw' ? (
+      {endMethod === DRAW ? (
         <Fragment>
           <span>Draw... players reached halfmove limit.</span>
           <span> Game lasted {formattedTime(elapsedTime, true)}.</span>
-          <EndMessageButton
-            onClick={(e: React.SyntheticEvent): void => handleButtonClick(e)}
-          >
+          <EndMessageButton onClick={(): void => handleButtonClick()}>
             Restart Game
             <RestartGraphic />
           </EndMessageButton>
@@ -56,14 +62,13 @@ const GameEndMessage: React.FC<GameEndMessageProps> = ({
         </Fragment>
       ) : (
         <EndMessageContent winner={winner}>
-          <span className='color--winner'>{winner}</span> wins by capturing{' '}
+          <span className='color--winner'>{winner.slice(7)}</span> wins by
+          capturing{' '}
           <span className='color--loser'>
-            {winMethod === 'capture-master' ? 'Master' : 'Temple'}
+            {endMethod === CAPTURE_MASTER ? 'Master' : 'Temple'}
           </span>
           <span> in {formattedTime(elapsedTime, true)}.</span>
-          <EndMessageButton
-            onClick={(e: React.SyntheticEvent): void => handleButtonClick(e)}
-          >
+          <EndMessageButton onClick={(): void => handleButtonClick()}>
             Restart Game
             <RestartGraphic />
           </EndMessageButton>

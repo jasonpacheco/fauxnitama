@@ -1,5 +1,12 @@
 import { pieceReducer } from '../pieceReducers';
-import { PLAYER_AI, PLAYER_BLUE } from '../../types/gameTypes';
+import {
+  PLAYER_AI,
+  PLAYER_BLUE,
+  PLAYER_RED,
+  SINGLE_PLAYER,
+  RED,
+  BLUE,
+} from '../../types/gameTypes';
 import {
   PieceState,
   STUDENT,
@@ -10,6 +17,7 @@ import {
   RESET_HALFMOVE,
   INITIALIZE_PIECE_POSITIONS,
 } from '../../types/pieceTypes';
+import { ON_GAME_INITIALIZATION } from '../../types/eventTypes';
 
 describe('tests for pieceReducer', () => {
   const initialState: PieceState = {
@@ -199,8 +207,11 @@ describe('tests for pieceReducer', () => {
 
       expect(
         pieceReducer(initialState, {
-          type: INITIALIZE_PIECE_POSITIONS,
+          type: ON_GAME_INITIALIZATION,
           players: [PLAYER_AI, PLAYER_BLUE],
+          gameType: SINGLE_PLAYER,
+          firstPlayer: PLAYER_AI,
+          colors: [RED, BLUE],
         })
       ).toEqual({
         ...initialState,

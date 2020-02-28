@@ -1,28 +1,41 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { RoundModalWrapper, RoundModalButton } from './styles/RoundModal';
-import useTimer from '../../interactive/useTimer';
-import useKeyPress from '../../interactive/useKeyPress';
-import GameEndMessage from './GameEndMessage';
-import MoveHistoryModal from './MoveHistoryModal';
+import useTimer from '../interactive/useTimer';
+import useKeyPress from '../interactive/useKeyPress';
 import {
+  BUTTON_PROMPT,
+  BUTTON_YES,
   BUTTON_NO,
   BUTTON_PASS,
   BUTTON_PAUSE,
-  BUTTON_PROMPT,
-  BUTTON_YES,
-} from '../../types/buttonStates';
-import useGameContext from '../../context/useGameContext';
+} from '../types/buttonStates';
+import {
+  RoundModalWrapper,
+  RoundModalButton,
+} from '../components/Modal/styles/RoundModal';
+import HistoryModal from './HistoryModalContainer';
+import GameEndMessage from '../components/Modal/GameEndMessage';
+import { connect, ConnectedProps } from 'react-redux';
+import {
+  onClickButtonYesRestart,
+  onClickButtonPass,
+  onClickButtonPause,
+} from '../store/engine/actions/buttonActions';
+import { AppState } from '../store/engine';
+import { CardName } from '../store/engine/types/cardTypes';
+import { EndMethod, PlayerType } from '../store/engine/types/gameTypes';
 
-const RoundModal: React.FC = () => {
-  const {
-    clearGameState,
-    clickedCard,
-    hasGameFinished,
-    pauseGame,
-    setPassTurn,
-    setPauseGame,
-    winMethod,
-  } = useGameContext();
+type RoundModalContainerProps = PropsFromRedux;
+
+const RoundModalContainer: React.FC<RoundModalContainerProps> = ({
+  pauseGame,
+  selectedCardName,
+  isGameComplete,
+  endMethod,
+  winner,
+  onClickButtonYesRestart,
+  onClickButtonPass,
+  onClickButtonPause,
+}) => {
   const [showPrompt, setShowPrompt] = useState(false);
   const {
     elapsedTime,
@@ -33,7 +46,7 @@ const RoundModal: React.FC = () => {
   } = useTimer();
 
   const onPressDown = (): void => {
-    setPauseGame(!pauseGame);
+    onClickButtonPause();
     !pauseGame ? stopTimer() : startTimer();
   };
 
@@ -48,40 +61,39 @@ const RoundModal: React.FC = () => {
     switch (type) {
       case BUTTON_PROMPT:
         stopTimer();
-        setPauseGame(true);
+        onClickButtonPause();
         setShowPrompt(true);
         break;
       case BUTTON_YES:
         setShowPrompt(false);
-        clearGameState();
+        onClickButtonYesRestart();
         resetTimer();
         startTimer();
         break;
       case BUTTON_NO:
         setShowPrompt(false);
-        setPauseGame(false);
+        onClickButtonPause();
         startTimer();
         break;
       case BUTTON_PASS:
-        if (clickedCard) {
-          setPassTurn();
+        if (selectedCardName) {
+          onClickButtonPass();
         }
         break;
       case BUTTON_PAUSE:
         if (!pauseGame) {
           stopTimer();
-          setPauseGame(true);
         } else {
-          setPauseGame(false);
           startTimer();
         }
+        onClickButtonPause();
         break;
       default:
         return;
     }
   };
 
-  return !hasGameFinished ? (
+  return !isGameComplete ? (
     <RoundModalWrapper>
       {formattedTime(elapsedTime)}
       {showPrompt ? (
@@ -103,7 +115,7 @@ const RoundModal: React.FC = () => {
           </RoundModalButton>
           <RoundModalButton
             onClick={(): void => handleClick(BUTTON_PASS)}
-            disabled={clickedCard === undefined || pauseGame}
+            disabled={selectedCardName === '' || pauseGame}
           >
             Pass Turn
           </RoundModalButton>
@@ -113,23 +125,59 @@ const RoundModal: React.FC = () => {
         </Fragment>
       )}
 
-      <MoveHistoryModal />
+      <HistoryModal />
     </RoundModalWrapper>
   ) : (
     <Fragment>
-      {winMethod && (
+      {endMethod && (
         <GameEndMessage
           formattedTime={formattedTime}
           elapsedTime={elapsedTime}
           stopTimer={stopTimer}
           resetTimer={resetTimer}
           startTimer={startTimer}
+          endMethod={endMethod}
+          winner={winner}
+          resetGame={onClickButtonYesRestart}
         >
-          <MoveHistoryModal />
+          <HistoryModal />
         </GameEndMessage>
       )}
     </Fragment>
   );
 };
 
-export default RoundModal;
+interface StateProps {
+  pauseGame: boolean;
+  selectedCardName: CardName | '';
+  isGameComplete: boolean;
+  endMethod: EndMethod | '';
+  winner: PlayerType | '';
+}
+
+const mapStateToProps = (state: AppState): StateProps => {
+  const { selectedCardName } = state.cardReducer;
+  const {
+    pauseGame,
+    endMethod,
+    winner,
+    isGameComplete,
+  } = state.gameReducer.properties;
+  return {
+    pauseGame,
+    selectedCardName,
+    isGameComplete,
+    endMethod,
+    winner,
+  };
+};
+
+const connector = connect(mapStateToProps, {
+  onClickButtonYesRestart,
+  onClickButtonPass,
+  onClickButtonPause,
+});
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(RoundModalContainer);
