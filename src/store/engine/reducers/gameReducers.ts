@@ -141,6 +141,8 @@ export const propertiesReducer = (
       return {
         ...state,
         history: [...state.history, action.move],
+        endMethod: action.endMethod,
+        isGameComplete: action.isGameComplete,
       };
     case ON_CLICK_BUTTON_PAUSE:
       return {

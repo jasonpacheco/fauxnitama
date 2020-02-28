@@ -52,7 +52,7 @@ export const pieceReducer = (
         ...state,
         selectedPiece: [],
         validMoves: [],
-        halfmoves: state.halfmoves + 1,
+        halfmoves: action.halfmoves,
       };
     case ON_CLICK_BUTTON_YES_RESTART:
       return {

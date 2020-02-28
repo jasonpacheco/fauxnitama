@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { createGlobalStyle } from 'styled-components/macro';
@@ -20,13 +20,13 @@ const GlobalStyles = createGlobalStyle`
 const store = configureStore();
 console.log(store.getState());
 ReactDOM.render(
-  <React.Fragment>
+  <Fragment>
     <GlobalStyles />
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
         <App />
       </DndProvider>
     </Provider>
-  </React.Fragment>,
+  </Fragment>,
   document.getElementById('root')
 );

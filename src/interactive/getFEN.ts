@@ -45,8 +45,8 @@ const cardToFEN = (name: CardName, isBlue = false): string => {
 
 const piecesList = (piecePositions: PiecePosition): number[] => {
   const list: number[] = [];
-  Object.keys(piecePositions).map(key => {
-    piecePositions[key].map(([id]) => list.push(id));
+  Object.values(piecePositions).forEach(positionArray => {
+    positionArray.forEach(([id]) => list.push(id));
   });
   return list;
 };

@@ -1,5 +1,5 @@
 import { CardName } from './cardTypes';
-import { PlayerType } from './gameTypes';
+import { PlayerType, EndMethod } from './gameTypes';
 
 export const ON_CLICK_BUTTON_NO_RESTART = 'ON_CLICK_BUTTON_NO_RESTART';
 export const ON_CLICK_BUTTON_PASS = 'ON_CLICK_BUTTON_PASS';
@@ -21,6 +21,9 @@ export interface OnClickButtonPass {
   type: typeof ON_CLICK_BUTTON_PASS;
   move: string[];
   currentPlayer: PlayerType;
+  halfmoves: number;
+  endMethod: EndMethod | '';
+  isGameComplete: boolean;
 }
 export interface OnClickButtonPause {
   type: typeof ON_CLICK_BUTTON_PAUSE;

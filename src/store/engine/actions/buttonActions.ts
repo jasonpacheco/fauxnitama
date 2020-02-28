@@ -15,10 +15,12 @@ import {
   PLAYER_BLUE,
   PLAYER_AI,
   PlayerType,
+  DRAW,
 } from '../types/gameTypes';
 import { ThunkResult } from '..';
 import { moveNotation } from '../../../interactive/notation';
 import { getFEN } from '../../../interactive/getFEN';
+import { HALFMOVE_LIMIT } from '../../../utils/constants';
 
 export const onClickButtonNoRestart = (): OnClickButtonNoRestart => ({
   type: ON_CLICK_BUTTON_NO_RESTART,
@@ -52,6 +54,7 @@ export const onClickButtonPass = (): ThunkResult<void> => (
     gameReducer: {
       player: { currentPlayer, colors, players },
     },
+    pieceReducer: { halfmoves },
   } = getState();
   if (!selectedCardName) {
     return;
@@ -62,10 +65,20 @@ export const onClickButtonPass = (): ThunkResult<void> => (
   const move = moveNotation(playerColor, didPass, didCapture, selectedCardName);
   const opponent = currentPlayer === players[0] ? players[1] : players[0];
 
+  const halfmovesLimit = HALFMOVE_LIMIT;
+
+  const updatedHalfmoves = halfmoves + 1;
+
+  const endMethod = updatedHalfmoves === halfmovesLimit ? DRAW : '';
+  const isGameComplete = endMethod ? true : false;
+
   dispatch({
     type: ON_CLICK_BUTTON_PASS,
     move,
     currentPlayer: opponent,
+    halfmoves: updatedHalfmoves,
+    endMethod,
+    isGameComplete,
   });
 };
 

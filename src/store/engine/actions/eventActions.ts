@@ -24,10 +24,16 @@ import {
   PLAYER_AI,
   RED,
   BLUE,
+  DRAW,
 } from '../types/gameTypes';
 import { PiecePosition, PieceTuple, MASTER } from '../types/pieceTypes';
 import { getPlayerCards, cardSwapper, setPlayersByGameType } from '../../utils';
 import { moveNotation } from '../../../interactive/notation';
+import {
+  TEMPLE_ID_P1,
+  TEMPLE_ID_P2,
+  HALFMOVE_LIMIT,
+} from '../../../utils/constants';
 
 export const onGameInitializationAction = (
   gameType: GameType,
@@ -176,27 +182,35 @@ export const onClickSquareAction = (
       selectedSquareID,
       piecePositions[opponent]
     );
+    const halfmovesLimit = HALFMOVE_LIMIT;
 
     const updatedHalfmoves = opponentPiece ? 0 : halfmoves + 1;
+
     const isCaptureMaster =
       opponentPiece && opponentPiece[1] === MASTER ? CAPTURE_MASTER : '';
+
     const isCaptureTemple =
-      (currentPlayer === players[1] &&
-        selectedSquareID === 2 &&
-        selectedPiece[1] === MASTER) ||
-      (currentPlayer === players[0] &&
-        selectedSquareID === 22 &&
-        selectedPiece[1] === MASTER)
+      ((currentPlayer === players[1] && selectedSquareID === TEMPLE_ID_P1) ||
+        (currentPlayer === players[0] && selectedSquareID === TEMPLE_ID_P2)) &&
+      selectedPiece[1] === MASTER
         ? CAPTURE_TEMPLE
         : '';
-    const endMethod = isCaptureMaster || isCaptureTemple;
-    const winner = endMethod ? currentPlayer : '';
-    const isGameComplete = winner ? true : false;
+
+    const endMethod =
+      isCaptureMaster ||
+      isCaptureTemple ||
+      (updatedHalfmoves === halfmovesLimit ? DRAW : '');
+
+    const winner = endMethod && endMethod !== DRAW ? currentPlayer : '';
+
+    const isGameComplete = endMethod ? true : false;
 
     const playerColor = currentPlayer.includes(colors[0])
       ? colors[0]
       : colors[1];
+
     const capturedPieceType = opponentPiece && opponentPiece[1];
+
     const notation = moveNotation(
       playerColor,
       false,
