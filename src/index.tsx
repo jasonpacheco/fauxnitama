@@ -18,7 +18,7 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 const store = configureStore();
-console.log(store.getState());
+
 ReactDOM.render(
   <Fragment>
     <GlobalStyles />

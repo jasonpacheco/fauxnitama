@@ -1,7 +1,6 @@
 import styled from 'styled-components/macro';
 import BlueShuriken from '../../../assets/_blue/shuriken.svg';
 import RedShuriken from '../../../assets/_red/shuriken.svg';
-import { PlayerColor } from '../../../interfaces/context.interface';
 
 export const GutterWrapper = styled.div`
   align-self: flex-end;
@@ -43,7 +42,7 @@ export const StampTooltip = styled.div<StampTooltipStyleProps>`
 `;
 
 interface StampStyleProps {
-  color: PlayerColor;
+  color: 'Blue' | 'Red';
 }
 
 export const Stamp = styled.div<StampStyleProps>`

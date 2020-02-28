@@ -1,8 +1,7 @@
-import { Coordinate, SquareData, Piece } from '../interfaces/context.interface';
 import CardModel, { CardName } from '../interfaces/card.interface';
 import cards from '../types/cards';
 import constants from './constants';
-const { BOARD_ROWS, BOARD_COLS, TEMPLE_ID_P1, TEMPLE_ID_P2 } = constants;
+const { BOARD_ROWS, BOARD_COLS } = constants;
 
 const {
   Boar,
@@ -32,6 +31,11 @@ export const getIDs = (): number[] => {
   }
   return idList;
 };
+
+interface Coordinate {
+  x: number;
+  y: number;
+}
 
 /**
  * Converts a [coordinate] of type <Coordinate> { x: number, y: number } to
@@ -144,29 +148,4 @@ export const generateCardSet = (numCards = 5): CardModel[] => {
   }
 
   return cardSet;
-};
-
-export const checkMaster = (board: SquareData[], toID: number): boolean => {
-  const getCellByID = board[toID];
-  const cellPiece = getCellByID?.piece;
-  return cellPiece?.type === 'Master';
-};
-
-export const checkTemple = (piece: Piece, toID: number): boolean => {
-  return (
-    piece.type === 'Master' &&
-    ((piece.color === 'Blue' && toID === TEMPLE_ID_P2) ||
-      (piece.color === 'Red' && toID === TEMPLE_ID_P1))
-  );
-};
-
-export const generateEmptyCells = (): SquareData[] => {
-  const cells = [];
-  for (let i = 5; i <= 19; i++) {
-    cells.push({
-      id: i,
-      piece: undefined,
-    });
-  }
-  return cells;
 };

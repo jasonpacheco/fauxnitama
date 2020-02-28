@@ -1,11 +1,6 @@
 import { useEffect } from 'react';
 
-export default (
-  targetKey: string,
-  onPressUp = (): void => {
-    return;
-  }
-): void => {
+export default (targetKey: string, onPressUp: () => void): void => {
   useEffect(() => {
     const handleUp = ({ key }: KeyboardEvent): void => {
       if (key === targetKey) {

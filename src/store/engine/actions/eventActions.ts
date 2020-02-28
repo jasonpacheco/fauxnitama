@@ -87,12 +87,12 @@ export const onClickCard = (selectedCardName: CardName): ThunkResult<void> => (
     cardReducer: { selectedCardName: stateSelectedCardName, cards },
     gameReducer: {
       player: { currentPlayer, players },
-      properties: { isGameComplete },
+      properties: { isGameComplete, pauseGame },
     },
     pieceReducer: { piecePositions, selectedPiece },
   } = getState();
 
-  if (isGameComplete) {
+  if (isGameComplete || pauseGame) {
     return;
   }
 
@@ -248,12 +248,12 @@ export const onClickSquare = (selectedSquareID: number): ThunkResult<void> => (
     cardReducer: { selectedCardName, cards },
     gameReducer: {
       player: { currentPlayer, players, colors },
-      properties: { isGameComplete },
+      properties: { isGameComplete, pauseGame },
     },
     pieceReducer: { piecePositions, selectedPiece, validMoves, halfmoves },
   } = getState();
 
-  if (isGameComplete) {
+  if (isGameComplete || pauseGame) {
     return;
   }
 

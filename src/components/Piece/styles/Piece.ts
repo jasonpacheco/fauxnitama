@@ -2,7 +2,6 @@ import styled from 'styled-components/macro';
 
 import BlueTempleArch from '../../../assets/_blue/temple_arch.svg';
 import RedTempleArch from '../../../assets/_red/temple_arch.svg';
-import { PlayerColor } from '../../../interfaces/context.interface';
 
 interface PieceWrapperStyleProps {
   isActive: boolean;
@@ -31,7 +30,7 @@ export const PieceWrapper = styled.div<PieceWrapperStyleProps>`
 `;
 
 interface DragSourceProps {
-  hasTempleBackground: PlayerColor | boolean;
+  hasTempleBackground: 'Blue' | 'Red' | boolean;
 }
 
 export const DragSource = styled.div<DragSourceProps>`

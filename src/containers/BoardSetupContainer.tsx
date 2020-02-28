@@ -23,6 +23,7 @@ import {
 import Card from '../components/Card/CardNew';
 import Hand from '../components/BoardSetup/HandNew';
 import Board from '../components/Board/BoardNew';
+import ArrowKeyLogic from './ArrowKeyLogic';
 import RoundModal from '../containers/RoundModalContainer';
 import { PlayerType, Colors, BLUE } from '../store/engine/types/gameTypes';
 
@@ -68,6 +69,7 @@ const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
 
   return (
     <Fragment>
+      <ArrowKeyLogic />
       <FullWrapper playerColorToRight={currentPlayer} colors={colors}>
         <Card
           name={nextCard}
