@@ -25,6 +25,7 @@ import {
   RED,
   BLUE,
   DRAW,
+  SINGLE_PLAYER,
 } from '../types/gameTypes';
 import { PiecePosition, PieceTuple, MASTER } from '../types/pieceTypes';
 import { getPlayerCards, cardSwapper, setPlayersByGameType } from '../../utils';
@@ -49,8 +50,8 @@ export const onGameInitializationAction = (
 });
 
 export const onGameInitialization = (
-  gameType = LOCAL_MULTIPLAYER as GameType,
-  selectedPlayer = PLAYER_BLUE as PlayerType
+  gameType = SINGLE_PLAYER as GameType,
+  selectedPlayer = PLAYER_RED as PlayerType
 ): ThunkResult<void> => (dispatch, getState): void => {
   const {
     cardReducer: { cards },
@@ -205,9 +206,10 @@ export const onClickSquareAction = (
 
     const isGameComplete = endMethod ? true : false;
 
-    const playerColor = currentPlayer.includes(colors[0])
-      ? colors[0]
-      : colors[1];
+    const playerColor =
+      currentPlayer.includes(colors[0]) || currentPlayer === PLAYER_AI
+        ? colors[0]
+        : colors[1];
 
     const capturedPieceType = opponentPiece && opponentPiece[1];
 

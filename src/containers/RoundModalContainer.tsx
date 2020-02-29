@@ -22,7 +22,11 @@ import {
 } from '../store/engine/actions/buttonActions';
 import { AppState } from '../store/engine';
 import { CardName } from '../store/engine/types/cardTypes';
-import { EndMethod, PlayerType } from '../store/engine/types/gameTypes';
+import {
+  EndMethod,
+  PlayerType,
+  PLAYER_AI,
+} from '../store/engine/types/gameTypes';
 
 type RoundModalContainerProps = PropsFromRedux;
 
@@ -35,6 +39,7 @@ const RoundModalContainer: React.FC<RoundModalContainerProps> = ({
   onClickButtonYesRestart,
   onClickButtonPass,
   onClickButtonPause,
+  currentPlayer,
 }) => {
   const [showPrompt, setShowPrompt] = useState(false);
   const {
@@ -115,11 +120,18 @@ const RoundModalContainer: React.FC<RoundModalContainerProps> = ({
           </RoundModalButton>
           <RoundModalButton
             onClick={(): void => handleClick(BUTTON_PASS)}
-            disabled={selectedCardName === '' || pauseGame}
+            disabled={
+              selectedCardName === '' ||
+              pauseGame ||
+              currentPlayer === PLAYER_AI
+            }
           >
             Pass Turn
           </RoundModalButton>
-          <RoundModalButton onClick={(): void => handleClick(BUTTON_PAUSE)}>
+          <RoundModalButton
+            onClick={(): void => handleClick(BUTTON_PAUSE)}
+            disabled={currentPlayer === PLAYER_AI}
+          >
             {pauseGame ? 'Resume Match' : 'Pause'}
           </RoundModalButton>
         </Fragment>
@@ -153,6 +165,7 @@ interface StateProps {
   isGameComplete: boolean;
   endMethod: EndMethod | '';
   winner: PlayerType | '';
+  currentPlayer: PlayerType | '';
 }
 
 const mapStateToProps = (state: AppState): StateProps => {
@@ -163,12 +176,14 @@ const mapStateToProps = (state: AppState): StateProps => {
     winner,
     isGameComplete,
   } = state.gameReducer.properties;
+  const { currentPlayer } = state.gameReducer.player;
   return {
     pauseGame,
     selectedCardName,
     isGameComplete,
     endMethod,
     winner,
+    currentPlayer,
   };
 };
 

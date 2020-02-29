@@ -25,7 +25,13 @@ import Hand from '../components/BoardSetup/HandNew';
 import Board from '../components/Board/BoardNew';
 import ArrowKeyLogic from './ArrowKeyLogic';
 import RoundModal from '../containers/RoundModalContainer';
-import { PlayerType, Colors, BLUE } from '../store/engine/types/gameTypes';
+import {
+  PlayerType,
+  Colors,
+  BLUE,
+  PLAYER_AI,
+} from '../store/engine/types/gameTypes';
+import { aiRandomMove } from '../store/ai/actions';
 
 interface StateProps {
   handP1: CardName[];
@@ -52,12 +58,19 @@ const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
   onClickSquare,
   colors,
   selectedCardName,
+  aiRandomMove,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     onGameInitialization();
     setIsLoading(false);
   }, []);
+
+  useEffect(() => {
+    if (currentPlayer === PLAYER_AI) {
+      aiRandomMove();
+    }
+  }, [currentPlayer]);
 
   const handleClickCard = (cardName: CardName): void => {
     onClickCard(cardName);
@@ -70,7 +83,7 @@ const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
   return (
     <Fragment>
       <ArrowKeyLogic />
-      <FullWrapper playerColorToRight={currentPlayer} colors={colors}>
+      <FullWrapper playerColorToRight={currentPlayer} players={players}>
         <Card
           name={nextCard}
           isCurrentlyActive={false}
@@ -128,6 +141,7 @@ const connector = connect(mapStateToProps, {
   onGameInitialization,
   onClickCard,
   onClickSquare,
+  aiRandomMove,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

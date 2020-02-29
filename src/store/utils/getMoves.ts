@@ -39,6 +39,7 @@ const getMoves = (
             x: xDisplacement,
             y: yDisplacement,
           });
+
           if (
             xDisplacement < ROWS &&
             xDisplacement >= 0 &&
