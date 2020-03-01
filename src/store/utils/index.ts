@@ -77,22 +77,38 @@ export const setPlayersByGameType = (
 
 export const generateRandomCards = (numberOfCards = 5): CardName[] => {
   const cards: CardName[] = [
+    'Bear',
     'Boar',
     'Cobra',
     'Crab',
     'Crane',
+    'Dog',
     'Dragon',
     'Eel',
     'Elephant',
+    'Fox',
     'Frog',
+    'Giraffe',
     'Goose',
     'Horse',
+    'Iguana',
+    'Kirin',
     'Mantis',
     'Monkey',
+    'Mouse',
+    'Otter',
     'Ox',
+    'Panda',
+    'Phoenix',
     'Rabbit',
+    'Rat',
     'Rooster',
+    'Sable',
+    'Sea Snake',
+    'Tanuki',
     'Tiger',
+    'Turtle',
+    'Viper',
   ];
 
   return sampleSize(cards, numberOfCards);

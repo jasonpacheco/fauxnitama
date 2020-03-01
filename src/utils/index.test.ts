@@ -3,7 +3,6 @@ import {
   idToCoordinate,
   coordinateToID,
   movesToID,
-  generateCardSet,
   idToGridLocation,
   cardNameToCard,
 } from './index';
@@ -26,27 +25,6 @@ describe('tests for getIDs', () => {
 
   test('returns 24 as last element', () => {
     expect(getIDs()[constants.BOARD_SQUARES - 1]).toEqual(24);
-  });
-});
-
-describe('tests for cardNameToCard', () => {
-  test('it returns appropriate card for name', () => {
-    expect(cardNameToCard('Boar')).toEqual(CardTypes.Boar);
-    expect(cardNameToCard('Cobra')).toEqual(CardTypes.Cobra);
-    expect(cardNameToCard('Crab')).toEqual(CardTypes.Crab);
-    expect(cardNameToCard('Crane')).toEqual(CardTypes.Crane);
-    expect(cardNameToCard('Dragon')).toEqual(CardTypes.Dragon);
-    expect(cardNameToCard('Eel')).toEqual(CardTypes.Eel);
-    expect(cardNameToCard('Elephant')).toEqual(CardTypes.Elephant);
-    expect(cardNameToCard('Frog')).toEqual(CardTypes.Frog);
-    expect(cardNameToCard('Goose')).toEqual(CardTypes.Goose);
-    expect(cardNameToCard('Horse')).toEqual(CardTypes.Horse);
-    expect(cardNameToCard('Mantis')).toEqual(CardTypes.Mantis);
-    expect(cardNameToCard('Monkey')).toEqual(CardTypes.Monkey);
-    expect(cardNameToCard('Ox')).toEqual(CardTypes.Ox);
-    expect(cardNameToCard('Rabbit')).toEqual(CardTypes.Rabbit);
-    expect(cardNameToCard('Rooster')).toEqual(CardTypes.Rooster);
-    expect(cardNameToCard('Tiger')).toEqual(CardTypes.Tiger);
   });
 });
 
@@ -140,12 +118,6 @@ describe('tests for moveToID', () => {
 
   test('edge case: moving 100 squares will return undefined', () => {
     expect(movesToID([[100, 0]])).toEqual([undefined]);
-  });
-});
-
-describe('test for generateCardSet', () => {
-  test('CardSet returns 5 elements', () => {
-    expect(generateCardSet()).toHaveLength(5);
   });
 });
 

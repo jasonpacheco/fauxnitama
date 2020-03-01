@@ -4,9 +4,7 @@ import { SELECT_CARD, CardActions, SWAP_CARDS } from '../types/cardTypes';
 
 /**
  * Action creator called when the user selects a card for move-making.
- * @param selectedCardName 'Boar' | 'Cobra' | 'Crab' | 'Crane' | 'Dragon'
- *  | 'Eel' | 'Elephant' | 'Frog' | 'Goose' | 'Horse' | 'Mantis' |
- * 'Monkey' | 'Ox' | 'Rabbit' | 'Rooster' | 'Tiger'
+ * @param selectedCardName 'Bear' | 'Boar' | 'Cobra' | 'Crab' | 'Crane' | 'Dog' | 'Dragon' | 'Eel' | 'Elephant' | 'Fox' | 'Frog' | 'Giraffe' | 'Goose' | 'Horse' | 'Iguana' | 'Kirin' | 'Mantis' | 'Monkey' | 'Mouse' | 'Otter' | 'Ox' | 'Panda' | 'Phoenix' | 'Rabbit' | 'Rat' | 'Rooster' | 'Sable' | 'Sea Snake' | 'Tanuki' | 'Tiger' | 'Turtle' | 'Viper';
  */
 export const selectCard = (selectedCardName: CardName): ThunkResult<void> => (
   dispatch,

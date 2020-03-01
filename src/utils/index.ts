@@ -4,22 +4,38 @@ import constants from './constants';
 const { BOARD_ROWS, BOARD_COLS } = constants;
 
 const {
+  Bear,
   Boar,
   Cobra,
   Crab,
   Crane,
+  Dog,
   Dragon,
   Eel,
   Elephant,
+  Fox,
   Frog,
+  Giraffe,
   Goose,
   Horse,
+  Iguana,
+  Kirin,
   Mantis,
   Monkey,
+  Mouse,
+  Otter,
   Ox,
+  Panda,
+  Phoenix,
   Rabbit,
+  Rat,
   Rooster,
+  Sable,
+  SeaSnake,
+  Tanuki,
   Tiger,
+  Turtle,
+  Viper,
 } = cards;
 
 export const getIDs = (): number[] => {
@@ -98,54 +114,39 @@ interface NameToCard {
 }
 export const cardNameToCard = (name: CardName): CardModel => {
   const cards: NameToCard = {
+    Bear,
     Boar,
     Cobra,
     Crab,
     Crane,
+    Dog,
     Dragon,
     Eel,
     Elephant,
+    Fox,
     Frog,
+    Giraffe,
     Goose,
     Horse,
+    Iguana,
+    Kirin,
     Mantis,
     Monkey,
+    Mouse,
+    Otter,
     Ox,
+    Panda,
+    Phoenix,
     Rabbit,
+    Rat,
     Rooster,
+    Sable,
+    'Sea Snake': SeaSnake,
+    Tanuki,
     Tiger,
+    Turtle,
+    Viper,
   };
 
   return cards[name];
-};
-
-export const generateCardSet = (numCards = 5): CardModel[] => {
-  const cards = [
-    Boar,
-    Cobra,
-    Crab,
-    Crane,
-    Dragon,
-    Eel,
-    Elephant,
-    Frog,
-    Goose,
-    Horse,
-    Mantis,
-    Monkey,
-    Ox,
-    Rabbit,
-    Rooster,
-    Tiger,
-  ];
-
-  const cardSet: CardModel[] = [];
-
-  for (let i = 0; i < numCards; i++) {
-    const randomIndex = Math.floor(Math.random() * cards.length);
-    cardSet.push(cards[randomIndex]);
-    cards.splice(randomIndex, 1);
-  }
-
-  return cardSet;
 };

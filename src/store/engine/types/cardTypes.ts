@@ -5,22 +5,38 @@ export const SELECT_CARD = 'SELECT_CARD';
 export const SWAP_CARDS = 'SWAP_CARDS';
 
 export type CardName =
+  | 'Bear'
   | 'Boar'
   | 'Cobra'
   | 'Crab'
   | 'Crane'
+  | 'Dog'
   | 'Dragon'
   | 'Eel'
   | 'Elephant'
+  | 'Fox'
   | 'Frog'
+  | 'Giraffe'
   | 'Goose'
   | 'Horse'
+  | 'Iguana'
+  | 'Kirin'
   | 'Mantis'
   | 'Monkey'
+  | 'Mouse'
+  | 'Otter'
   | 'Ox'
+  | 'Panda'
+  | 'Phoenix'
   | 'Rabbit'
+  | 'Rat'
   | 'Rooster'
-  | 'Tiger';
+  | 'Sable'
+  | 'Sea Snake'
+  | 'Tanuki'
+  | 'Tiger'
+  | 'Turtle'
+  | 'Viper';
 
 export interface CardProperties {
   name: CardName;
