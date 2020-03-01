@@ -1,9 +1,5 @@
 import styled from 'styled-components/macro';
-import {
-  PlayerType,
-  Colors,
-  PLAYER_AI,
-} from '../../../store/engine/types/gameTypes';
+import { PlayerType } from '../../../store/engine/types/gameTypes';
 
 interface FullWrapperStyleProps {
   playerColorToRight: PlayerType;

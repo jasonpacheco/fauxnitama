@@ -150,3 +150,16 @@ export const cardNameToCard = (name: CardName): CardModel => {
 
   return cards[name];
 };
+
+export const gridLocationToID = (gridLocation: string): number => {
+  const [rowLetter, colString] = gridLocation.split('');
+  const letters = ['a', 'b', 'c', 'd', 'e'];
+  const nums = ['1', '2', '3', '4', '5'];
+  const rowNum = letters.indexOf(rowLetter);
+  const colNum = nums.indexOf(colString);
+  return BOARD_ROWS * rowNum + colNum;
+};
+
+export interface FunctionsObject {
+  [key: string]: () => void;
+}

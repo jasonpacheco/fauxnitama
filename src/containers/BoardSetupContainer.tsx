@@ -23,14 +23,9 @@ import {
 import Card from '../components/Card/CardNew';
 import Hand from '../components/BoardSetup/HandNew';
 import Board from '../components/Board/BoardNew';
-import ArrowKeyLogic from './ArrowKeyLogic';
+import KeyLogic from './KeyLogicContainer';
 import RoundModal from '../containers/RoundModalContainer';
-import {
-  PlayerType,
-  Colors,
-  BLUE,
-  PLAYER_AI,
-} from '../store/engine/types/gameTypes';
+import { PlayerType, BLUE, PLAYER_AI } from '../store/engine/types/gameTypes';
 import { aiRandomMove } from '../store/ai/actions';
 
 interface StateProps {
@@ -40,7 +35,6 @@ interface StateProps {
   currentPlayer: PlayerType;
   players: PlayerType[];
   pauseGame: boolean;
-  colors: Colors[];
   selectedCardName: CardName | '';
 }
 
@@ -56,7 +50,6 @@ const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
   onClickCard,
   pauseGame,
   onClickSquare,
-  colors,
   selectedCardName,
   aiRandomMove,
 }) => {
@@ -82,7 +75,7 @@ const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
 
   return (
     <Fragment>
-      <ArrowKeyLogic />
+      {currentPlayer !== PLAYER_AI && <KeyLogic />}
       <FullWrapper playerColorToRight={currentPlayer} players={players}>
         <Card
           name={nextCard}
@@ -132,7 +125,6 @@ const mapStateToProps = (state: AppState): StateProps => {
     currentPlayer: currentPlayer as PlayerType,
     players,
     pauseGame,
-    colors,
     selectedCardName,
   };
 };

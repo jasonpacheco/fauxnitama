@@ -11,7 +11,11 @@ import { ON_CLICK_PIECE } from '../engine/types/eventTypes';
 import { onClickSquare } from '../engine/actions/eventActions';
 import { batch } from 'react-redux';
 
-export const selectRandomCard = (): ThunkResult<void> => (
+const wait = (ms: number): Promise<unknown> => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+};
+
+export const selectRandomCard = (cardName?: CardName): ThunkResult<void> => (
   dispatch,
   getState
 ): void => {
@@ -21,14 +25,24 @@ export const selectRandomCard = (): ThunkResult<void> => (
       player: { players },
     },
   } = getState();
-
   const aiCards = getPlayerCards(cards, players, PLAYER_AI);
   const randomIndex = random(0, 1);
 
   dispatch({
     type: SELECT_CARD,
-    selectedCardName: aiCards[randomIndex],
+    selectedCardName: cardName ? cardName : aiCards[randomIndex],
   });
+};
+
+export const moveToRandomSquare = (): ThunkResult<void> => (
+  dispatch,
+  getState
+): void => {
+  const {
+    pieceReducer: { validMoves },
+  } = getState();
+  const randomSquareID = sampleSize(validMoves, 1);
+  dispatch(onClickSquare(randomSquareID[0]));
 };
 
 export const selectPiece = (): ThunkResult<void> => (
@@ -36,8 +50,11 @@ export const selectPiece = (): ThunkResult<void> => (
   getState
 ): void => {
   const {
-    cardReducer: { selectedCardName },
+    cardReducer: { selectedCardName, cards },
     pieceReducer: { piecePositions },
+    gameReducer: {
+      player: { players },
+    },
   } = getState();
   const aiPieces = piecePositions[PLAYER_AI];
   const randomIndices = sampleSize(range(aiPieces.length), aiPieces.length);
@@ -60,29 +77,20 @@ export const selectPiece = (): ThunkResult<void> => (
     return false;
   });
 
-  dispatch({
-    type: ON_CLICK_PIECE,
-    selectedPiece: aiPieces[index],
-    validMoves,
-  });
-};
-
-const sleep = (ms: number): Promise<unknown> => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-};
-
-export const moveToRandomSquare = (): ThunkResult<void> => (
-  dispatch,
-  getState
-): void => {
-  const {
-    pieceReducer: { validMoves },
-  } = getState();
-  const randomSquareID = sampleSize(validMoves, 1);
-
-  sleep(1500).then(() => {
-    dispatch(onClickSquare(randomSquareID[0]));
-  });
+  if (validMoves.length === 0) {
+    const aiCards = getPlayerCards(cards, players, PLAYER_AI);
+    const index = aiCards.indexOf(selectedCardName as CardName);
+    batch(() => {
+      dispatch(selectRandomCard(aiCards[1 - index]));
+      dispatch(selectPiece());
+    });
+  } else {
+    dispatch({
+      type: ON_CLICK_PIECE,
+      selectedPiece: aiPieces[index],
+      validMoves,
+    });
+  }
 };
 
 export const aiRandomMove = (): ThunkResult<void> => (
@@ -100,6 +108,8 @@ export const aiRandomMove = (): ThunkResult<void> => (
   batch(() => {
     dispatch(selectRandomCard());
     dispatch(selectPiece());
-    dispatch(moveToRandomSquare());
+    wait(1000).then(() => {
+      dispatch(moveToRandomSquare());
+    });
   });
 };

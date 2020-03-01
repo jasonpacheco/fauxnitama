@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import useTimer from '../interactive/useTimer';
-import useKeyPress from '../interactive/useKeyPress';
 import {
   BUTTON_PROMPT,
   BUTTON_YES,
@@ -50,17 +49,10 @@ const RoundModalContainer: React.FC<RoundModalContainerProps> = ({
     formattedTime,
   } = useTimer();
 
-  const onPressDown = (): void => {
-    onClickButtonPause();
-    !pauseGame ? stopTimer() : startTimer();
-  };
-
-  useKeyPress(' ', onPressDown);
-
   useEffect(() => {
-    startTimer();
+    !pauseGame ? startTimer() : stopTimer();
     // eslint-disable-next-line
-  }, []);
+  }, [pauseGame]);
 
   const handleClick = (type: string): void => {
     switch (type) {

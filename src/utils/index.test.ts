@@ -4,11 +4,9 @@ import {
   coordinateToID,
   movesToID,
   idToGridLocation,
-  cardNameToCard,
+  gridLocationToID,
 } from './index';
 import constants from './constants';
-
-import CardTypes from '../types/cards';
 
 describe('tests for getIDs', () => {
   test('returns an array of length rows * cols', () => {
@@ -136,5 +134,23 @@ describe('tests for idToGridLocation', () => {
 
   test('returns a1 for id=0', () => {
     expect(idToGridLocation(0)).toEqual('a1');
+  });
+});
+
+describe('tests for gridLocationToID', () => {
+  test('returns 22 for e3', () => {
+    expect(gridLocationToID('e3')).toEqual(22);
+  });
+
+  test('returns 2 for a3', () => {
+    expect(gridLocationToID('a3')).toEqual(2);
+  });
+
+  test('returns 12 for c3', () => {
+    expect(gridLocationToID('c3')).toEqual(12);
+  });
+
+  test('returns 0 for a1', () => {
+    expect(gridLocationToID('a1')).toEqual(0);
   });
 });
