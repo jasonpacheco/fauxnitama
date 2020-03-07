@@ -51,4 +51,4 @@ const MoveNotation: React.FC<MoveNotationProps> = ({ tokens }) => {
   );
 };
 
-export default MoveNotation;
+export default React.memo(MoveNotation);

@@ -78,4 +78,4 @@ const Piece: React.FC<PieceProps> = ({
   );
 };
 
-export default Piece;
+export default React.memo(Piece);

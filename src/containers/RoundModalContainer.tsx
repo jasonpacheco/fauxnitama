@@ -50,6 +50,12 @@ const RoundModalContainer: React.FC<RoundModalContainerProps> = ({
   } = useTimer();
 
   useEffect(() => {
+    startTimer();
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
+    console.log('game paused in useEffect pauseGame is ', pauseGame);
     !pauseGame ? startTimer() : stopTimer();
     // eslint-disable-next-line
   }, [pauseGame]);
@@ -78,12 +84,14 @@ const RoundModalContainer: React.FC<RoundModalContainerProps> = ({
         }
         break;
       case BUTTON_PAUSE:
-        if (!pauseGame) {
+        if (pauseGame === false) {
+          console.log('what is causing this');
           stopTimer();
+          onClickButtonPause();
         } else {
           startTimer();
+          onClickButtonPause();
         }
-        onClickButtonPause();
         break;
       default:
         return;
@@ -121,7 +129,10 @@ const RoundModalContainer: React.FC<RoundModalContainerProps> = ({
             Pass Turn
           </RoundModalButton>
           <RoundModalButton
-            onClick={(): void => handleClick(BUTTON_PAUSE)}
+            onMouseDown={(e: React.MouseEvent): void => {
+              e.preventDefault();
+              handleClick(BUTTON_PAUSE);
+            }}
             disabled={currentPlayer === PLAYER_AI}
           >
             {pauseGame ? 'Resume Match' : 'Pause'}

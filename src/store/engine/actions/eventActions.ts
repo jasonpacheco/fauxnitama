@@ -35,6 +35,7 @@ import {
   TEMPLE_ID_P2,
   HALFMOVE_LIMIT,
 } from '../../../utils/constants';
+import getPieceFromSquare from '../../utils/getPieceFromSquare';
 
 export const onGameInitializationAction = (
   gameType: GameType,
@@ -153,12 +154,6 @@ export const onClickPieceAction = (
   }
   return undefined;
 };
-
-const getPieceFromSquare = (
-  selectedSquareID: number,
-  currentPlayerPositions: PieceTuple[]
-): PieceTuple | undefined =>
-  currentPlayerPositions.find(pieceTuple => selectedSquareID === pieceTuple[0]);
 
 export const onClickSquareAction = (
   currentPlayer: PlayerType | '',

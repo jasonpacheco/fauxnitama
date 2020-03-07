@@ -36,6 +36,7 @@ interface StateProps {
   players: PlayerType[];
   pauseGame: boolean;
   selectedCardName: CardName | '';
+  isGameComplete: boolean;
 }
 
 type BoardSetupContainerProps = PropsFromRedux;
@@ -52,6 +53,7 @@ const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
   onClickSquare,
   selectedCardName,
   aiRandomMove,
+  isGameComplete,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -59,11 +61,11 @@ const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
     setIsLoading(false);
   }, []);
 
-  useEffect(() => {
+  React.useMemo(() => {
     if (currentPlayer === PLAYER_AI) {
       aiRandomMove();
     }
-  }, [currentPlayer]);
+  }, [currentPlayer, isGameComplete]);
 
   const handleClickCard = (cardName: CardName): void => {
     onClickCard(cardName);
@@ -110,7 +112,7 @@ const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
 const mapStateToProps = (state: AppState): StateProps => {
   const { cards, selectedCardName } = state.cardReducer;
   const { currentPlayer, players, colors } = state.gameReducer.player;
-  const { pauseGame } = state.gameReducer.properties;
+  const { pauseGame, isGameComplete } = state.gameReducer.properties;
   const handP1 = (colors[0] === BLUE
     ? getCards(cards, HAND_BLUE)
     : getCards(cards, HAND_RED)) as CardName[];
@@ -126,6 +128,7 @@ const mapStateToProps = (state: AppState): StateProps => {
     players,
     pauseGame,
     selectedCardName,
+    isGameComplete,
   };
 };
 

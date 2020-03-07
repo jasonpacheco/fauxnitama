@@ -107,6 +107,7 @@ const KeyLogicContainer: React.FC<KeyLogicContainerProps> = ({
     '4': (): void => onPressGrid('4'),
     '5': (): void => onPressGrid('5'),
     ' ': (): void => {
+      console.log('clicked for pause in KLC');
       onClickButtonPause();
     },
   };
