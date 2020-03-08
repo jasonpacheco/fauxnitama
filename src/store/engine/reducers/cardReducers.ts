@@ -1,22 +1,12 @@
-import { generateRandomCards, cardSwapper } from '../../utils';
 import {
-  CardActions,
-  CardState,
-  SELECT_CARD,
-  SWAP_CARDS,
-} from '../types/cardTypes';
-import {
-  ON_CLICK_CARD,
-  OnClickCardAction,
-  OnClickSquareAction,
-  ON_CLICK_SQUARE,
-} from '../types/eventTypes';
-import {
-  OnClickButtonYesRestart,
-  ON_CLICK_BUTTON_YES_RESTART,
   OnClickButtonPass,
+  OnClickButtonYesRestart,
   ON_CLICK_BUTTON_PASS,
+  ON_CLICK_BUTTON_YES_RESTART,
 } from '../types/buttonTypes';
+import { CardActions, CardState, ON_CLICK_CARD } from '../types/cardTypes';
+import { OnClickSquareAction, ON_CLICK_SQUARE } from '../types/eventTypes';
+import { generateRandomCards } from '../../utils';
 
 const initialState: CardState = {
   cards: generateRandomCards(),
@@ -27,7 +17,6 @@ export const cardReducer = (
   state = initialState,
   action:
     | CardActions
-    | OnClickCardAction
     | OnClickSquareAction
     | OnClickButtonYesRestart
     | OnClickButtonPass
@@ -44,24 +33,6 @@ export const cardReducer = (
         cards: action.cards,
         selectedCardName: '',
       };
-    case SELECT_CARD:
-      return {
-        ...state,
-        selectedCardName: action.selectedCardName,
-      };
-    case SWAP_CARDS:
-      if (state.selectedCardName) {
-        const cards = cardSwapper(state.cards, state.selectedCardName);
-        return {
-          ...state,
-          cards,
-          selectedCardName: '',
-        };
-      }
-      return {
-        ...state,
-      };
-
     case ON_CLICK_CARD:
       return {
         ...state,

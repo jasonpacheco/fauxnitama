@@ -1,27 +1,27 @@
 import getAllPossibleMoves from './getAllPossibleMoves';
 import {
   PLAYER_AI,
-  PLAYER_BLUE,
+  PLAYER_RED,
   PlayerType,
 } from '../../engine/types/gameTypes';
 import { PiecePosition, STUDENT, MASTER } from '../../engine/types/pieceTypes';
 import { CardName } from '../../engine/types/cardTypes';
 
 describe('test for getAllPossibleMoves', () => {
-  const cards: CardName[] = ['Boar', 'Cobra', 'Rooster', 'Ox', 'Fox'];
-  const players: PlayerType[] = [PLAYER_AI, PLAYER_BLUE];
+  const cards: CardName[] = ['Rooster', 'Tiger', 'Ox', 'Rat', 'Fox'];
+  const players: PlayerType[] = [PLAYER_AI, PLAYER_RED];
   const playerPositions: PiecePosition = {
     PLAYER_AI: [
-      [0, STUDENT],
       [1, STUDENT],
       [2, MASTER],
       [3, STUDENT],
       [4, STUDENT],
+      [5, STUDENT],
     ],
-    PLAYER_BLUE: [
+    PLAYER_RED: [
+      [8, MASTER],
       [20, STUDENT],
       [21, STUDENT],
-      [22, MASTER],
       [23, STUDENT],
       [24, STUDENT],
     ],
@@ -31,11 +31,12 @@ describe('test for getAllPossibleMoves', () => {
     const possibleMoves = getAllPossibleMoves(
       cards,
       players,
+      3,
       PLAYER_AI,
       playerPositions
     );
     console.log(possibleMoves);
-    console.log(possibleMoves[0][1][0]);
+
     expect(possibleMoves).toBeDefined();
   });
 });

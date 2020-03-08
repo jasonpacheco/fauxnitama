@@ -1,26 +1,54 @@
 import { ThunkResult } from '../';
-import { CardName } from '../../../interfaces/card.interface';
-import { SELECT_CARD, CardActions, SWAP_CARDS } from '../types/cardTypes';
+import { CardName, OnClickCardAction, ON_CLICK_CARD } from '../types/cardTypes';
+import getMoves from '../../utils/getMoves';
+import { getPlayerCards } from '../../utils';
+import { cardNameToCard } from '../../../utils';
 
-/**
- * Action creator called when the user selects a card for move-making.
- * @param selectedCardName 'Bear' | 'Boar' | 'Cobra' | 'Crab' | 'Crane' | 'Dog' | 'Dragon' | 'Eel' | 'Elephant' | 'Fox' | 'Frog' | 'Giraffe' | 'Goose' | 'Horse' | 'Iguana' | 'Kirin' | 'Mantis' | 'Monkey' | 'Mouse' | 'Otter' | 'Ox' | 'Panda' | 'Phoenix' | 'Rabbit' | 'Rat' | 'Rooster' | 'Sable' | 'Sea Snake' | 'Tanuki' | 'Tiger' | 'Turtle' | 'Viper';
- */
-export const selectCard = (selectedCardName: CardName): ThunkResult<void> => (
+export const onClickCardAction = (
+  selectedCardName: CardName,
+  validMoves: number[]
+): OnClickCardAction => ({
+  type: ON_CLICK_CARD,
+  selectedCardName,
+  validMoves,
+});
+
+export const onClickCard = (selectedCardName: CardName): ThunkResult<void> => (
   dispatch,
   getState
 ): void => {
-  if (getState().cardReducer.selectedCardName !== selectedCardName) {
-    dispatch({
-      type: SELECT_CARD,
-      selectedCardName,
-    });
+  const {
+    cardReducer: { selectedCardName: stateSelectedCardName, cards },
+    gameReducer: {
+      player: { currentPlayer, players },
+      properties: { isGameComplete, pauseGame },
+    },
+    pieceReducer: { piecePositions, selectedPiece },
+  } = getState();
+
+  if (isGameComplete || pauseGame) {
+    return;
+  }
+
+  if (
+    currentPlayer &&
+    getPlayerCards(cards, players, currentPlayer).includes(selectedCardName)
+  ) {
+    if (selectedPiece.length !== 0) {
+      const validMoves = getMoves(
+        selectedPiece[0],
+        currentPlayer === players[0],
+        cardNameToCard(selectedCardName).moves,
+        piecePositions[currentPlayer]
+      );
+
+      dispatch(onClickCardAction(selectedCardName, validMoves));
+      return;
+    }
+
+    if (stateSelectedCardName !== selectedCardName) {
+      dispatch(onClickCardAction(selectedCardName, []));
+      return;
+    }
   }
 };
-
-/**
- * Action creator called to swap the cards after the user makes a move.
- */
-export const swapCards = (): CardActions => ({
-  type: SWAP_CARDS,
-});

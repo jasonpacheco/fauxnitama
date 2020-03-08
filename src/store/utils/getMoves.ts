@@ -12,7 +12,9 @@ export const isValidSpace = (
   positionID: number,
   currentPlayerPositions: PieceType.PieceTuple[]
 ): boolean => {
-  return currentPlayerPositions.every(([id]) => id !== positionID);
+  return currentPlayerPositions.find(([id]) => id === positionID)
+    ? false
+    : true;
 };
 
 /**
@@ -28,9 +30,15 @@ const getMoves = (
   validMovesFromCard: number[][],
   currentPlayerPositions: PieceType.PieceTuple[]
 ): number[] => {
+  if (
+    currentPlayerPositions.find(([id]) => id === selectedPieceID) === undefined
+  )
+    return [];
+
   const { x, y } = idToCoordinate(selectedPieceID);
   if (isTransposable)
     validMovesFromCard = transposeCardMovement(validMovesFromCard);
+
   return validMovesFromCard
     ? validMovesFromCard
         .reduce((acc, [moveX, moveY]) => {

@@ -11,9 +11,10 @@ import { CardName } from '../store/engine/types/cardTypes';
 
 import {
   onGameInitialization,
-  onClickCard,
   onClickSquare,
 } from '../store/engine/actions/eventActions';
+
+import { onClickCard } from '../store/engine/actions/cardActions';
 import { getCards } from '../store/utils';
 import {
   FullWrapper,

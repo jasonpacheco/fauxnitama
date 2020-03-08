@@ -2,16 +2,9 @@ import { CardName } from './cardTypes';
 import { PieceTuple } from './pieceTypes';
 import { PlayerType, EndMethod, GameType, Colors } from './gameTypes';
 
-export const ON_CLICK_CARD = 'ON_CLICK_CARD';
 export const ON_CLICK_PIECE = 'ON_CLICK_PIECE';
 export const ON_CLICK_SQUARE = 'ON_CLICK_SQUARE';
 export const ON_GAME_INITIALIZATION = 'ON_GAME_INITIALIZATION';
-
-export interface OnClickCardAction {
-  type: typeof ON_CLICK_CARD;
-  selectedCardName: CardName;
-  validMoves: number[];
-}
 
 export interface OnClickPieceAction {
   type: typeof ON_CLICK_PIECE;
@@ -42,7 +35,6 @@ export interface OnGameInitializationAction {
 }
 
 export type EventActions =
-  | OnClickCardAction
   | OnClickPieceAction
   | OnClickSquareAction
   | OnGameInitializationAction;

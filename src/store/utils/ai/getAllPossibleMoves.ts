@@ -2,14 +2,10 @@ import getMoves from '../getMoves';
 import { getPlayerCards } from '..';
 import { CardName } from '../../engine/types/cardTypes';
 import { PlayerType, PLAYER_AI } from '../../engine/types/gameTypes';
-import { PiecePosition, PieceTuple } from '../../engine/types/pieceTypes';
+import { PiecePosition } from '../../engine/types/pieceTypes';
 import { cardNameToCard } from '../../../utils';
 
 export type PossibleMoves = [CardName, number][];
-
-const isValidMove = (positions: PieceTuple[], idToCheck: number): boolean => {
-  return positions.find(([id]) => id === idToCheck) ? false : true;
-};
 
 const getAllPossibleMoves = (
   cards: CardName[],
@@ -34,9 +30,7 @@ const getAllPossibleMoves = (
 
     for (let j = 0; j < moves.length; j++) {
       const moveID = moves[j];
-      if (isValidMove(positions, moveID)) {
-        possibleMovesList.push([cardList[i].name, moveID]);
-      }
+      possibleMovesList.push([cardList[i].name, moveID]);
     }
   }
 

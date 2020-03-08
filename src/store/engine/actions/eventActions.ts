@@ -1,8 +1,6 @@
 import { CardName } from '../types/cardTypes';
 import { ThunkResult } from '..';
 import {
-  ON_CLICK_CARD,
-  OnClickCardAction,
   ON_CLICK_PIECE,
   OnClickPieceAction,
   ON_CLICK_SQUARE,
@@ -28,7 +26,7 @@ import {
   SINGLE_PLAYER,
 } from '../types/gameTypes';
 import { PiecePosition, PieceTuple, MASTER } from '../types/pieceTypes';
-import { getPlayerCards, cardSwapper, setPlayersByGameType } from '../../utils';
+import { cardSwapper, setPlayersByGameType } from '../../utils';
 import { moveNotation } from '../../../interactive/notation';
 import {
   TEMPLE_ID_P1,
@@ -52,7 +50,7 @@ export const onGameInitializationAction = (
 
 export const onGameInitialization = (
   gameType = SINGLE_PLAYER as GameType,
-  selectedPlayer = PLAYER_RED as PlayerType
+  selectedPlayer = PLAYER_BLUE as PlayerType
 ): ThunkResult<void> => (dispatch, getState): void => {
   const {
     cardReducer: { cards },
@@ -70,55 +68,6 @@ export const onGameInitialization = (
       : ([players[0].slice(7), players[1].slice(7)] as Colors[]);
   dispatch(onGameInitializationAction(gameType, players, firstPlayer, colors));
   return;
-};
-
-export const onClickCardAction = (
-  selectedCardName: CardName,
-  validMoves: number[]
-): OnClickCardAction => ({
-  type: ON_CLICK_CARD,
-  selectedCardName,
-  validMoves,
-});
-
-export const onClickCard = (selectedCardName: CardName): ThunkResult<void> => (
-  dispatch,
-  getState
-): void => {
-  const {
-    cardReducer: { selectedCardName: stateSelectedCardName, cards },
-    gameReducer: {
-      player: { currentPlayer, players },
-      properties: { isGameComplete, pauseGame },
-    },
-    pieceReducer: { piecePositions, selectedPiece },
-  } = getState();
-
-  if (isGameComplete || pauseGame) {
-    return;
-  }
-
-  if (
-    currentPlayer &&
-    getPlayerCards(cards, players, currentPlayer).includes(selectedCardName)
-  ) {
-    if (selectedPiece.length !== 0) {
-      const validMoves = getMoves(
-        selectedPiece[0],
-        currentPlayer === players[0],
-        cardNameToCard(selectedCardName).moves,
-        piecePositions[currentPlayer]
-      );
-
-      dispatch(onClickCardAction(selectedCardName, validMoves));
-      return;
-    }
-
-    if (stateSelectedCardName !== selectedCardName) {
-      dispatch(onClickCardAction(selectedCardName, []));
-      return;
-    }
-  }
 };
 
 export const onClickPieceAction = (

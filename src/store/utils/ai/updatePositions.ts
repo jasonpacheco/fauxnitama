@@ -9,6 +9,13 @@ const updatePositions = (
   playerToUpdate: PlayerType
 ): PiecePosition => {
   const otherPlayer = players[1 - players.indexOf(playerToUpdate)];
+
+  if (currentPositions[playerToUpdate].find(([id]) => id === pieceToUpdateID)) {
+    currentPositions[otherPlayer] = currentPositions[otherPlayer].filter(
+      ([id]) => id !== newPositionID
+    );
+  }
+
   currentPositions[playerToUpdate] = currentPositions[playerToUpdate]
     .map<PieceTuple>(([id, pieceType]) => {
       if (id === pieceToUpdateID) {
@@ -17,9 +24,7 @@ const updatePositions = (
       return [id, pieceType];
     })
     .sort((tupleA: PieceTuple, tupleB: PieceTuple) => tupleA[0] - tupleB[0]);
-  currentPositions[otherPlayer] = currentPositions[otherPlayer].filter(
-    ([id]) => id !== newPositionID
-  );
+
   return currentPositions;
 };
 

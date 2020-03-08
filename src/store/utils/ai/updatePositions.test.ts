@@ -3,37 +3,31 @@ import { PiecePosition, STUDENT, MASTER } from '../../engine/types/pieceTypes';
 import {
   PlayerType,
   PLAYER_AI,
-  PLAYER_BLUE,
+  PLAYER_RED,
 } from '../../engine/types/gameTypes';
 
 describe('tests for updatePositions', () => {
   const playerPositions: PiecePosition = {
     PLAYER_AI: [
-      [0, STUDENT],
       [1, STUDENT],
       [2, MASTER],
       [3, STUDENT],
-      [17, STUDENT],
+      [4, STUDENT],
+      [5, STUDENT],
     ],
-    PLAYER_BLUE: [
+    PLAYER_RED: [
+      [8, MASTER],
       [20, STUDENT],
       [21, STUDENT],
-      [22, MASTER],
       [23, STUDENT],
       [24, STUDENT],
     ],
   };
 
-  const players: PlayerType[] = [PLAYER_AI, PLAYER_BLUE];
+  const players: PlayerType[] = [PLAYER_AI, PLAYER_RED];
 
   test('returns a value', () => {
-    const updated = updatePositions(
-      playerPositions,
-      17,
-      20,
-      players,
-      PLAYER_AI
-    );
+    const updated = updatePositions(playerPositions, 2, 8, players, PLAYER_AI);
     console.log(updated);
     expect(updated).toBeDefined();
   });

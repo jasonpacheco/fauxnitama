@@ -18,8 +18,6 @@ import {
   ON_CLICK_SQUARE,
   OnGameInitializationAction,
   ON_GAME_INITIALIZATION,
-  OnClickCardAction,
-  ON_CLICK_CARD,
 } from '../types/eventTypes';
 import {
   OnClickButtonYesRestart,
@@ -27,6 +25,7 @@ import {
   ON_CLICK_BUTTON_PASS,
   OnClickButtonPass,
 } from '../types/buttonTypes';
+import { ON_CLICK_CARD, CardActions } from '../types/cardTypes';
 
 const initialState: PieceState = {
   piecePositions: {},
@@ -39,9 +38,9 @@ export const pieceReducer = (
   state = initialState,
   action:
     | PieceActions
+    | CardActions
     | OnClickPieceAction
     | OnClickSquareAction
-    | OnClickCardAction
     | OnGameInitializationAction
     | OnClickButtonYesRestart
     | OnClickButtonPass

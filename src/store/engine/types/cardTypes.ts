@@ -1,8 +1,7 @@
 export const HAND_BLUE = 'HAND_BLUE';
 export const HAND_RED = 'HAND_RED';
 export const NEXT_CARD = 'NEXT_CARD';
-export const SELECT_CARD = 'SELECT_CARD';
-export const SWAP_CARDS = 'SWAP_CARDS';
+export const ON_CLICK_CARD = 'ON_CLICK_CARD';
 
 export type CardName =
   | 'Bear'
@@ -57,13 +56,10 @@ export type CardsRequestTypes =
   | typeof HAND_RED
   | typeof NEXT_CARD;
 
-interface SelectCardAction {
-  type: typeof SELECT_CARD;
+export interface OnClickCardAction {
+  type: typeof ON_CLICK_CARD;
   selectedCardName: CardName;
+  validMoves: number[];
 }
 
-interface SwapCardsAction {
-  type: typeof SWAP_CARDS;
-}
-
-export type CardActions = SelectCardAction | SwapCardsAction;
+export type CardActions = OnClickCardAction;

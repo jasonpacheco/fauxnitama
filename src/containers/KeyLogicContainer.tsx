@@ -2,10 +2,8 @@ import React, { Fragment, useState } from 'react';
 import useKeyPress from '../interactive/useKeyPress';
 import { connect, ConnectedProps } from 'react-redux';
 import { AppState } from '../store/engine';
-import {
-  onClickSquare,
-  onClickCard,
-} from '../store/engine/actions/eventActions';
+import { onClickSquare } from '../store/engine/actions/eventActions';
+import { onClickCard } from '../store/engine/actions/cardActions';
 import { PlayerType } from '../store/engine/types/gameTypes';
 import { PiecePosition, PieceTuple } from '../store/engine/types/pieceTypes';
 import { getPlayerCards } from '../store/utils';

@@ -22,7 +22,7 @@ const negamax = (
   beta: number,
   isUser: boolean
 ): number => {
-  const [score] = heuristic(
+  const [score, hasGameFinished] = heuristic(
     gameState.piecePositions,
     gameState.players,
     gameState.halfmoves
@@ -59,8 +59,6 @@ const negamax = (
         gameState.piecePositions[nextPlayer]
       );
 
-      const halfmovesCount = pieceOccupyingID ? 0 : gameState.halfmoves + 1;
-
       const nextGameState = JSON.parse(
         JSON.stringify({
           piecePositions: updatePositions(
@@ -73,7 +71,7 @@ const negamax = (
           cards: cardSwapper(gameState.cards, cardName),
           currentPlayer: nextPlayer,
           players: gameState.players,
-          halfmoves: halfmovesCount,
+          halfmoves: pieceOccupyingID ? 0 : gameState.halfmoves + 1,
         })
       );
 
@@ -91,19 +89,19 @@ const negamax = (
 };
 
 export interface OptimalMove {
-  piece?: PieceTuple;
-  cardName?: CardName;
-  moveToID?: number;
+  piece: PieceTuple;
+  cardName: CardName;
+  moveToID: number;
 }
 
 const negamaxRoot = (gameState: GameState, depth: number): OptimalMove => {
-  let optimalMove: OptimalMove = {};
+  console.time('negamax');
+  let optimalMove = {};
 
   let alpha = -Infinity;
   const beta = Infinity;
 
   const currentPieces = gameState.piecePositions[gameState.currentPlayer];
-
   for (let i = 0; i < currentPieces.length; i++) {
     const pieceID = currentPieces[i][0];
     const piecePossibleMoves = getAllPossibleMoves(
@@ -126,8 +124,6 @@ const negamaxRoot = (gameState: GameState, depth: number): OptimalMove => {
         gameState.piecePositions[nextPlayer]
       );
 
-      const halfmovesCount = pieceOccupyingID ? 0 : gameState.halfmoves + 1;
-
       const nextGameState = JSON.parse(
         JSON.stringify({
           piecePositions: updatePositions(
@@ -140,7 +136,7 @@ const negamaxRoot = (gameState: GameState, depth: number): OptimalMove => {
           cards: cardSwapper(gameState.cards, cardName),
           currentPlayer: nextPlayer,
           players: gameState.players,
-          halfmoves: halfmovesCount,
+          halfmoves: pieceOccupyingID ? 0 : gameState.halfmoves + 1,
         })
       );
 
@@ -156,8 +152,8 @@ const negamaxRoot = (gameState: GameState, depth: number): OptimalMove => {
       }
     }
   }
-
-  return optimalMove;
+  console.timeEnd('negamax');
+  return optimalMove as OptimalMove;
 };
 
 export default negamaxRoot;

@@ -104,51 +104,39 @@ describe('tests for minimax heuristic', () => {
     expect(heuristic(playerPositions, players, 50)).toStrictEqual([0, true]);
   });
 
-  test('returns 200 without an AI master', () => {
+  test('returns -200 without an AI master', () => {
     expect(
       heuristic(playerPositionsWithoutAIMaster, players, halfmoves)
-    ).toStrictEqual([200, true]);
+    ).toStrictEqual([-200, true]);
   });
 
-  test('returns 1 without at halfmove limit without ai master', () => {
+  test('returns 1 at halfmove limit without ai master', () => {
     expect(
       heuristic(playerPositionsWithoutAIMaster, players, 50)
-    ).toStrictEqual([1, true]);
-  });
-
-  test('returns -200 without a player master', () => {
-    expect(
-      heuristic(playerPositionsWithoutUserMaster, players, halfmoves)
-    ).toStrictEqual([-200, true]);
-  });
-
-  test('returns -200 without a player master', () => {
-    expect(
-      heuristic(playerPositionsWithoutUserMaster, players, halfmoves)
-    ).toStrictEqual([-200, true]);
-  });
-
-  test('returns -1 without a player master', () => {
-    expect(
-      heuristic(playerPositionsWithoutUserMaster, players, 50)
     ).toStrictEqual([-1, true]);
   });
 
-  test('returns -200 when AI master captures temple', () => {
+  test('returns 200 without a player master', () => {
     expect(
-      heuristic(playerPositionsAIMasterCapturesTemple, players, halfmoves)
-    ).toStrictEqual([-200, true]);
+      heuristic(playerPositionsWithoutUserMaster, players, halfmoves)
+    ).toStrictEqual([200, true]);
   });
 
-  test('returns -200 when AI master captures temple', () => {
+  test('returns 1 without a player master', () => {
     expect(
-      heuristic(playerPositionsAIMasterCapturesTemple, players, halfmoves)
-    ).toStrictEqual([-200, true]);
+      heuristic(playerPositionsWithoutUserMaster, players, 50)
+    ).toStrictEqual([1, true]);
   });
 
-  test('returns 200 when player master captures temple', () => {
+  test('returns 200 when AI master captures temple', () => {
+    expect(
+      heuristic(playerPositionsAIMasterCapturesTemple, players, halfmoves)
+    ).toStrictEqual([200, true]);
+  });
+
+  test('returns -200 when player master captures temple', () => {
     expect(
       heuristic(playerPositionsUserMasterCapturesTemple, players, halfmoves)
-    ).toStrictEqual([200, true]);
+    ).toStrictEqual([-200, true]);
   });
 });

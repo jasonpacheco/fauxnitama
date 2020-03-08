@@ -63,7 +63,12 @@ const heuristic = (
     material = material === 0 ? 0 : material > 0 ? 1 : -1;
   }
   let hasGameFinished = false;
-  if (halfmoves >= HALFMOVE_LIMIT || Math.abs(material) > 10) {
+  if (
+    halfmoves >= HALFMOVE_LIMIT ||
+    Math.abs(aiMasterCount - userMasterCount) === 1 ||
+    didUserCaptureTemple ||
+    didAICaptureTemple
+  ) {
     hasGameFinished = true;
   }
 
