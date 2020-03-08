@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+
 import BlueShuriken from '../../../assets/_blue/shuriken.svg';
 import RedShuriken from '../../../assets/_red/shuriken.svg';
 

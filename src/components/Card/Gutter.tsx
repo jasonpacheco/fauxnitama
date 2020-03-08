@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { GutterWrapper, Stamp, StampTooltip } from './styles/Gutter';
 
 interface GutterProps {

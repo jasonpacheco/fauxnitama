@@ -1,7 +1,8 @@
 import React from 'react';
+
 import Square from '../../containers/SquareContainer';
-import { GridWrapper, Grid, LetterColumn, NumberRow } from './styles/Board';
 import { getIDs } from '../../utils';
+import { Grid, GridWrapper, LetterColumn, NumberRow } from './styles/Board';
 
 interface BoardProps {
   onClickSquare: (selectedSquareID: number) => void;

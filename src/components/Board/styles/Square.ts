@@ -1,7 +1,8 @@
 import styled from 'styled-components/macro';
+
 import BlueTempleArch from '../../../assets/_blue/temple_arch.svg';
 import RedTempleArch from '../../../assets/_red/temple_arch.svg';
-import { BLUE, RED, Colors } from '../../../store/engine/types/gameTypes';
+import { BLUE, Colors, RED } from '../../../store/engine/types/gameTypes';
 
 interface SquareWrapperStyleProps {
   hasTempleBackground: typeof BLUE | typeof RED | boolean;

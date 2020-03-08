@@ -1,5 +1,5 @@
-import { PiecePosition, PieceTuple } from '../../engine/types/pieceTypes';
 import { PlayerType } from '../../engine/types/gameTypes';
+import { PiecePosition, PieceTuple } from '../../engine/types/pieceTypes';
 
 const updatePositions = (
   currentPositions: PiecePosition,

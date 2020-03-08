@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import { createGlobalStyle } from 'styled-components/macro';
-
 import { DndProvider } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import configureStore from './store/engine';
+import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { createGlobalStyle } from 'styled-components/macro';
+
+import App from './App';
+import configureStore from './store/engine';
+
 const GlobalStyles = createGlobalStyle`
   body {
     margin: 0;

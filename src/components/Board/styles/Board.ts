@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+
 import { BOARD_COLS as COLS } from '../../../utils/constants';
 
 export const GridWrapper = styled.div`

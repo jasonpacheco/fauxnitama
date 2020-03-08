@@ -1,44 +1,45 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import useTimer from '../interactive/useTimer';
-import {
-  BUTTON_PROMPT,
-  BUTTON_YES,
-  BUTTON_NO,
-  BUTTON_PASS,
-  BUTTON_PAUSE,
-} from '../types/buttonStates';
-import {
-  RoundModalWrapper,
-  RoundModalButton,
-} from '../components/Modal/styles/RoundModal';
-import HistoryModal from './HistoryModalContainer';
-import GameEndMessage from '../components/Modal/GameEndMessage';
 import { connect, ConnectedProps } from 'react-redux';
+
+import GameEndMessage from '../components/Modal/GameEndMessage';
 import {
-  onClickButtonYesRestart,
+  RoundModalButton,
+  RoundModalWrapper,
+} from '../components/Modal/styles/RoundModal';
+import useTimer from '../interactive/useTimer';
+import { AppState } from '../store/engine';
+import {
   onClickButtonPass,
   onClickButtonPause,
+  onClickButtonYesRestart,
 } from '../store/engine/actions/buttonActions';
-import { AppState } from '../store/engine';
 import { CardName } from '../store/engine/types/cardTypes';
 import {
   EndMethod,
-  PlayerType,
   PLAYER_AI,
+  PlayerType,
 } from '../store/engine/types/gameTypes';
+import {
+  BUTTON_NO,
+  BUTTON_PASS,
+  BUTTON_PAUSE,
+  BUTTON_PROMPT,
+  BUTTON_YES,
+} from '../types/buttonStates';
+import HistoryModal from './HistoryModalContainer';
 
 type RoundModalContainerProps = PropsFromRedux;
 
 const RoundModalContainer: React.FC<RoundModalContainerProps> = ({
+  currentPlayer,
+  endMethod,
+  isGameComplete,
   pauseGame,
   selectedCardName,
-  isGameComplete,
-  endMethod,
   winner,
-  onClickButtonYesRestart,
   onClickButtonPass,
   onClickButtonPause,
-  currentPlayer,
+  onClickButtonYesRestart,
 }) => {
   const [showPrompt, setShowPrompt] = useState(false);
   const {
@@ -163,12 +164,12 @@ const RoundModalContainer: React.FC<RoundModalContainerProps> = ({
 };
 
 interface StateProps {
+  currentPlayer: PlayerType | '';
+  endMethod: EndMethod | '';
+  isGameComplete: boolean;
   pauseGame: boolean;
   selectedCardName: CardName | '';
-  isGameComplete: boolean;
-  endMethod: EndMethod | '';
   winner: PlayerType | '';
-  currentPlayer: PlayerType | '';
 }
 
 const mapStateToProps = (state: AppState): StateProps => {
@@ -181,19 +182,19 @@ const mapStateToProps = (state: AppState): StateProps => {
   } = state.gameReducer.properties;
   const { currentPlayer } = state.gameReducer.player;
   return {
+    currentPlayer,
+    endMethod,
+    isGameComplete,
     pauseGame,
     selectedCardName,
-    isGameComplete,
-    endMethod,
     winner,
-    currentPlayer,
   };
 };
 
 const connector = connect(mapStateToProps, {
-  onClickButtonYesRestart,
   onClickButtonPass,
   onClickButtonPause,
+  onClickButtonYesRestart,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

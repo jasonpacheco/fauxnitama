@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+
 import { NotationToken } from './styles/MoveNotation';
 
 interface MoveNotationProps {

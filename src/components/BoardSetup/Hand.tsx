@@ -1,7 +1,8 @@
 import React from 'react';
-import Card from '../Card/CardNew';
-import { HandWrapper } from './styles/Hand';
+
 import { CardName } from '../../store/engine/types/cardTypes';
+import Card from '../Card/Card';
+import { HandWrapper } from './styles/Hand';
 
 interface HandProps {
   hand: CardName[];

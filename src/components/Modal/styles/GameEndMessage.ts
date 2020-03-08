@@ -1,7 +1,8 @@
 import styled from 'styled-components/macro';
+
 import RestartIcon from '../../../assets/restart_icon.svg';
+import { PLAYER_BLUE, PlayerType } from '../../../store/engine/types/gameTypes';
 import { Button, Wrapper } from '../styles';
-import { PlayerType, PLAYER_BLUE } from '../../../store/engine/types/gameTypes';
 
 export const EndMessageWrapper = styled(Wrapper)``;
 

@@ -1,6 +1,7 @@
 import CardModel, { CardName } from '../interfaces/card.interface';
 import cards from '../types/cards';
 import constants from './constants';
+
 const { BOARD_ROWS, BOARD_COLS } = constants;
 
 const {

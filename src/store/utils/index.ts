@@ -1,14 +1,5 @@
 import sampleSize from 'lodash.samplesize';
-import {
-  GameType,
-  SINGLE_PLAYER,
-  PLAYER_AI,
-  LOCAL_MULTIPLAYER,
-  ONLINE_MULTIPLAYER,
-  PLAYER_BLUE,
-  PLAYER_RED,
-  PlayerType,
-} from '../engine/types/gameTypes';
+
 import { CardName } from '../../interfaces/card.interface';
 import {
   CardsRequestTypes,
@@ -17,9 +8,19 @@ import {
   NEXT_CARD,
 } from '../engine/types/cardTypes';
 import {
-  PieceTuple,
-  PiecePosition,
+  GameType,
+  LOCAL_MULTIPLAYER,
+  ONLINE_MULTIPLAYER,
+  PLAYER_AI,
+  PLAYER_BLUE,
+  PLAYER_RED,
+  PlayerType,
+  SINGLE_PLAYER,
+} from '../engine/types/gameTypes';
+import {
   MASTER,
+  PiecePosition,
+  PieceTuple,
   STUDENT,
 } from '../engine/types/pieceTypes';
 

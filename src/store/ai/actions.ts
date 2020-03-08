@@ -1,13 +1,14 @@
-import { ThunkResult } from '../engine';
-import { PLAYER_AI } from '../engine/types/gameTypes';
-import { CardName, ON_CLICK_CARD } from '../engine/types/cardTypes';
-import getMoves from '../utils/getMoves';
-import { cardNameToCard } from '../../utils';
-import { ON_CLICK_PIECE } from '../engine/types/eventTypes';
-import { onClickSquare } from '../engine/actions/eventActions';
 import { batch } from 'react-redux';
-import negamaxRoot, { GameState } from '../utils/ai/negamax';
+
+import { cardNameToCard } from '../../utils';
+import { ThunkResult } from '../engine';
+import { onClickSquare } from '../engine/actions/eventActions';
+import { CardName, ON_CLICK_CARD } from '../engine/types/cardTypes';
+import { ON_CLICK_PIECE } from '../engine/types/eventTypes';
+import { PLAYER_AI } from '../engine/types/gameTypes';
 import { PieceTuple } from '../engine/types/pieceTypes';
+import negamaxRoot, { GameState } from '../utils/ai/negamax';
+import getMoves from '../utils/getMoves';
 
 const smartSelectCard = (cardName: CardName): ThunkResult<void> => (
   dispatch

@@ -1,19 +1,18 @@
 import React, { Fragment, useEffect } from 'react';
 
 import {
-  EndMessageWrapper,
-  EndMessageHeader,
-  EndMessageContent,
-  EndMessageButton,
-  RestartGraphic,
-} from './styles/GameEndMessage';
-
-import {
-  PlayerType,
-  EndMethod,
   CAPTURE_MASTER,
   DRAW,
+  EndMethod,
+  PlayerType,
 } from '../../store/engine/types/gameTypes';
+import {
+  EndMessageButton,
+  EndMessageContent,
+  EndMessageHeader,
+  EndMessageWrapper,
+  RestartGraphic,
+} from './styles/GameEndMessage';
 
 interface GameEndMessageProps {
   formattedTime: (currentTime: number, alt?: boolean) => string;

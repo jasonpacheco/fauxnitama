@@ -1,29 +1,30 @@
 import React, { Fragment, useState } from 'react';
-import useKeyPress from '../interactive/useKeyPress';
 import { connect, ConnectedProps } from 'react-redux';
+
+import useKeyPress from '../interactive/useKeyPress';
 import { AppState } from '../store/engine';
-import { onClickSquare } from '../store/engine/actions/eventActions';
+import { onClickButtonPause } from '../store/engine/actions/buttonActions';
 import { onClickCard } from '../store/engine/actions/cardActions';
+import { onClickSquare } from '../store/engine/actions/eventActions';
+import { CardName } from '../store/engine/types/cardTypes';
 import { PlayerType } from '../store/engine/types/gameTypes';
 import { PiecePosition, PieceTuple } from '../store/engine/types/pieceTypes';
 import { getPlayerCards } from '../store/utils';
-import { CardName } from '../store/engine/types/cardTypes';
-import { gridLocationToID, FunctionsObject } from '../utils';
-import { onClickButtonPause } from '../store/engine/actions/buttonActions';
+import { FunctionsObject, gridLocationToID } from '../utils';
 
 type KeyLogicContainerProps = PropsFromRedux;
 
 const KeyLogicContainer: React.FC<KeyLogicContainerProps> = ({
+  currentCards,
   currentPlayer,
-  piecePositions,
-  selectedPiece,
-  onClickSquare,
   isGameComplete,
   pauseGame,
-  currentCards,
-  onClickCard,
+  piecePositions,
+  selectedPiece,
   validMoves,
   onClickButtonPause,
+  onClickCard,
+  onClickSquare,
 }) => {
   const [pressed, setPressed] = useState('');
   const letters = new Set(['a', 'b', 'c', 'd', 'e']);
@@ -116,12 +117,12 @@ const KeyLogicContainer: React.FC<KeyLogicContainerProps> = ({
 };
 
 interface StateProps {
+  currentCards: CardName[];
   currentPlayer: PlayerType | '';
-  piecePositions: PiecePosition;
-  selectedPiece: PieceTuple | [];
   isGameComplete: boolean;
   pauseGame: boolean;
-  currentCards: CardName[];
+  piecePositions: PiecePosition;
+  selectedPiece: PieceTuple | [];
   validMoves: number[];
 }
 
@@ -140,19 +141,19 @@ const mapStateToProps = (state: AppState): StateProps => {
     currentPlayer as PlayerType
   );
   return {
+    currentCards,
     currentPlayer,
-    piecePositions,
-    selectedPiece,
     isGameComplete,
     pauseGame,
-    currentCards,
+    piecePositions,
+    selectedPiece,
     validMoves,
   };
 };
 const connector = connect(mapStateToProps, {
-  onClickSquare,
-  onClickCard,
   onClickButtonPause,
+  onClickCard,
+  onClickSquare,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

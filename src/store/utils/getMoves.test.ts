@@ -1,5 +1,5 @@
+import { MASTER, PieceTuple, STUDENT } from '../engine/types/pieceTypes';
 import getMoves, { isValidSpace } from './getMoves';
-import { MASTER, STUDENT, PieceTuple } from '../engine/types/pieceTypes';
 
 describe('tests for getMoves', () => {
   describe('test for isValidSpace helper', () => {

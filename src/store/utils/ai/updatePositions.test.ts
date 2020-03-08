@@ -1,10 +1,10 @@
-import updatePositions from './updatePositions';
-import { PiecePosition, STUDENT, MASTER } from '../../engine/types/pieceTypes';
 import {
-  PlayerType,
   PLAYER_AI,
   PLAYER_RED,
+  PlayerType,
 } from '../../engine/types/gameTypes';
+import { MASTER, PiecePosition, STUDENT } from '../../engine/types/pieceTypes';
+import updatePositions from './updatePositions';
 
 describe('tests for updatePositions', () => {
   const playerPositions: PiecePosition = {

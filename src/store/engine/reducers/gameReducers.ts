@@ -1,19 +1,20 @@
 import { combineReducers } from 'redux';
+
 import {
-  OnClickButtonPass,
-  OnClickButtonPause,
-  OnClickButtonYesRestart,
   ON_CLICK_BUTTON_PASS,
   ON_CLICK_BUTTON_PAUSE,
   ON_CLICK_BUTTON_YES_RESTART,
+  OnClickButtonPass,
+  OnClickButtonPause,
+  OnClickButtonYesRestart,
 } from '../types/buttonTypes';
 import {
-  OnClickSquareAction,
-  OnGameInitializationAction,
   ON_CLICK_SQUARE,
   ON_GAME_INITIALIZATION,
+  OnClickSquareAction,
+  OnGameInitializationAction,
 } from '../types/eventTypes';
-import { PlayerState, PropertiesState, PLAYER_AI } from '../types/gameTypes';
+import { PLAYER_AI, PlayerState, PropertiesState } from '../types/gameTypes';
 
 const initialPlayerState: PlayerState = {
   colors: [],

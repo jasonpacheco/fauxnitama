@@ -1,11 +1,11 @@
-import getAllPossibleMoves from './getAllPossibleMoves';
+import { CardName } from '../../engine/types/cardTypes';
 import {
   PLAYER_AI,
   PLAYER_RED,
   PlayerType,
 } from '../../engine/types/gameTypes';
-import { PiecePosition, STUDENT, MASTER } from '../../engine/types/pieceTypes';
-import { CardName } from '../../engine/types/cardTypes';
+import { MASTER, PiecePosition, STUDENT } from '../../engine/types/pieceTypes';
+import getAllPossibleMoves from './getAllPossibleMoves';
 
 describe('test for getAllPossibleMoves', () => {
   const cards: CardName[] = ['Rooster', 'Tiger', 'Ox', 'Rat', 'Fox'];

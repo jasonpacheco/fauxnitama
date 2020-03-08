@@ -1,12 +1,12 @@
-import {
-  getIDs,
-  idToCoordinate,
-  coordinateToID,
-  movesToID,
-  idToGridLocation,
-  gridLocationToID,
-} from './index';
 import constants from './constants';
+import {
+  coordinateToID,
+  getIDs,
+  gridLocationToID,
+  idToCoordinate,
+  idToGridLocation,
+  movesToID,
+} from './index';
 
 describe('tests for getIDs', () => {
   test('returns an array of length rows * cols', () => {

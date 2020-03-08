@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+
 import { PlayerType } from '../../../store/engine/types/gameTypes';
 
 interface FullWrapperStyleProps {

@@ -1,8 +1,8 @@
 import { ThunkResult } from '../';
-import { CardName, OnClickCardAction, ON_CLICK_CARD } from '../types/cardTypes';
-import getMoves from '../../utils/getMoves';
-import { getPlayerCards } from '../../utils';
 import { cardNameToCard } from '../../../utils';
+import { getPlayerCards } from '../../utils';
+import getMoves from '../../utils/getMoves';
+import { CardName, ON_CLICK_CARD, OnClickCardAction } from '../types/cardTypes';
 
 export const onClickCardAction = (
   selectedCardName: CardName,

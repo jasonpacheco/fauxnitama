@@ -1,6 +1,7 @@
-import React from 'react';
-import { MiniBoardWrapper, MiniCell } from './styles/MiniBoard';
 import isEqual from 'lodash.isequal';
+import React from 'react';
+
+import { MiniBoardWrapper, MiniCell } from './styles/MiniBoard';
 
 interface MiniBoardProps {
   board: string[][];

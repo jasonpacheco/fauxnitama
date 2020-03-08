@@ -1,10 +1,10 @@
-import heuristic from './heuristic';
-import { PiecePosition, STUDENT, MASTER } from '../../engine/types/pieceTypes';
 import {
   PLAYER_AI,
   PLAYER_BLUE,
   PlayerType,
 } from '../../engine/types/gameTypes';
+import { MASTER, PiecePosition, STUDENT } from '../../engine/types/pieceTypes';
+import heuristic from './heuristic';
 
 describe('tests for minimax heuristic', () => {
   const playerPositions: PiecePosition = {

@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+
 import MoveNotation from '../components/Modal/MoveNotation';
+import { Button } from '../components/Modal/styles';
 import {
   DisplayFEN,
   HistoryList,
 } from '../components/Modal/styles/MoveHistoryModal';
-import { Button } from '../components/Modal/styles';
-import { connect, ConnectedProps } from 'react-redux';
 import { AppState } from '../store/engine';
 import { onClickButtonFEN } from '../store/engine/actions/buttonActions';
 
 type HistoryModalContainerProps = StateProps & PropsFromRedux;
 
 const HistoryModalContainer: React.FC<HistoryModalContainerProps> = ({
-  history,
   halfmoves,
+  history,
   onClickButtonFEN,
 }) => {
   const [FEN, setFEN] = useState<string>('');

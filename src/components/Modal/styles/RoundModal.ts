@@ -1,4 +1,5 @@
 import styled from 'styled-components/macro';
+
 import { Button, Wrapper } from '../styles';
 
 export const RoundModalWrapper = styled(Wrapper)``;

@@ -1,11 +1,11 @@
-import { cardSwapper } from '..';
-import updatePositions from './updatePositions';
-import getAllPossibleMoves from './getAllPossibleMoves';
-import heuristic from './heuristic';
-import { PiecePosition, PieceTuple } from '../../engine/types/pieceTypes';
+import { cardSwapper } from '../';
 import { CardName } from '../../engine/types/cardTypes';
 import { PlayerType } from '../../engine/types/gameTypes';
+import { PiecePosition, PieceTuple } from '../../engine/types/pieceTypes';
 import getPieceFromSquare from '../getPieceFromSquare';
+import getAllPossibleMoves from './getAllPossibleMoves';
+import heuristic from './heuristic';
+import updatePositions from './updatePositions';
 
 export interface GameState {
   piecePositions: PiecePosition;

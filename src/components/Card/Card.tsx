@@ -1,17 +1,17 @@
 import React from 'react';
-import MiniBoard from './MiniBoard';
-import Gutter from './Gutter';
 
+import { CardName } from '../../store/engine/types/cardTypes';
+import { cardNameToCard } from '../../utils';
+import Gutter from './Gutter';
+import MiniBoard from './MiniBoard';
 import {
   CardWrapper,
-  Main,
-  LeftHalf,
-  RightHalf,
   Character,
+  LeftHalf,
+  Main,
   Name,
+  RightHalf,
 } from './styles/Card';
-import { CardName } from '../../store/engine/types/cardTypes';
-import { cardNameToCard } from '../../utils/';
 
 interface CardProps {
   name: CardName;

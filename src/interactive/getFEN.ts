@@ -1,13 +1,13 @@
-import constants from '../utils/constants';
-import { PiecePosition } from '../store/engine/types/pieceTypes';
-import { PlayerType, BLUE, Colors } from '../store/engine/types/gameTypes';
-import { idToPiece, PieceProperties, getCards } from '../store/utils';
 import {
   CardName,
-  HAND_RED,
   HAND_BLUE,
+  HAND_RED,
   NEXT_CARD,
 } from '../store/engine/types/cardTypes';
+import { BLUE, Colors, PlayerType } from '../store/engine/types/gameTypes';
+import { PiecePosition } from '../store/engine/types/pieceTypes';
+import { getCards, idToPiece, PieceProperties } from '../store/utils';
+import constants from '../utils/constants';
 
 const pieceToCharacter = (piece: PieceProperties): string => {
   return piece.color.includes(BLUE)

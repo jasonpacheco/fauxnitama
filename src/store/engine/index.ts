@@ -1,6 +1,6 @@
-import { createStore, combineReducers, applyMiddleware, Store } from 'redux';
-import thunk, { ThunkAction } from 'redux-thunk';
+import { applyMiddleware, combineReducers, createStore, Store } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk, { ThunkAction } from 'redux-thunk';
 
 import { cardReducer } from './reducers/cardReducers';
 import { gameReducer } from './reducers/gameReducers';

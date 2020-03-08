@@ -1,15 +1,16 @@
 import React from 'react';
-import { PieceWrapper, DragSource } from './styles/Piece';
+import { useDrag } from 'react-dnd';
+
 import BlueMaster from '../../assets/_blue/master.svg';
 import BlueStudent from '../../assets/_blue/student.svg';
 import RedMaster from '../../assets/_red/master.svg';
 import RedStudent from '../../assets/_red/student.svg';
-import { useDrag } from 'react-dnd';
+import { PLAYER_BLUE } from '../../store/engine/types/gameTypes';
+import { MASTER, PieceTuple } from '../../store/engine/types/pieceTypes';
+import { PieceProperties } from '../../store/utils';
 import dndTypes from '../../types/dndTypes';
 import { TEMPLE_ID_P1, TEMPLE_ID_P2 } from '../../utils/constants';
-import { PieceProperties } from '../../store/utils';
-import { PLAYER_BLUE } from '../../store/engine/types/gameTypes';
-import { PieceTuple, MASTER } from '../../store/engine/types/pieceTypes';
+import { DragSource, PieceWrapper } from './styles/Piece';
 
 interface PieceProps {
   isActive: boolean;

@@ -1,12 +1,12 @@
+import { generateRandomCards } from '../../utils';
 import {
-  OnClickButtonPass,
-  OnClickButtonYesRestart,
   ON_CLICK_BUTTON_PASS,
   ON_CLICK_BUTTON_YES_RESTART,
+  OnClickButtonPass,
+  OnClickButtonYesRestart,
 } from '../types/buttonTypes';
 import { CardActions, CardState, ON_CLICK_CARD } from '../types/cardTypes';
-import { OnClickSquareAction, ON_CLICK_SQUARE } from '../types/eventTypes';
-import { generateRandomCards } from '../../utils';
+import { ON_CLICK_SQUARE, OnClickSquareAction } from '../types/eventTypes';
 
 const initialState: CardState = {
   cards: generateRandomCards(),

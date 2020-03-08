@@ -1,60 +1,58 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 
+import Board from '../components/Board/Board';
+import Hand from '../components/BoardSetup/Hand';
 import {
-  NEXT_CARD,
-  HAND_RED,
-  HAND_BLUE,
-} from '../store/engine/types/cardTypes';
-import { AppState } from '../store/engine';
-import { CardName } from '../store/engine/types/cardTypes';
-
-import {
-  onGameInitialization,
-  onClickSquare,
-} from '../store/engine/actions/eventActions';
-
-import { onClickCard } from '../store/engine/actions/cardActions';
-import { getCards } from '../store/utils';
-import {
-  FullWrapper,
   BoardHandWrapper,
+  FullWrapper,
   Spacer,
 } from '../components/BoardSetup/styles/BoardSetup';
-import Card from '../components/Card/CardNew';
-import Hand from '../components/BoardSetup/HandNew';
-import Board from '../components/Board/BoardNew';
-import KeyLogic from './KeyLogicContainer';
-import RoundModal from '../containers/RoundModalContainer';
-import { PlayerType, BLUE, PLAYER_AI } from '../store/engine/types/gameTypes';
+import Card from '../components/Card/Card';
 import { aiRandomMove } from '../store/ai/actions';
+import { AppState } from '../store/engine';
+import { onClickCard } from '../store/engine/actions/cardActions';
+import {
+  onClickSquare,
+  onGameInitialization,
+} from '../store/engine/actions/eventActions';
+import {
+  CardName,
+  HAND_BLUE,
+  HAND_RED,
+  NEXT_CARD,
+} from '../store/engine/types/cardTypes';
+import { BLUE, PLAYER_AI, PlayerType } from '../store/engine/types/gameTypes';
+import { getCards } from '../store/utils';
+import KeyLogic from './KeyLogicContainer';
+import RoundModal from './RoundModalContainer';
 
 interface StateProps {
+  currentPlayer: PlayerType;
   handP1: CardName[];
   handP2: CardName[];
-  nextCard: CardName;
-  currentPlayer: PlayerType;
-  players: PlayerType[];
-  pauseGame: boolean;
-  selectedCardName: CardName | '';
   isGameComplete: boolean;
+  nextCard: CardName;
+  pauseGame: boolean;
+  players: PlayerType[];
+  selectedCardName: CardName | '';
 }
 
 type BoardSetupContainerProps = PropsFromRedux;
 
 const BoardSetupContainer: React.FC<BoardSetupContainerProps> = ({
+  aiRandomMove,
+  currentPlayer,
   handP1,
   handP2,
-  nextCard,
-  currentPlayer,
-  players,
-  onGameInitialization,
-  onClickCard,
-  pauseGame,
-  onClickSquare,
-  selectedCardName,
-  aiRandomMove,
   isGameComplete,
+  nextCard,
+  onClickCard,
+  onClickSquare,
+  onGameInitialization,
+  pauseGame,
+  players,
+  selectedCardName,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -122,22 +120,22 @@ const mapStateToProps = (state: AppState): StateProps => {
     ? getCards(cards, HAND_RED)
     : getCards(cards, HAND_BLUE)) as CardName[];
   return {
+    currentPlayer: currentPlayer as PlayerType,
     handP1,
     handP2,
-    nextCard: getCards(cards, NEXT_CARD) as CardName,
-    currentPlayer: currentPlayer as PlayerType,
-    players,
-    pauseGame,
-    selectedCardName,
     isGameComplete,
+    nextCard: getCards(cards, NEXT_CARD) as CardName,
+    pauseGame,
+    players,
+    selectedCardName,
   };
 };
 
 const connector = connect(mapStateToProps, {
-  onGameInitialization,
+  aiRandomMove,
   onClickCard,
   onClickSquare,
-  aiRandomMove,
+  onGameInitialization,
 });
 
 type PropsFromRedux = ConnectedProps<typeof connector>;

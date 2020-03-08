@@ -1,7 +1,8 @@
-import { idToGridLocation } from '../utils';
-import { Colors, BLUE } from '../store/engine/types/gameTypes';
 import { CardName } from '../store/engine/types/cardTypes';
+import { BLUE, Colors } from '../store/engine/types/gameTypes';
 import { PieceType } from '../store/engine/types/pieceTypes';
+import { idToGridLocation } from '../utils';
+
 /**
  *
  * @param player BLUE | RED, current player color.

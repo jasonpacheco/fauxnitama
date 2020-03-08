@@ -1,27 +1,26 @@
 import {
-  cardSwapper,
-  generateRandomCards,
-  getCards,
-  setPlayersByGameType,
-  getCardFor,
-  getPlayerCards,
-} from '.';
-import {
-  SINGLE_PLAYER,
-  PLAYER_BLUE,
-  PLAYER_AI,
-  PLAYER_RED,
-  LOCAL_MULTIPLAYER,
-  ONLINE_MULTIPLAYER,
-  PlayerType,
-} from '../engine/types/gameTypes';
-
-import {
+  CardName,
   HAND_BLUE,
   HAND_RED,
   NEXT_CARD,
-  CardName,
 } from '../engine/types/cardTypes';
+import {
+  LOCAL_MULTIPLAYER,
+  ONLINE_MULTIPLAYER,
+  PLAYER_AI,
+  PLAYER_BLUE,
+  PLAYER_RED,
+  PlayerType,
+  SINGLE_PLAYER,
+} from '../engine/types/gameTypes';
+import {
+  cardSwapper,
+  generateRandomCards,
+  getCardFor,
+  getCards,
+  getPlayerCards,
+  setPlayersByGameType,
+} from './';
 
 describe('test for setPlayersByGameType', () => {
   test('it returns [PLAYER_AI, PLAYER_BLUE] for single player', () => {

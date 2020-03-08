@@ -1,6 +1,6 @@
-import { moveNotation } from './notation';
 import { BLUE, RED } from '../store/engine/types/gameTypes';
-import { STUDENT, MASTER } from '../store/engine/types/pieceTypes';
+import { MASTER, STUDENT } from '../store/engine/types/pieceTypes';
+import { moveNotation } from './notation';
 
 describe('tests for moveNotation', () => {
   test('it will return BoarBe5xRd5', () => {

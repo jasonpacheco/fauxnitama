@@ -1,6 +1,6 @@
 import { CardName } from './cardTypes';
+import { Colors, EndMethod, GameType, PlayerType } from './gameTypes';
 import { PieceTuple } from './pieceTypes';
-import { PlayerType, EndMethod, GameType, Colors } from './gameTypes';
 
 export const ON_CLICK_PIECE = 'ON_CLICK_PIECE';
 export const ON_CLICK_SQUARE = 'ON_CLICK_SQUARE';
@@ -14,24 +14,24 @@ export interface OnClickPieceAction {
 
 export interface OnClickSquareAction {
   type: typeof ON_CLICK_SQUARE;
-  currentPlayer: PlayerType;
-  opponent: PlayerType;
-  idToUpdate: number;
-  targetID: number;
-  halfmoves: number;
-  endMethod: EndMethod | '';
-  winner: PlayerType | '';
-  isGameComplete: boolean;
   cards: CardName[];
+  currentPlayer: PlayerType;
+  endMethod: EndMethod | '';
+  halfmoves: number;
+  idToUpdate: number;
+  isGameComplete: boolean;
   move: string[];
+  opponent: PlayerType;
+  targetID: number;
+  winner: PlayerType | '';
 }
 
 export interface OnGameInitializationAction {
   type: typeof ON_GAME_INITIALIZATION;
+  colors: Colors[];
+  firstPlayer: PlayerType;
   gameType: GameType;
   players: PlayerType[];
-  firstPlayer: PlayerType;
-  colors: Colors[];
 }
 
 export type EventActions =

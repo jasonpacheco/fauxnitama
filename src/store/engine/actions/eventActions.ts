@@ -1,39 +1,39 @@
-import { CardName } from '../types/cardTypes';
-import { ThunkResult } from '..';
-import {
-  ON_CLICK_PIECE,
-  OnClickPieceAction,
-  ON_CLICK_SQUARE,
-  OnClickSquareAction,
-  ON_GAME_INITIALIZATION,
-  OnGameInitializationAction,
-} from '../types/eventTypes';
-import getMoves from '../../utils/getMoves';
+import { ThunkResult } from '../';
+import { moveNotation } from '../../../interactive/notation';
 import { cardNameToCard } from '../../../utils';
 import {
-  PlayerType,
-  CAPTURE_TEMPLE,
-  CAPTURE_MASTER,
-  GameType,
-  PLAYER_BLUE,
-  PLAYER_RED,
-  LOCAL_MULTIPLAYER,
-  Colors,
-  PLAYER_AI,
-  RED,
-  BLUE,
-  DRAW,
-  SINGLE_PLAYER,
-} from '../types/gameTypes';
-import { PiecePosition, PieceTuple, MASTER } from '../types/pieceTypes';
-import { cardSwapper, setPlayersByGameType } from '../../utils';
-import { moveNotation } from '../../../interactive/notation';
-import {
+  HALFMOVE_LIMIT,
   TEMPLE_ID_P1,
   TEMPLE_ID_P2,
-  HALFMOVE_LIMIT,
 } from '../../../utils/constants';
+import { cardSwapper, setPlayersByGameType } from '../../utils';
+import getMoves from '../../utils/getMoves';
 import getPieceFromSquare from '../../utils/getPieceFromSquare';
+import { CardName } from '../types/cardTypes';
+import {
+  ON_CLICK_PIECE,
+  ON_CLICK_SQUARE,
+  ON_GAME_INITIALIZATION,
+  OnClickPieceAction,
+  OnClickSquareAction,
+  OnGameInitializationAction,
+} from '../types/eventTypes';
+import {
+  BLUE,
+  CAPTURE_MASTER,
+  CAPTURE_TEMPLE,
+  Colors,
+  DRAW,
+  GameType,
+  LOCAL_MULTIPLAYER,
+  PLAYER_AI,
+  PLAYER_BLUE,
+  PLAYER_RED,
+  PlayerType,
+  RED,
+  SINGLE_PLAYER,
+} from '../types/gameTypes';
+import { MASTER, PiecePosition, PieceTuple } from '../types/pieceTypes';
 
 export const onGameInitializationAction = (
   gameType: GameType,

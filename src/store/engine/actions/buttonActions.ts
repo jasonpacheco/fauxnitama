@@ -1,26 +1,26 @@
-import {
-  OnClickButtonNoRestart,
-  ON_CLICK_BUTTON_NO_RESTART,
-  ON_CLICK_BUTTON_YES_RESTART,
-  ON_CLICK_BUTTON_PASS,
-  OnClickButtonPause,
-  ON_CLICK_BUTTON_PAUSE,
-  OnClickButtonPrompt,
-  ON_CLICK_BUTTON_PROMPT,
-} from '../types/buttonTypes';
-import { generateRandomCards } from '../../utils';
-import { cardNameToCard } from '../../../utils';
-import {
-  PLAYER_RED,
-  PLAYER_BLUE,
-  PLAYER_AI,
-  PlayerType,
-  DRAW,
-} from '../types/gameTypes';
-import { ThunkResult } from '..';
-import { moveNotation } from '../../../interactive/notation';
+import { ThunkResult } from '../';
 import { getFEN } from '../../../interactive/getFEN';
+import { moveNotation } from '../../../interactive/notation';
+import { cardNameToCard } from '../../../utils';
 import { HALFMOVE_LIMIT } from '../../../utils/constants';
+import { generateRandomCards } from '../../utils';
+import {
+  ON_CLICK_BUTTON_NO_RESTART,
+  ON_CLICK_BUTTON_PASS,
+  ON_CLICK_BUTTON_PAUSE,
+  ON_CLICK_BUTTON_PROMPT,
+  ON_CLICK_BUTTON_YES_RESTART,
+  OnClickButtonNoRestart,
+  OnClickButtonPause,
+  OnClickButtonPrompt,
+} from '../types/buttonTypes';
+import {
+  DRAW,
+  PLAYER_AI,
+  PLAYER_BLUE,
+  PLAYER_RED,
+  PlayerType,
+} from '../types/gameTypes';
 
 export const onClickButtonNoRestart = (): OnClickButtonNoRestart => ({
   type: ON_CLICK_BUTTON_NO_RESTART,
@@ -74,11 +74,11 @@ export const onClickButtonPass = (): ThunkResult<void> => (
 
   dispatch({
     type: ON_CLICK_BUTTON_PASS,
-    move,
     currentPlayer: opponent,
-    halfmoves: updatedHalfmoves,
     endMethod,
+    halfmoves: updatedHalfmoves,
     isGameComplete,
+    move,
   });
 };
 

@@ -1,16 +1,16 @@
 import {
-  PiecePosition,
-  PieceTuple,
-  STUDENT,
-  PieceType,
-  MASTER,
-} from '../../engine/types/pieceTypes';
-import { PlayerType, PLAYER_AI } from '../../engine/types/gameTypes';
-import {
+  HALFMOVE_LIMIT,
   TEMPLE_ID_P1,
   TEMPLE_ID_P2,
-  HALFMOVE_LIMIT,
 } from '../../../utils/constants';
+import { PLAYER_AI, PlayerType } from '../../engine/types/gameTypes';
+import {
+  MASTER,
+  PiecePosition,
+  PieceTuple,
+  PieceType,
+  STUDENT,
+} from '../../engine/types/pieceTypes';
 
 const pieceCounts = (positions: PieceTuple[]): number[] => {
   return positions.reduce(

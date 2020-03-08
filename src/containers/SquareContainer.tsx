@@ -1,31 +1,32 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import dndTypes from '../types/dndTypes';
-import { SquareWrapper, Overlay } from '../components/Board/styles/Square';
-import { TEMPLE_ID_P1, TEMPLE_ID_P2 } from '../utils/constants';
-import Piece from '../components/Piece/Piece';
 import { connect } from 'react-redux';
+
+import { Overlay, SquareWrapper } from '../components/Board/styles/Square';
+import Piece from '../components/Piece/Piece';
 import { AppState } from '../store/engine';
-import { PlayerType, Colors } from '../store/engine/types/gameTypes';
+import { Colors, PlayerType } from '../store/engine/types/gameTypes';
 import { PiecePosition, PieceTuple } from '../store/engine/types/pieceTypes';
 import { idToPiece, PieceProperties } from '../store/utils';
+import dndTypes from '../types/dndTypes';
+import { TEMPLE_ID_P1, TEMPLE_ID_P2 } from '../utils/constants';
 
 interface OwnProps {
   handleClickSquare: (selectedSquareID: number) => void;
   squareID: number;
 }
 
-type SquareContainerProps = StateProps & OwnProps;
+type SquareContainerProps = OwnProps & StateProps;
 
 const SquareContainer: React.FC<SquareContainerProps> = ({
-  handleClickSquare,
-  squareID,
-  pauseGame,
-  currentPlayer,
-  selectedPiece,
-  validMoves,
-  piece,
   colors,
+  currentPlayer,
+  handleClickSquare,
+  pauseGame,
+  piece,
+  selectedPiece,
+  squareID,
+  validMoves,
 }) => {
   const squareIsValidMove = validMoves.includes(squareID);
   const [{ isOver }, drop] = useDrop({
@@ -79,13 +80,13 @@ const SquareContainer: React.FC<SquareContainerProps> = ({
 };
 
 interface StateProps {
+  colors: Colors[];
   currentPlayer: PlayerType;
   pauseGame: boolean;
+  piece: PieceProperties | undefined;
   piecePositions: PiecePosition;
   selectedPiece: PieceTuple | [];
   validMoves: number[];
-  piece: PieceProperties | undefined;
-  colors: Colors[];
 }
 
 const mapStateToProps = (state: AppState, ownProps: OwnProps): StateProps => {
@@ -96,13 +97,13 @@ const mapStateToProps = (state: AppState, ownProps: OwnProps): StateProps => {
   const piece = idToPiece(squareID, piecePositions, players);
 
   return {
+    colors,
     currentPlayer: currentPlayer as PlayerType,
     pauseGame,
+    piece,
     piecePositions,
     selectedPiece,
     validMoves,
-    piece,
-    colors,
   };
 };
 
